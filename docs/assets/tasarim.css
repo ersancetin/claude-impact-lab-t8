@@ -44,6 +44,7 @@
   --marka-bant:   #C8102E;
   --marka-bant-2: #A00C24;
   --marka-zemin:  #FCE9EC;
+  --marka-bant-rgb: 200, 16, 46;   /* AI Sohbet düğmesi nabız halkası için */
   --bant-yazi:    #FFFFFF;   /* kırmızı bant üzerindeki yazı */
   --serit-yazi:   #FBDDE1;   /* koyu kırmızı şeritte okunan yazı */
 
@@ -51,6 +52,7 @@
   --vurgu:        #14395F;
   --vurgu-koyu:   #0D2743;
   --vurgu-zemin:  #E7EDF4;
+  --vurgu-rgb:    20, 57, 95;   /* AI Sohbet nabız halkası rgba() için */
 
   /* GÜVENCE — kalıcı hak, teminat altında */
   --turkuaz:      #0A6E6B;
@@ -260,19 +262,51 @@ main > .kahraman:first-child { margin-top: calc(var(--olcek)*-8); }
 }
 .mega-alt a { font-weight: 650; }
 
-/* Danışma çağrısı — kabuğun sağ ucunda, beyaz kutu */
-.ust-danisma {
+/* AI Sohbet çağrısı — kabuğun sağ ucunda, beyaz kutu. Danışma'nın
+   eski yerini aldı (ust-danisma); tek görünür sohbet girişi budur. */
+.ust-ai-sohbet {
   display: none; align-self: center; flex: none;
-  margin-left: calc(var(--olcek)*3);
-  background: #fff; color: var(--marka-bant);
+  position: relative;
+  background: #fff; color: var(--vurgu);
   border: 0; border-radius: var(--yuvarlak);
   font: inherit; font-size: .92rem; font-weight: 700;
   padding: calc(var(--olcek)*2) calc(var(--olcek)*4);
   min-height: 42px; cursor: pointer;
   align-items: center; gap: calc(var(--olcek)*2);
 }
-@media (min-width: 52rem) { .ust-danisma { display: inline-flex; } }
-.ust-danisma:hover { background: var(--marka-zemin); }
+@media (min-width: 52rem) { .ust-ai-sohbet { display: inline-flex; } }
+.ust-ai-sohbet:hover { background: var(--vurgu-zemin); }
+.ust-ai-sohbet::before {
+  content: ""; position: absolute; inset: -3px; border-radius: calc(var(--yuvarlak) + 3px);
+  box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), .35);
+  animation: ai-nabiz-halka 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Sparkle simgesi — hem üst bardaki hem yüzen AI Sohbet düğmesinde
+   kullanılır. İkon fontu/SVG dosyası yok: tek CSS şekli, currentColor. */
+.ai-simge {
+  position: relative; width: 13px; height: 13px; flex: none;
+  display: inline-block;
+}
+.ai-simge::before, .ai-simge::after {
+  content: ""; position: absolute; inset: 0;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+}
+.ai-simge::after { transform: rotate(45deg) scale(.55); opacity: .8; }
+.ai-ac .ai-simge, .ai-bas .ai-simge, .ust-ai-sohbet .ai-simge { animation: ai-parilti 2.4s ease-in-out infinite; }
+.ai-bas b .ai-simge { vertical-align: -1px; }
+
+@keyframes ai-parilti {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.25) rotate(18deg); opacity: .75; }
+}
+@keyframes ai-nabiz-halka {
+  0% { box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), .35); }
+  70% { box-shadow: 0 0 0 8px rgba(var(--vurgu-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), 0); }
+}
 
 /* ---- Mobil gezinme — <details>, JS yok --------------------- */
 .gezinme-mobil { margin-left: auto; align-self: center; }
@@ -505,6 +539,39 @@ a:hover { color: var(--vurgu-koyu); }
 .rehber b { display: block; font-size: 1.02rem; font-weight: 700; margin-bottom: calc(var(--olcek)*2); }
 .rehber span { display: block; color: var(--murekkep-2); font-size: .9rem; flex: 1; }
 .rehber .etiket { color: var(--turkuaz); }
+
+/* Görselli rehber kartı: küçük fotoğraf üstte, metin altta. Fotoğraf
+   dekoratiftir (alt=""), bilgiyi başlık taşır — görsel hiç yüklenmese
+   de kart eksik kalmaz. Yükseklik/genişlik özniteliği zorunlu: ızgara
+   yüklenirken kaymasın (CLS). */
+.rehber.gorselli { padding: 0; overflow: hidden; }
+.rehber-gorsel {
+  display: block; width: 100%; height: auto; aspect-ratio: 360 / 188;
+  object-fit: cover; background: var(--yuzey-alt);
+  border-bottom: var(--sinir);
+}
+.rehber-kapak {
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: calc(var(--olcek)*3);
+  font-family: var(--f-mono); font-size: .8rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  background: var(--yuzey-alt);
+  /* Fotoğrafı olmayan rehberin kartı boş kalmaz; sahte fotoğraf da konmaz. */
+  background-image: repeating-linear-gradient(
+    135deg, transparent 0 7px, var(--cizgi) 7px 8px);
+}
+/* Sarmalayıcının `.rehber span` kuralını yenmesi için sınıf zinciri:
+   yoksa kart başlığı da soluk metin rengini miras alırdı. */
+.rehber .rehber-ic {
+  display: flex; flex-direction: column; flex: 1;
+  padding: calc(var(--olcek)*4);
+  color: var(--murekkep); font-size: 1rem;
+}
+.rehber .rehber-ic > span { color: var(--murekkep-2); font-size: .9rem; }
+.rehber .etiket {
+  font-size: .7rem; letter-spacing: .13em; text-transform: uppercase;
+  margin-bottom: calc(var(--olcek)*2);
+}
 
 /* --- 12. Durum kartları ----------------------------------- */
 .kart {
@@ -950,6 +1017,43 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 .icindekiler a { color: var(--murekkep-2); text-decoration: none; }
 .icindekiler a:hover { color: var(--vurgu); text-decoration: underline; }
 
+/* Açılış fotoğrafı — indirilmiş dosya, dış istek yok; künyesi altında. */
+.foto { margin: 0 0 calc(var(--olcek)*6); }
+.foto img {
+  display: block; width: 100%; height: auto;
+  border: var(--sinir);            /* köşe yuvarlatma yok: evrak hissi */
+  background: var(--yuzey-alt);
+}
+.foto figcaption,
+.sekil figcaption {
+  font-family: var(--f-mono); font-size: .72rem;
+  color: var(--murekkep-3);
+  margin-top: calc(var(--olcek)*2);
+}
+.foto figcaption a { color: var(--murekkep-3); }
+
+/* Şema (satır içi SVG) — renkler tema değişkenlerinden gelir, böylece
+   koyu tema ve kullanıcının tema seçimi çizime de uygulanır. */
+.sekil {
+  margin: 0 0 calc(var(--olcek)*7);
+  padding: calc(var(--olcek)*4) calc(var(--olcek)*4) calc(var(--olcek)*3);
+  background: var(--yuzey); border: var(--sinir);
+}
+.sekil svg { display: block; width: 100%; height: auto; }
+.sekil figcaption { margin-top: calc(var(--olcek)*3); }
+.sekil .s-metin        { fill: var(--murekkep); font-family: var(--f-metin); }
+.sekil .s-mono         { fill: var(--murekkep-2); font-family: var(--f-mono); }
+.sekil .s-kutu         { fill: var(--yuzey-alt); }
+.sekil .s-cizgi        { stroke: var(--cizgi); stroke-width: 1; }
+.sekil .s-cizgi-kalin  { stroke: var(--cizgi-koyu); stroke-width: 2; }
+.sekil .s-ok           { fill: var(--cizgi-koyu); }
+.sekil .s-vurgu-dolgu  { fill: var(--vurgu); }
+.sekil .s-uyari-dolgu  { fill: var(--uyari); }
+.sekil .s-tehlike-dolgu{ fill: var(--tehlike); }
+.sekil .s-bilgi-dolgu  { fill: var(--bilgi); }
+.sekil .s-notr-dolgu   { fill: var(--cizgi-koyu); }
+.sekil .s-cubuk-yazi   { fill: var(--bant-yazi); font-family: var(--f-mono); }
+
 .yazi-kunye {
   display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3);
   align-items: center;
@@ -1123,6 +1227,112 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   }
 }
 
+/* ============================================================
+   24b. AI SOHBET PENCERESİ
+   Sitenin tek görünür sohbet girişi (üst bardaki "AI Sohbet"
+   düğmesiyle aynı pencereyi açar — bkz. .ust-ai-sohbet). Sorular
+   dış bir yapay zekâ servisine gönderilir; kurumsal marka
+   kırmızısı (--marka-bant/--marka) ve hafif bir nabız animasyonuyla "canlı"/AI
+   hissi verilir, ama şekil dili (köşe, gölge, tipografi) sitenin
+   geri kalanıyla aynı kalır — gradyan yok, tek CSS dosyası.
+   ============================================================ */
+.ai-ac {
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  z-index: 118;
+  display: inline-flex; align-items: center; gap: calc(var(--olcek)*2.5);
+  background: var(--marka-bant); color: #fff;
+  border: 2px solid var(--marka-bant); border-radius: var(--yuvarlak);
+  font: inherit; font-weight: 700; font-size: .95rem;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*5);
+  min-height: 52px; cursor: pointer;
+  box-shadow: var(--katman);
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+  animation: ai-nefes 3.2s ease-in-out infinite;
+}
+.ai-ac:hover {
+  background: var(--marka-bant-2); border-color: var(--marka-bant-2);
+  transform: translateY(-2px);
+}
+.ai-ac:active { transform: translateY(0); }
+
+@keyframes ai-nefes {
+  0%, 100% { box-shadow: var(--katman), 0 0 0 0 rgba(var(--marka-bant-rgb), .45); }
+  50% { box-shadow: var(--katman), 0 0 0 9px rgba(var(--marka-bant-rgb), 0); }
+}
+
+.ai-sohbet {
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  width: min(28rem, calc(100vw - var(--olcek) * 8));
+  height: min(40rem, calc(100vh - var(--olcek) * 8));
+  z-index: 128;
+  background: var(--yuzey); border: var(--sinir);
+  box-shadow: var(--katman);
+  display: flex; flex-direction: column;
+}
+.ai-sohbet[hidden] { display: none; }
+.ai-bas {
+  background: var(--marka-bant); color: #fff; flex: none;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
+  display: flex; align-items: center; gap: calc(var(--olcek)*3);
+}
+.ai-bas b { font-size: 1rem; font-weight: 700; }
+.ai-bas small { display: block; font-size: .74rem; color: var(--serit-yazi); }
+.ai-bas .bosluk { flex: 1; }
+.ai-kapat {
+  background: none; border: 1px solid rgba(255,255,255,.5); border-radius: var(--yuvarlak);
+  color: #fff; font: inherit; font-size: 1.1rem; line-height: 1;
+  width: 34px; height: 34px; cursor: pointer; flex: none;
+}
+.ai-kapat:hover { background: var(--marka-bant-2); }
+
+.ai-akis {
+  flex: 1; overflow-y: auto; padding: calc(var(--olcek)*4);
+  display: flex; flex-direction: column; gap: calc(var(--olcek)*3);
+  background: var(--kagit);
+}
+.balon.bot.ai { border-left-color: var(--marka); }
+
+.ai-yazi { display: inline-flex; gap: 4px; align-self: flex-start; padding: calc(var(--olcek)*2) 0; }
+.ai-yazi span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--murekkep-3);
+  animation: ai-nabiz 1.1s infinite ease-in-out;
+}
+.ai-yazi span:nth-child(2) { animation-delay: .15s; }
+.ai-yazi span:nth-child(3) { animation-delay: .3s; }
+@keyframes ai-nabiz {
+  0%, 80%, 100% { opacity: .25; transform: scale(.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+.ai-alt { flex: none; border-top: var(--sinir); background: var(--yuzey); }
+.ai-form { display: flex; gap: calc(var(--olcek)*2); padding: calc(var(--olcek)*3); }
+.ai-form input {
+  flex: 1; min-height: 46px; min-width: 0;
+  border: 2px solid var(--cizgi-koyu); border-radius: var(--yuvarlak);
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*3); font: inherit;
+  background: var(--yuzey); color: var(--murekkep);
+}
+.ai-form input:focus { border-color: var(--marka); outline: none; }
+.ai-form input:disabled { opacity: .6; }
+.ai-form button {
+  flex: none; min-height: 46px; padding: 0 calc(var(--olcek)*4);
+  background: var(--marka-bant); color: #fff; border: 2px solid var(--marka-bant);
+  border-radius: var(--yuvarlak); font: inherit; font-weight: 700; cursor: pointer;
+}
+.ai-form button:hover { background: var(--marka-bant-2); border-color: var(--marka-bant-2); }
+.ai-form button:disabled { opacity: .6; cursor: default; }
+.ai-not {
+  padding: 0 calc(var(--olcek)*3) calc(var(--olcek)*3);
+  font-size: .74rem; color: var(--murekkep-2); line-height: 1.45;
+}
+
+@media (max-width: 30rem) {
+  .ai-sohbet {
+    left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh;
+    border: 0;
+  }
+}
+
 /* --- 25. Yardımcılar -------------------------------------- */
 .gizli { display: none !important; }
 /* [hidden] tarayıcı varsayılanı display:none'dur ama .dugme gibi
@@ -1138,7 +1348,7 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 @media print {
   .ust, .kurum-serit, .alt, .dugme-sira, .serit, .atla,
   .gezinme-mobil, .icindekiler, .kunye,
-  .danisma, .danisma-ac, .hizli { display: none !important; }
+  .danisma, .danisma-ac, .ai-sohbet, .ai-ac, .hizli { display: none !important; }
   /* Afiş ve profil kartları kâğıtta da işe yarar; renk yerine çizgiyle
      ayrışsınlar ve sayfa ortasından bölünmesinler. */
   .kesit { border: 1px solid #999; break-inside: avoid; max-height: 9cm; }
@@ -1166,6 +1376,8 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   .dosya-kod { border: 1px solid #000; background: #fff !important; }
   .kart { border: 1px solid #999; break-inside: avoid; }
   .yazi-duzen { display: block; }
+  .foto, .sekil { break-inside: avoid; }
+  .sekil { border: 1px solid #999; }
   a { color: #000; text-decoration: none; }
   .sss details { display: block; }
   .sss .cevap { display: block !important; }
