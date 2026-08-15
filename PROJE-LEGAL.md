@@ -17,7 +17,13 @@ Bu doküman hukuki bir metindir; her bilginin doğrulama durumu açıkça işare
 | ⚠️ | Tek kaynak veya kaynaklar arasında çelişki var — **yayına almadan önce resmî metinden teyit edilmeli** |
 | 🔴 | Ürünün hukuka uygunluğunu doğrudan etkileyen kritik konu |
 
-> **Araştırma kısıtı — dürüst not:** Bu araştırma sırasında çalışma ortamının ağ politikası `mevzuat.gov.tr`, `resmigazete.gov.tr`, `dask.gov.tr` ve `tobb.org.tr` erişimini engelledi. Kanun metinleri **birebir tam metin olarak indirilemedi**; bilgiler web araması sonuçlarından ve ikincil kaynaklardan çapraz doğrulama ile derlendi. **Madde numaraları ve hukuki çerçeve güvenilirdir; ancak yayına geçmeden önce her maddenin tam metni resmî kaynaktan (mevzuat.gov.tr) alınmalı ve içerik ekibince birebir doğrulanmalıdır.** Özellikle ⚠️ işaretli parasal tutarlar ve süreler bu doğrulamayı zorunlu kılar.
+> **Araştırma kısıtı — dürüst not:** Çalışma ortamının ağ politikası tüm resmî hukuk kaynaklarını **ağ katmanında** engelliyor: `mevzuat.gov.tr`, `resmigazete.gov.tr`, `dask.gov.tr`, `bedesten.adalet.gov.tr`, `karararama.yargitay.gov.tr`, `d.barobirlik.org.tr`, `webdosya.csb.gov.tr` — hepsi `CONNECT tunnel failed, response 403` veriyor.
+>
+> **Mevzuat MCP de bu ortamda çalışamaz.** `mevzuat-mcp` 0.3.0 paketi PyPI'dan indirilip incelendi; istemci **yalnızca** `https://www.mevzuat.gov.tr` ile konuşuyor (`BASE_URL`, `SEARCH_ENDPOINT`, `DOC/PDF_URL_TEMPLATE`). MCP kurulsa da her çağrı bağlantı hatası verir.
+>
+> Bu nedenle bilgiler **çoklu bağımsız kaynak teyidi** (web araması) ile derlendi. Madde numaraları ve hukuki çerçeve güvenilirdir; ancak **hiçbir madde, resmî metinden birebir doğrulanmadan yayına alınmamalıdır.**
+>
+> 👉 Doğrulama işi maddeye kadar planlandı ve ayrı bir dosyaya çıkarıldı: **[`DOGRULAMA.md`](./DOGRULAMA.md)** — 34 kalem, öncelik sırasına dizili, her biri için MCP çağrısı yazılmış durumda. Repoya ayrıca [`.mcp.json`](./.mcp.json) eklendi; ağ erişimi olan bir ortamda Claude Code repo kökünde açıldığında Mevzuat MCP otomatik devreye girer.
 
 ---
 
@@ -190,16 +196,30 @@ Bu, platformun en yüksek etkili tek mesajıdır. "DASK primi 500 lira, ödemese
 
 Bina yaşı, dayanıklılık hakkında kaba ama anlamlı bir göstergedir. Türkiye'de yürürlüğe girmiş başlıca deprem yönetmelikleri:
 
-| Dönem | Yönetmelik |
-|---|---|
-| 1975 | Afet Bölgelerinde Yapılacak Yapılar Hakkında Yönetmelik (ABYYHY) |
-| 1998 | ABYYHY (kapsamlı revizyon) |
-| 2007 | Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY) |
-| 2018 | Türkiye Bina Deprem Yönetmeliği (TBDY) — 01.01.2019'da yürürlüğe girdi |
+| Dönem | Yönetmelik | Resmî Gazete | Durum |
+|---|---|---|---|
+| 1975 | Afet Bölgelerinde Yapılacak Yapılar Hakkında Yönetmelik (ABYYHY) | — | ⚠️ RG tarihi gerekli |
+| 1998 | ABYYHY (kapsamlı revizyon) | — | ⚠️ RG tarihi gerekli |
+| 2007 | Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY) | — | ⚠️ RG tarihi gerekli |
+| **2018** | **Türkiye Bina Deprem Yönetmeliği (TBDY)** | **18.03.2018 / 30364 (Mükerrer)** — yürürlük **01.01.2019** | ✅ doğrulandı |
 
-Ayrıca **4708 sayılı Yapı Denetimi Hakkında Kanun** 2001'de kabul edilmiş, zorunlu yapı denetimi kademeli olarak yaygınlaştırılmıştır. 2001 öncesi yapılar bu denetimden geçmemiştir.
+TBDY 2018, DBYBHY 2007'yi yürürlükten kaldırmıştır. Amacı, yeni yapılacak/değiştirilecek/büyütülecek kamu ve özel binaların depreme dayanıklı tasarımı ile **mevcut binaların deprem etkisi altında değerlendirilmesi ve güçlendirilmesi** için gerekli kuralları belirlemektir. ✅
 
-> ⚠️ **Bu tablo "Güvende miyim?" testinin çekirdeğidir; tarihler yayına girmeden önce resmî Resmî Gazete tarihleriyle birebir doğrulanmalıdır.**
+Ayrıca **4708 sayılı Yapı Denetimi Hakkında Kanun** 2001'de kabul edilmiş, zorunlu yapı denetimi kademeli olarak yaygınlaştırılmıştır. **2001 öncesi yapılar bu denetimden geçmemiştir** — testin en ayırt edici sorularından biri budur.
+
+> ⚠️ Bu tablo "Güvende miyim?" testinin çekirdeğidir; kalan üç yönetmeliğin RG tarihleri doğrulanmalıdır (bkz. `DOGRULAMA.md` § E).
+
+### 5.8 🔴 İmar barışı / Yapı Kayıt Belgesi — milyonlarca binayı ilgilendiren yanılgı ⚠️
+
+**3194 sayılı İmar Kanunu geçici m.16** (7143 s.K. m.16 ile eklenmiştir, 11.05.2018): 31.12.2017'den önce yapılmış ruhsatsız veya ruhsata aykırı yapılar için, 31.10.2018'e kadar başvurup 31.12.2018'e kadar bedelini ödeyenlere **Yapı Kayıt Belgesi** verilmiştir.
+
+**Kritik ve yaygın biçimde yanlış bilinen nokta:**
+
+> **Yapı Kayıt Belgesi, binanın depreme dayanıklı olduğunu göstermez ve maliki sorumluluktan kurtarmaz.** Düzenleme, **binanın depreme dayanıklılığı konusundaki sorumluluğu açıkça malike yüklemektedir.** Belge yapıyı imar mevzuatına uygun hale getirmez; yalnızca mevcut kullanımına geçici bir hukuki statü tanır.
+
+Ayrıca basit tamir ve bakım sınırlarını aşan esaslı onarım yapılması hâlinde belge geçerliliğini yitirir. ⚠️
+
+Bu, platformun anlatması gereken en yüksek etkili uyarılardan biridir: "İmar barışından yararlandım, binam artık yasal" diyen bir kullanıcı, hem deprem güvenliği hem hukuki sorumluluk bakımından yanılmaktadır.
 
 ---
 
@@ -250,7 +270,21 @@ Sigorta bedeli, **yapı tarzına göre belirlenen metrekare birim bedeli × bina
 | Diğer yapılar m² bedeli | 7.142 TL ⚠️ |
 | Bir mesken için azami teminat tutarı | **2.271.283 TL** ⚠️ |
 
-> 🔴 **Kaynak çelişkisi:** Bazı kaynaklar 2026 için azami teminatı **2.407.723 TL** olarak vermektedir; başka kaynaklar 01.05.2026 itibarıyla **2.271.283 TL** demektedir. Bu tutarlar yıl içinde de güncellendiğinden çelişki muhtemelen farklı dönemlere ait değerlerden kaynaklanmaktadır. **Yayına girmeden önce DASK'ın resmî tarifesinden teyit edilmelidir.**
+#### 🔴 Azami teminat **aylık** güncelleniyor — ürünü belirleyen bulgu
+
+İlk araştırmada çıkan üç farklı 2026 rakamı bir çelişki değil; **tutarın yıl içinde defalarca güncellendiğinin kanıtı.** Doğrulama sonrası tablo:
+
+| Dönem | Azami teminat |
+|---|---|
+| 2024 | 1.272.000 TL |
+| 2025 | 1.704.162 TL |
+| 2026 (yıl başı tarifesi) | 2.095.462 TL |
+| **01.05.2026** | **2.271.283 TL** |
+| 2026 (sonraki dönem) | 2.407.723 TL |
+
+DASK'ın resmî tarife tablosunda 2026 için **ocak–haziran değerleri ayrı ayrı** yayımlanmıştır. ⚠️
+
+> **Ürün sonucu — pazarlıksız kural:** Bu tutarı bir içerik sayfasına yazmak, o sayfayı **bir ay içinde yanlış** hâle getirir. Değer, tarih damgalı ve sürümlü bir yapılandırma dosyasından okunmalı; "Sigortam yeterli mi?" testi kullanıcıya **hangi tarihli tarifeyle** hesap yaptığını açıkça göstermelidir. Bu, Bölüm 15.2'deki "parametrik değerler metne gömülmez" kuralının somut gerekçesidir.
 
 **Örnek hesap:** 100 m² betonarme konut → 100 × 10.714 = **1.071.400 TL** sigorta bedeli. Bu tutar azami teminatın altında olduğundan doğrudan geçerlidir. ⚠️
 
@@ -332,6 +366,22 @@ Doğrudan Tahkim Komisyonu'na veya mahkemeye gitmek, başvurunun/davanın usulde
 - Başvurular önce **raportörler** tarafından incelenir; çözülemeyenler bağımsız **sigorta hakemlerine** iletilir.
 - **m.30/14:** Mahkemeye veya Tüketici Hakem Heyetine intikal etmiş uyuşmazlıklar için Komisyon'a başvurulamaz. **Yol seçimi geri dönüşsüzdür** — kullanıcıya bu açıkça anlatılmalıdır.
 - Mahkemeye kıyasla daha hızlı ve düşük maliyetlidir.
+- İtiraz, **üç kişilik itiraz hakem heyeti** tarafından **iki ay** içinde karara bağlanır; itiraz süresi kararın bildiriminden itibaren **10 gün** ve bir defaya mahsustur. ⚠️
+
+#### 🔴 Parasal sınırlar — her yıl değişir, metne yazılmaz
+
+| Eşik (22.01.2026 itibarıyla) | Tutar |
+|---|---|
+| **Kesinlik sınırı** — hakem kararına itiraz edilemez | 35.000 TL altı ⚠️ |
+| **İtiraz sınırı** — Komisyon nezdinde itiraz | 35.000 TL ve üzeri ⚠️ |
+| **Üç kişilik hakem heyeti** zorunluluğu | 122.000 TL ve üzeri ⚠️ |
+| **Yargıtay temyiz sınırı** | 383.000 TL üzeri ⚠️ |
+
+> **Uyarı:** Kanun metnindeki **5.000 TL** rakamı 2007 tarihli orijinal hâldir ve her yıl yeniden değerleme oranında artar. Hiçbir içerikte bu rakam kullanılmamalıdır.
+>
+> **Hangi tarihin sınırı uygulanır?** İtiraz ve temyizde **kararın verildiği tarihteki**, hakem heyeti teşekkülünde **zorunlu hâle geldiği tarihteki** sınır esas alınır. ⚠️
+>
+> 🔴 Kaynaklar kesinlik sınırında 35.000/28.000 TL, temyizde 383.000/300.000 TL olarak çelişmektedir — resmî duyurudan teyit zorunludur.
 
 ### 8.3 Hasar tespit raporuna itiraz ✅
 
@@ -405,6 +455,10 @@ Ayrıca **TCK m.184 (imar kirliliğine neden olma)** ruhsatsız veya ruhsata ayk
 
 **4708 sayılı Yapı Denetimi Hakkında Kanun**, yapı denetim kuruluşlarının ve denetçi mimar/mühendislerin sorumluluğunu düzenler. Kuruluş, denetim görevini gereği gibi yerine getirmemesinden doğan zararlardan sorumludur; sorumluluk hem hukuki hem cezai boyut taşır. Kanun 2001 tarihlidir; öncesinde yapılan binalar bu denetimden geçmemiştir.
 
+**m.9 — Cezai sorumluluk:** Yapı denetim kuruluşunun ortakları, yöneticileri, mimar ve mühendisleri, yapı müteahhitleri, proje müellifleri ve laboratuvar görevlilerinden görevini ihmal eden veya yetkisini kötüye kullananlar hakkında cezai hüküm uygulanır. Ruhsat aşamasında **sahte belge** düzenlendiği sonradan anlaşılırsa izin derhal iptal edilir. Bu madde uyarınca verilen cezalar **paraya çevrilemez ve ertelenemez.** ⚠️
+
+> 🔴 **Güncellik şüphesi:** Erişilebilen metin, görevi ihmal ve yetkiyi kötüye kullanma bakımından **765 sayılı (mülga) Türk Ceza Kanunu'na** atıf yapıyor. Bu, 2001 tarihli **orijinal** metin olabilir; 5237 sayılı TCK'nın yürürlüğe girmesiyle maddenin değişmiş olması kuvvetle muhtemeldir. **Yürürlükteki hâli doğrulanmadan bu madde içerikte kullanılmamalıdır** (`DOGRULAMA.md` § C7). Bu örnek, ikincil kaynaklara güvenmenin neden yeterli olmadığını iyi gösteriyor.
+
 ### 9.4 İdarenin sorumluluğu — tam yargı davası ✅
 
 Deprem nedeniyle açılan tam yargı davaları **idarenin hizmet kusuru sorumluluğuna** dayanır.
@@ -465,6 +519,65 @@ Bu ayrım, aylarca "kayıp" statüsünde bekleyip miras, sigorta ve banka işlem
 - **VUK m.115 — Terkin:** Yangın, yer sarsıntısı, yer kayması, su basması, kuraklık, don, zararlı hayvan ve haşere istilası gibi afetler yüzünden **varlıklarının veya mahsullerinin en az üçte birini kaybedenlerin**, afete uğrayan gelir kaynakları ile ilgili kamu borçları **Cumhurbaşkanı kararıyla kısmen veya tamamen terkin edilebilir.** ✅
 - Yıkılan veya ağır hasarlı binalarda **emlak vergisi mükellefiyeti** açısından ayrı bir değerlendirme gerekir. ⚠️
 
+### 10.5 🔴 Ölüm hâlinde sigorta ve sosyal güvenlik hakları
+
+DASK ölümü karşılamaz (Bölüm 6.2). Bedeni zararların karşılığı **başka** poliçelerdedir ve bu ayrım hiç bilinmez.
+
+| Kaynak | İçerik | Durum |
+|---|---|---|
+| **Hayat sigortası** | Vefat teminatı ödenir. Ödeme için kişinin **vefat etmiş** ya da **gaiplik kararı** çıkarılmış olması gerekir — ölüm karinesi tescili (TMK m.31 / 5490 m.32) burada kritik hızlandırıcıdır | ⚠️ |
+| **Ferdi kaza sigortası** | 🔴 **Aksi sözleşmeyle kararlaştırılmadıkça deprem teminat dışıdır.** Poliçede deprem teminatının seçilip seçilmediği mutlaka kontrol edilmelidir | ⚠️ |
+| **SGK ölüm (dul-yetim) aylığı** | 4/a kapsamında **en az 5 yıl sigortalılık + 900 prim günü** koşuluyla hak sahiplerine bağlanır. Başvuru: e-Devlet "Gelir, Aylık, Ödenek Talep Belgesinin Verilmesi" | ⚠️ |
+| **İş kazası tartışması** | Deprem sırasında iş yerinde ölüm hâlinde olayın iş kazası sayılıp sayılmayacağı — sayılırsa prim gün şartları farklılaşır | ⚠️ tartışmalı |
+| **BES birikimleri** | Bireysel emeklilik birikimlerine erişim ve intikal usulü | ⚠️ |
+
+> **Ürün notu:** Ferdi kaza poliçesindeki deprem istisnası, "sigortam var" diyen kullanıcının en büyük yanılgısıdır. "Sigortam yeterli mi?" testinin bir sorusu bunu kontrol etmelidir.
+
+### 10.6 Hasarlı binadan eşya alma ve yıkım kararı ✅
+
+| Bina durumu | Kural |
+|---|---|
+| **"Yıkık" ve "acil yıktırılacak yapı"** | Kısa süreliğine dahi **girmek ve eşya almak kesinlikle yasaktır** |
+| **Ağır hasarlı** | Giriş ve eşya alımı, Bakanlıkça görevlendirilen **uzmanların raporu** doğrultusunda değerlendirilir; tahliye, yerel afet tahliye ve planlama grubu **gözetiminde** yapılır |
+
+Ağır hasarlı yapılarda eşya tahliyesi, **30 günlük itiraz süresine bağlanmıştır**: hasar durumuna itiraz etmeyecek vatandaşların eşya alımı, uzmanlarca oluşturulacak tahliye raporuna göre planlanır. İtiraz hasar tespit çalışmaları ise "acil yıkılacak bina" dışındaki yapılar için 30 günlük sürenin bitiminden sonra başlar. ✅
+
+> 🔴 **Burada gizli bir tuzak var:** Eşyasını almak isteyen kullanıcı, itiraz etmemeyi seçtiğinde **30 günlük itiraz hakkını da kullanmamış olur.** Platform bu ikilemi açıkça anlatmalı — "eşyanı al" ile "hakkını koru" arasındaki gerilim kullanıcıya gösterilmeden bırakılmamalıdır.
+
+**Yıkım kararı**, hasar derecesi tespitinden **ayrı bir idari işlemdir** ve ona karşı ayrıca iptal davası açılabilir. ⚠️
+
+### 10.7 Afet konutu borçlandırma koşulları ⚠️
+
+Hak sahipliği kabul edilip kendisine konut tahsis edilen kişiler için (7269 s.K.):
+
+- Geri ödeme süresi **en az 20, en çok 30 yıl**, **eşit taksitler**
+- **Faizsizdir**
+- İlk taksit: ihale ve emanet usulünde inşaatın tamamlanıp hak sahibine **tesliminden 2 yıl sonra**; "Evini Yapana Yardım" yönteminde ve orta hasarlı konut/iş yeri onarımlarında son kredi taksitinin ödenmesinden 2 yıl sonra başlar
+
+Bu koşullar, hak sahipliğine başvurup başvurmama kararında belirleyicidir ve neredeyse hiç anlatılmaz.
+
+### 10.8 Borç erteleme — kalıcı hak değil, emsal uygulama ⚠️
+
+6 Şubat 2023 sonrasında **BDDK kararlarıyla** getirilen esneklikler:
+
+- Tüketici ve taşıt kredilerinde anapara ve faiz ödemelerinin, müşterinin talebi üzerine **en az 6 ay ertelenmesi**
+- Kredi kartı borçlarında **ödemesiz dönem** tanımlanabilmesi (asgari tutar dahil)
+- Taksitlendirme sürelerinin **bir katına kadar** artırılması
+- Kredi kartı yıllık ücreti ve POS aylık ücretlerinin alınmaması
+- Kararların **06.02.2023 – 01.01.2024** arası geçerli olması
+
+> 🔴 **Bunlar kalıcı mevzuat değildir.** Platformda "hakkınız" olarak değil, **"geçmiş afette uygulanan emsal"** olarak sunulmalıdır. Aksi hâlde kullanıcıya var olmayan bir hak vaat edilmiş olur — bu, platformun yapabileceği en zararlı hatalardan biridir.
+
+Aynı uyarı **AFAD kira/taşınma yardımı tutarları** ve **öğrenci destekleri** için de geçerlidir.
+
+### 10.9 Öğrenci hakları (2023 uygulaması) ⚠️
+
+- KYK **kredisinin bursa dönüştürülmesi** — depremde yakınını kaybeden veya konutu/iş yeri hasar gören öğrenciler için
+- KYK yurtlarında **öncelik**, ek şart aranmaksızın
+- Psikososyal destek programları
+
+Askerlik erteleme, sınav hakkı ve kamu personeli mazeret nakli konularında ayrı araştırma gerekiyor (bkz. `DOGRULAMA.md` § F).
+
 ---
 
 # BÖLÜM III — ÜRÜN TASARIMI
@@ -503,23 +616,29 @@ ANA SAYFA
 │   │   └── Tek başıma risk tespiti yaptırabilir miyim?  ← 6306 m.3, az bilinen hak
 │   ├── DASK'ım var mı, yeterli mi?
 │   │   └── DASK'ım yoksa ne kaybederim?  ← 7269 m.29/8, en yüksek etkili mesaj
+│   ├── Ölüm ve eşya zararımı ne karşılar?  ← hayat/ferdi kaza; deprem istisnası
 │   ├── Binamın belgelerini nasıl alırım? (ruhsat, iskân, zemin etüdü)
 │   ├── Yanımdaki inşaata itiraz edebilir miyim?  ← 3194 m.8/b, 1 ay askı
+│   ├── İmar barışım var, binam güvenli mi?  ← 3194 gç. m.16, sorumluluk malikte
 │   └── Binam hangi deprem yönetmeliğine göre yapıldı?
 │
 ├── 🚨 DEPREM OLDU — İLK 30 GÜN
 │   ├── Hasar tespiti nasıl yapılır, sonucu nereden öğrenirim?
 │   ├── ⏰ Hasar tespitine itiraz — 30 GÜN
 │   ├── ⏰ DASK hasar ihbarı — 15 GÜN
+│   ├── Binamdan eşyamı alabilir miyim?  ← itiraz hakkıyla çatışma uyarısı
 │   ├── Enkaz altında yakınım var / kayıp — ölüm karinesi
 │   ├── Kiracıyım, evim hasarlı — kira ödemeye devam edecek miyim?
 │   └── İşyerim kapandı, ücretimi alabilir miyim?
 │
 ├── 📋 İLK 3 AY
 │   ├── ⏰ Hak sahipliği başvurusu — 2 AY
+│   │   └── Konut borçlandırması: 20-30 yıl, faizsiz
 │   ├── DASK ödemesi yetersiz geldi, ne yapabilirim?
+│   ├── Yakınımı kaybettim: hayat sigortası, SGK ölüm aylığı, BES
 │   ├── Devlet destekleri: kira yardımı, taşınma yardımı
-│   ├── Vergi ve borç ertelemesi
+│   ├── Vergi ve borç ertelemesi  ← "kalıcı hak değil" uyarısı
+│   ├── Öğrenciyim / askerlik / kamu görevlisiyim
 │   └── Miras ve nüfus işlemleri
 │
 ├── ⚖️ DAVA YOLLARI
@@ -688,6 +807,7 @@ Sitenin her sayfasında ve chatbot'un her cevabında bulunması gerekenler:
 
 ### V0 — Hackathon demosu
 - [ ] 🔴 Tüzel yapı kararı: dernek mi, baro ortaklığı mı? (Bölüm 1-2 — **kod yazmadan önce**)
+- [ ] 🔴 [`DOGRULAMA.md`](./DOGRULAMA.md) § A — 12 kritik maddenin resmî metinden doğrulanması (ağ erişimli ortamda, Mevzuat MCP ile)
 - [ ] Bilgi kütüphanesi: en kritik 15 konu, tam sayfa şablonuyla
 - [ ] **Test 2 — "Sigortam yeterli mi?"** (en yüksek etkili, tek ekranda gösterilebilir)
 - [ ] **Test 3 — süre hesaplayıcı ve kişisel takvim**
@@ -696,6 +816,7 @@ Sitenin her sayfasında ve chatbot'un her cevabında bulunması gerekenler:
 - [ ] Sorumluluk reddi ve yasal uyarı altyapısı
 
 ### V1 — Yayına hazır
+- [ ] [`DOGRULAMA.md`](./DOGRULAMA.md) § B, § D ve § E — önemli maddeler, parametrik değerler ve ek yönetmelikler
 - [ ] Kütüphanenin tüm konulara genişletilmesi (~60 sayfa)
 - [ ] Katı RAG chatbot + kaynak zorunluluğu + avukat onaylı test seti
 - [ ] 12 dilekçe şablonunun tamamı
@@ -744,7 +865,17 @@ Bir binanın "ağır hasarlı" kaydı, lojistik tarafında **çadır ve battaniy
 
 ## 21. Kaynaklar
 
-Bu doküman aşağıdaki kaynaklardan derlenmiştir. Resmî mevzuat siteleri ağ kısıtı nedeniyle doğrudan indirilemediğinden, **yayına geçmeden önce tüm madde metinleri mevzuat.gov.tr üzerinden birebir doğrulanmalıdır.**
+Bu doküman aşağıdaki kaynaklardan derlenmiştir. Resmî mevzuat siteleri ağ kısıtı nedeniyle doğrudan indirilemediğinden, **yayına geçmeden önce tüm madde metinleri mevzuat.gov.tr üzerinden birebir doğrulanmalıdır** — planı [`DOGRULAMA.md`](./DOGRULAMA.md) içindedir.
+
+**Mevzuat erişim altyapısı**
+- [saidsurucu/mevzuat-mcp — GitHub](https://github.com/saidsurucu/mevzuat-mcp) · PyPI: `mevzuat-mcp` 0.3.0 · repo yapılandırması: [`.mcp.json`](./.mcp.json)
+- [Zorunlu Deprem Sigortası Tarife ve Talimatı — mevzuat.gov.tr](https://mevzuat.gov.tr/mevzuat?MevzuatNo=23199&MevzuatTur=9&MevzuatTertip=5)
+- [Afet Sebebiyle Hak Sahibi Olanların Tespiti Hakkındaki Yönetmelik — mevzuat.gov.tr](https://www.mevzuat.gov.tr/anasayfa/MevzuatFihristDetayIframe?MevzuatTur=7&MevzuatNo=4905&MevzuatTertip=5)
+- [Sigortacılıkta Tahkime İlişkin Yönetmelik — mevzuat.gov.tr](https://mevzuat.gov.tr/anasayfa/MevzuatFihristDetayIframe?MevzuatTur=7&MevzuatNo=11514&MevzuatTertip=5)
+- [Türkiye Bina Deprem Yönetmeliği (TBDY 2018) — mevzuat.gov.tr](https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=24468&MevzuatTur=7&MevzuatTertip=5) · [Resmî Gazete 18.03.2018/30364 Mükerrer](https://www.resmigazete.gov.tr/eskiler/2018/03/20180318M1-2.htm) · [AFAD sayfası](https://www.afad.gov.tr/turkiye-bina-deprem-yonetmeligi) · [İMO duyurusu](https://www.imo.org.tr/TR,143081/turkiye-bina-deprem-yonetmeligi-yayinlandi.html)
+- [4708 sayılı Yapı Denetimi Hakkında Kanun — mevzuat.gov.tr](https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4708.pdf) · [TMMOB JMO metni](https://www.jmo.org.tr/mevzuat/mevzuat_detay.php?kod=23)
+- [7269 sayılı Kanun — mevzuat.gov.tr (PDF)](https://www.mevzuat.gov.tr/mevzuatmetin/1.3.7269.pdf)
+- [İmar Kanunu geçici m.16 (imar barışı) — ÇŞB](https://webdosya.csb.gov.tr/db/afyon/menu/3194-degisiklik-gecici-16_20180607081602.pdf) · [imarbarisi.csb.gov.tr — kanun maddesi](https://imarbarisi.csb.gov.tr/kanun-maddesi-i-86170)
 
 **Resmî kaynaklar (doğrulama için başvurulacak)**
 - [6305 Sayılı Afet Sigortaları Kanunu — mevzuat.gov.tr](https://www.mevzuat.gov.tr/MevzuatMetin/1.5.6305.pdf)
@@ -802,12 +933,35 @@ Bu doküman aşağıdaki kaynaklardan derlenmiştir. Resmî mevzuat siteleri ağ
 - [2026 DASK Prim ve Tarife Değişikliği — Sigortaladım](https://www.sigortaladim.com/2026-dask-prim-ve-tarife-degisikligi)
 - [Deprem Hasarı İhbarı ve Tazminat Ödeme Süreleri — Sigortaladım](https://www.sigortaladim.com/deprem-hasari-ihbari-ve-tazminat-odeme-sureleri)
 - [Kahramanmaraş Depremleri ve DASK'tan Bakiye Hasar Tazminatı — Örnek Karar](https://www.basgozehukuk.com/post/bakiye-deprem-hasar-tazminat%C4%B1)
+- [Zorunlu Deprem Sigortası 2026 tarifesinde artışa gidildi — Sigortacı Gazetesi](https://sigortacigazetesi.com.tr/zorunlu-deprem-sigortasi-2026-tarifesinde-artisa-gidildi/)
+- [ZDS azami teminat 1.272.000 TL'ye yükseltildi (2024) — AA](https://www.aa.com.tr/tr/ekonomi/zorunlu-deprem-sigortasi-azami-teminat-tutari-1-milyon-272-bin-tl-ye-yukseltildi/3094542) · [1.704.162 TL'ye yükseltildi (2025) — AA](https://www.aa.com.tr/tr/ekonomi/zorunlu-deprem-sigortasi-azami-teminat-tutari-1-milyon-704-bin-162-tlye-yukseltildi/3502584)
+- [TÜRMOB — ZDS Tarife ve Talimat Tebliğinde Değişiklik](https://www.turmob.org.tr/mevzuat/Pdf/19175)
+- [2026 Sigorta Tahkim Parasal Sınırları: İtiraz ve Temyiz Limitleri — Paksoy & Partners](https://www.paksoyandpartners.com/tr/post/2026-sigorta-tahkim-parasal-s%C4%B1n%C4%B1rlar%C4%B1-i%CC%87tiraz-ve-temyiz-limitleri) · [2026 Yılı Sigorta Tahkim Komisyonu: İtiraz ve Güncel Parasal Sınırlar — Mondaq](https://www.mondaq.com/turkey/insurance-laws-and-products/1753706/2026-yili-sigorta-tahkim-komisyonu-itiraz-ve-g%C3%BCncel-parasal-sinirlar) · [Sigorta Tahkim Komisyonu duyurusu](https://www.sigortatahkim.org/manset/57)
+- [BDDK depremzede borç esneklikleri — AA](https://www.aa.com.tr/tr/ekonomi/bddk-depremlerden-etkilenen-vatandaslarin-borclarina-yonelik-esnekliklerin-kapsamini-genisletti/2815148) · [BDDK Kararı: kredi ve kredi kartı düzenlemeleri — Alomaliye](https://www.alomaliye.com/2023/02/09/bddk-karari-depremden-etkilenen-illerdeki-kredi-ve-kredi-karti-duzenlemeleri/)
+- [Hak sahiplerinin borçlandırılması — Kahramanmaraş AFAD](https://kahramanmaras.afad.gov.tr/hak-sahipligi-kabul-edilen-noter-krakllariyla-kendilerine-konut-cikan-vatandaslarimizin-borclandirma-islemi) · [Kahramanmaraş Valiliği duyurusu](https://www.kahramanmaras.gov.tr/hak-sahiplerinin-borclandirilmasi-duyurusu)
+- [Hasarlı yapılardan eşya tahliyesine ilişkin genelge](https://haber.sol.org.tr/haber/hasarli-yapilardan-esya-tahliyesine-iliskin-genelge-366248) · [Ağır hasarlı binadan eşya alınır mı? — Hürriyet](https://www.hurriyet.com.tr/bilgi/galeri/agir-hasarli-binadan-esya-alinir-mi-deprem-bolgelerinde-esya-cikarma-islemi-nasil-olacak-izin-veriliyor-mu-iste-yapilan-aciklama-42223743)
+- [Hasar tespiti, yıkım kararı ve hasar derecesine karşı iptal davası — MG Hukuk](https://mehmetgorunmez.av.tr/afet-sonrasi-bina-hasar-tespiti-yikim-karari-ve-hasar-derecesi-tespiti-islemine-karsi-acilabilecek-iptal-davasi/)
+- [Deprem felaketine ilişkin BES, Hayat ve FKS ürünleri — SSS (Agesa)](https://www.agesa.com.tr/deprem-felaketine-iliskin-bes-hayat-ve-fks-urunleri-ile-ilgili-sik-sorulan-sorular) · [Hayat ve Ferdi Kaza Sigortası Genel Şartları](https://www.garantibbvaemeklilik.com.tr/content/dam/gewebsite/documents/pdf/hayat_sigortasi_genel_sartlar.pdf)
+- [Depremde Yakınlarını Kaybedenler Hangi SGK Yardımlarından Faydalanabilir?](https://www.isvesosyalguvenlik.com/depremde-yakinlarini-kaybedenler-hangi-sgk-yardimlarindan-faydalanabilirler/)
+- [Yapı Kayıt Belgesinin Sağladığı Yasallık — Av. İlker Hasan Duman](https://www.ilkerduman.av.tr/?d=1567) · [Sırf Yapı Kayıt Belgesine Sahip Olmak Ceza Sorumluluğunu Gündeme Getirir mi? — Ersan Şen](https://sen.av.tr/tr/makale/s%C4%B1rf-yapi-kayit-belgesine-sahip-olmak-ceza-sorumlulugunu-gundeme-getirir-mi)
+- [Sigortacılıkta Tahkime İlişkin Yönetmelik'te Değişiklik — Gün + Partners](https://gun.av.tr/tr/goruslerimiz/guncel-yazilar/sigortacilikta-tahkime-iliskin-yonetmelik-te-degisiklik-yapilmasina-dair-yonetmelik-yayimlandi)
+- [Depremzede öğrencilere burs ve yurt önceliği — Memurlar.net](https://www.memurlar.net/haber/1066240/depremzede-ogrencilere-yurtlarda-oncelik.html)
 
 ---
 
 ## Katkı
 
-Bu doküman tartışmaya açıktır ve **hukuki bir metin olduğu için farklı bir titizlik gerektirir.** İki kural önerisi:
+Bu doküman tartışmaya açıktır ve **hukuki bir metin olduğu için farklı bir titizlik gerektirir.** Üç kural önerisi:
 
 1. **Bölüm 1 ve 2 (Avukatlık Kanunu ve reklam yasağı) çözülmeden dilekçe ve chatbot modüllerine kod yazılmamalıdır.** Bunlar sonradan düzeltilemeyecek mimari kararlardır.
-2. **⚠️ işaretli hiçbir bilgi, resmî metinden birebir doğrulanmadan yayına alınmamalıdır.** Yanlış bir süre bilgisi, kullanıcının hakkını tamamen kaybetmesine yol açabilir — bu ürünün yaratabileceği en büyük zarardır.
+2. **⚠️ işaretli hiçbir bilgi, resmî metinden birebir doğrulanmadan yayına alınmamalıdır.** Yanlış bir süre bilgisi, kullanıcının hakkını tamamen kaybetmesine yol açabilir — bu ürünün yaratabileceği en büyük zarardır. Doğrulama planı: [`DOGRULAMA.md`](./DOGRULAMA.md).
+3. **Geçmiş afette uygulanan destekler, kalıcı hak gibi sunulmamalıdır.** BDDK borç ertelemesi, AFAD kira/taşınma yardımı tutarları ve öğrenci destekleri 2023'e özgü uygulamalardır. Kullanıcıya var olmayan bir hak vaat etmek, hiç bilgi vermemekten daha zararlıdır.
+
+### Dosya haritası
+
+| Dosya | İçerik |
+|---|---|
+| [`PROJE.md`](./PROJE.md) | Afet lojistik koordinasyon sistemi — arz/talep eşleştirme motoru |
+| `PROJE-LEGAL.md` | Bu dosya — hukuki altyapı ve bilgilendirme platformu tasarımı |
+| [`DOGRULAMA.md`](./DOGRULAMA.md) | 34 kalemlik mevzuat doğrulama görev listesi |
+| [`.mcp.json`](./.mcp.json) | Mevzuat MCP yapılandırması (ağ erişimli ortamda otomatik yüklenir) |
