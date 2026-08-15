@@ -5,6 +5,7 @@
   "sira": 3,
   "baslik": "Bu platform kimden, ne kadar para alıyor?",
   "ozet": "Bugün hiç kimseden hiçbir ödeme alınmıyor. Hedeflenen model, aracılığı lisanslı bir tarafın yaptığı ve gelirin tamamının bağışlandığı bir yapıdır — ama bu model henüz kurulmadı.",
+  "seoAciklama": "Bugün hiç kimseden ödeme alınmıyor. Hedeflenen model, lisanslı bir aracının komisyonun tamamını bağışladığı bir yapı — ama henüz kurulmadı.",
   "anahtar": ["gelir modeli", "bağış", "komisyon", "şeffaflık", "kimden para alıyorsunuz", "aracılık"]
 }
 ---
@@ -12,7 +13,9 @@
 Kısa cevap: **hiç kimseden, hiçbir ödeme almıyoruz.** Reklam yok, sponsor yok, sigorta
 şirketiyle anlaşma yok, kullanıcıdan ücret yok.
 
-:::guvence Bugünkü durum
+## Bugünkü durum
+
+:::guvence
 Bu sayfadaki hiçbir şirket adı gerçek değildir. Sitede hiçbir sigorta şirketine giden
 bağlantı, form veya yönlendirme yoktur. Poliçe almak isteyen kullanıcı, şirketini
 kendisi seçer ve bizimle hiçbir teması olmaz.

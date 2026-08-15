@@ -3,7 +3,7 @@
   "ad": "Mahremiyet",
   "sira": 3,
   "baslik": "Verileriniz cihazınızdan çıkmıyor",
-  "ozet": "Sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok. Bu bir politika tercihi değil, mimari bir karardır.",
+  "ozet": "Sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok. Girdiğiniz tarih ve kimlik bilgisi cihazınızdan çıkmaz; bu bir politika değil mimari karardır.",
   "anahtar": [
     "mahremiyet",
     "veri",
@@ -27,6 +27,7 @@ T.C. kimlik numarası ve adres bilgisi yalnızca tarayıcınızın kendi yerel d
 Bu, "verilerinizi korumaya söz veriyoruz" demek değildir. Verilerinizi **teknik olarak
 alamayacak** şekilde kurulmuş olmak demektir.
 
+:tablo Yaygın uygulamalar ile bu platformun karşılaştırması
 | Yaygın uygulama | Bizde |
 |---|---|
 | Kullanıcı hesabı, e-posta ile giriş | Yok |

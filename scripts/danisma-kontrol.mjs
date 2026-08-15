@@ -27,7 +27,7 @@ const SORULAR = [
   ["verilerim saklanıyor mu", "mahremiyet"],
   ["eksik sigorta nedir", "sigorta"],
   ["neden poliçe gerekli", "police"],
-  ["dask yeterli mi", "police"],
+  ["dask yeterli mi", "dask-yeterli-mi"],
   ["kimden para alıyorsunuz", "model"],
   ["alternatif konaklama teminatı", "police"],
 ];

@@ -298,7 +298,11 @@ export function danismaBaslat() {
     d.addEventListener("click", ac);
   }
 
-  document.body.append(acDugme, pencere);
+  /* acDugme artık hiçbir yere basılmıyor — AI Sohbet tek görünür
+     giriş noktası oldu (bkz. ai-sohbet.js). Değişkeni yine de
+     oluşturuyoruz çünkü ac()/kapa() ona referans veriyor; kolayca
+     geri getirilebilsin diye kaldırılmadı, sadece DOM'a eklenmiyor. */
+  document.body.append(pencere);
 
   /* Sayfalar arasında gezerken pencere açık kalsın */
   if (oku("danisma-acik", false)) ac();

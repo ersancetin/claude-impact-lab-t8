@@ -19,6 +19,7 @@ Kaynak içerik `icerik/` ve `kaynak/` altındadır; yayına giden statik site
 
 ```bash
 python3 scripts/site-uret.py       # docs/ klasörünü üretir
+python3 scripts/seo-kontrol.py     # SEO + erişilebilirlik denetimi (55 sayfa)
 python3 scripts/bag-kontrol.py     # iç bağlantıları denetler
 python3 scripts/veri-uret.py       # parametreler.json -> veri-parametre.js
 python3 scripts/kontrast.py        # renk kontrastlarını ölçer
@@ -34,14 +35,18 @@ cd docs && python3 -m http.server 8899   # http://localhost:8899
 ### Yapı
 
 ```
-icerik/site.json          kurum bilgisi, gezinme, 9 konu başlığı
+icerik/site.json          kurum bilgisi, gezinme, 10 konu başlığı
 icerik/police/*.md        "Neden poliçe?" bölümü
 data/ikon.json            ikon sözlüğü (tek kaynak; ikon.js buradan üretilir)
 icerik/rehber/*.md        Bilgi Merkezi rehberleri (JSON künye + markdown)
 icerik/kurumsal/*.md      kurumsal sayfalar
 kaynak/modul/*.html       etkileşimli araç sayfaları (JSON künye + HTML gövde)
 scripts/site-uret.py      üreteç: şablon, mega menü, SEO, JSON-LD, sitemap
+scripts/sekiller.py       rehber başına SVG şema tanımı (slug → şema)
+scripts/gorseller.py      şema çizen SVG kütüphanesi (5 tip)
+scripts/foto-indir.py     rehber açılış fotoğraflarını Pexels'ten indirir
 docs/                     üretilen site (yayına giden klasör)
+docs/assets/gorsel/       rehber fotoğrafları (indirilmiş; kucuk/ = kart görselleri)
 docs/assets/*.css,*.js    elle bakılan varlıklar — üreteç bunları silmez
 docs/assets/bilgi-tabani.js  ÜRETİLİR: danışmanın aradığı künye dizini
 docs/assets/veri-parametre.js ÜRETİLİR: parametreler.json'un JS karşılığı
@@ -54,33 +59,53 @@ Yeni bir rehber eklemek için `icerik/rehber/` altına tek bir dosya yazmak yete
 gezinme, kategori sayfası, ilgili içerik bağları, site haritası ve yapılandırılmış veri
 yeniden üretimde kendiliğinden güncellenir.
 
+Parasal değerler metne yazılmaz: rehber gövdesinde `{{dask.azamiTeminat}}` gibi yer
+tutucular kullanılır, değer üretim anında `data/parametreler.json`'dan gelir.
+
 ### Bölümler
 
 | Bölüm | İş |
 |---|---|
 | **Neden poliçe?** | DASK'ın kapsamı, teminat bazında karşılaştırma, şeffaflık ve gelir modeli |
 | **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama, Dosya kodu · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı ve tazminat hesabı |
-| **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
+| **Bilgi Merkezi** | 10 konu başlığı altında 33 kanuni dayanaklı rehber; her rehberde açılış fotoğrafı ve bir şema |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
-| **Danışma** | Her sayfada, sağ altta. Soruyu sitedeki doğrulanmış içerikle eşleştirir |
+| **AI Sohbet** | Üst barda (masaüstü) ve her sayfada sağ altta. Sorunuzu yapay zekâ ile sitede arar, ilgili sayfaya yönlendirir |
 
-### Danışma penceresi
+### Danışma arama motoru (dahili)
 
-Sitede **hesap ve giriş yoktur**; bunun yerine her sayfada bir soru penceresi vardır.
-Bu pencere bir dil modeli değildir: soruyu `icerik/` ve `data/parametreler.json`'dan
-üretilen künye dizininde arar, ilgili rehbere/araca yönlendirir ve o kaydın
-**doğrulama rozetini** gösterir. Eşleşme bulamazsa uydurmaz, "bulamadım" der.
-
-Böyle olmasının nedeni mahremiyet taahhüdüdür: soruyu bir API'ye göndermek,
-kullanıcının hukuki durumunu üçüncü bir tarafa aktarmak olurdu. Ayrıntı:
-[`TASARIM.md`](./TASARIM.md) Bölüm 10.
+Sitenin altında, hiçbir dış isteğe çıkmayan bir yerel arama motoru vardır
+(`danisma.js` → `ara()`): soruyu `icerik/` ve `data/parametreler.json`'dan
+üretilen künye dizininde (`bilgi-tabani.js`) arar, ilgili rehbere/araca
+eşler ve o kaydın **doğrulama rozetini** taşır. Bu motorun kendi açma
+düğmesi artık arayüzde yok — tek görünür sohbet girişi AI Sohbet'tir — ama
+altyapı olarak AI Sohbet'in yönlendirme katmanını besler (aşağıya bakınız).
 
 Her rehber iki etiketle işaretlenir: **kalıcı mevzuat mı, geçmiş uygulama mı** ve
 bilginin **doğrulama düzeyi**. Bu ayrım, kullanıcıya olmayan bir hakkın vaat
 edilmemesi için vardır.
 
-**Mahremiyet:** sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok.
-Girilen hiçbir bilgi — danışmaya sorulan soru dâhil — cihazdan çıkmaz.
+### AI Sohbet penceresi
+
+Sitenin tek görünür sohbet girişi. Sorunuz bir yapay zekâ servisine
+(DeepSeek) gönderilir; bu yüzden **mahremiyet taahhüdü bu pencere için
+geçerli değildir** — kullanıcıya panel içinde bu açıkça belirtilir (sağlayıcı
+adı kullanıcıya gösterilmez, sadece "yapay zekâ servisi" denir). Yönlendirme
+yine de güvenilirdir: modele verilecek bağlam, yukarıdaki yerel arama
+(`danisma.js` → `ara()`) ile `bilgi-tabani.js` künye dizininden seçilir;
+kullanıcıya gösterilen "İlgili sayfalar" bağlantıları modelin ürettiği
+metne değil, doğrudan bu aramaya dayanır.
+
+`docs/assets/ai-yapilandirma.js` içindeki `apiAnahtar` alanı repoda **boş**
+tutulur ve commit edilmez; gerçek anahtar yalnızca yayın derlemesinde,
+`DEEPSEEK_API_KEY` adlı bir GitHub Actions secret'ından enjekte edilir (bkz.
+aşağıdaki "GitHub Pages'i açma" bölümü). Anahtar tanımlı değilse pencere
+çökmez, "yapılandırılmamış" mesajı gösterir.
+
+> ⚠️ **Statik site backend'siz olduğu için anahtar yine de yayınlanan
+> sayfanın kaynağında herkese açık olur.** Bu bilinçli bir demo/hackathon
+> kararıdır — düşük harcama limitli bir anahtar kullanın. Kalıcı/üretim
+> kullanımı için anahtarı gizleyen bir proxy (ör. Cloudflare Worker) şarttır.
 
 ---
 
@@ -200,3 +225,16 @@ listesine eklenmelidir.
 
 **Alternatif (iş akışı olmadan):** Settings → Pages → Source: *Deploy from a
 branch* → dal `main`, klasör `/docs`.
+
+### AI Sohbet için DeepSeek anahtarı (isteğe bağlı)
+
+AI Sohbet penceresinin çalışması için depoya bir secret eklenmelidir:
+
+1. Depo → **Settings → Secrets and variables → Actions → New repository secret**
+2. İsim: `DEEPSEEK_API_KEY`, değer: DeepSeek API anahtarınız
+3. Bir sonraki "GitHub Pages" iş akışı çalıştığında anahtar otomatik olarak
+   `docs/assets/ai-yapilandirma.js` içine gömülür (yalnızca yayın derlemesinde,
+   repoya geri commit edilmez — bkz. yukarıdaki "AI Sohbet penceresi" bölümü).
+
+Secret tanımlı değilse iş akışı yine sorunsuz çalışır; AI Sohbet o zaman
+"yapılandırılmamış" demo moduyla açılır.

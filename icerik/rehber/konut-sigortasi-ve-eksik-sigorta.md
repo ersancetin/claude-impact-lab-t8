@@ -3,7 +3,7 @@
   "kategori": "konut-sigorta",
   "sira": 2,
   "baslik": "Konut sigortası ve eksik sigorta tuzağı",
-  "seoBaslik": "Konut sigortası: DASK'ın bıraktığı boşluk ve eksik sigorta tuzağı",
+  "seoBaslik": "Konut sigortası ve eksik sigorta tuzağı",
   "ozet": "DASK'ın karşılamadığı eşya, konaklama ve kira kaybı ihtiyari konut sigortasıyla kapatılır. Ancak sigorta bedeli gerçek değerin altındaysa, tam hasarda bile eksik ödeme yapılır.",
   "seoAciklama": "İhtiyari konut sigortası neyi kapsar? Eksik sigorta (sub-insurance) nedir, oransal ödeme nasıl hesaplanır? Ferdi kaza poliçesinde deprem istisnası.",
   "nitelik": "kalici",
@@ -50,8 +50,9 @@
   ],
   "ilgili": [
     "dask-neyi-karsilar",
-    "sigortaciya-yazili-basvuru",
-    "olum-halinde-sigorta-ve-sgk"
+    "dask-yeterli-mi",
+    "kiraci-deprem-haklari",
+    "olum-karinesi-ve-miras"
   ],
   "anahtar": [
     "konut sigortası",
@@ -73,6 +74,7 @@ anlatılmayan bir tuzağı vardır.
 İhtiyari konut poliçesi, şirkete ve seçilen teminatlara göre değişmekle birlikte tipik
 olarak şunları kapsayabilir:
 
+:tablo DASK ile ihtiyari konut sigortasının teminat karşılaştırması
 | Teminat | DASK'ta | Konut sigortasında |
 |---|---|---|
 | Bina (azami teminata kadar) | Var | Var, sınır poliçeye göre |
@@ -129,4 +131,4 @@ olmadığı için bina hasarından pay alamaz, ancak **kendi eşyası için** si
 Türkiye'de kiracılar arasında eşya sigortasının yaygınlığı çok düşüktür ve bu, kiracının
 afet sonrası tamamen açıkta kalmasının başlıca nedenlerinden biridir.
 
-Ayrıntı: [Kiracının hakları](kiracinin-haklari.html).
+Ayrıntı: [Kiracının deprem hakları](kiraci-deprem-haklari.html).

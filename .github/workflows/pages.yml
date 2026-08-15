@@ -25,6 +25,30 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # AI Sohbet (DeepSeek) anahtarini SADECE bu calistiricinin
+      # gecici kopyasina gomer, repoya asla geri yazilmaz. Secret
+      # tanimli degilse dosya bos anahtarla kalir ve AI Sohbet
+      # widget'i "yapilandirilmamis" mesaji gosterir (crash etmez).
+      #
+      # GUVENLIK NOTU: site tamamen statik oldugu icin anahtar yine
+      # de yayinlanan sayfanin kaynaginda herkese acik olur. Bu
+      # bilinen ve kabul edilen bir demo/hackathon riskidir; dusuk
+      # harcama limitli bir anahtar kullanin. Kalici kullanim icin
+      # anahtari gizleyen bir proxy (ör. Cloudflare Worker) gerekir.
+      - name: DeepSeek anahtarini goem (yalnizca yayin derlemesi)
+        if: ${{ secrets.DEEPSEEK_API_KEY != '' }}
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, pathlib
+          yol = pathlib.Path("docs/assets/ai-yapilandirma.js")
+          metin = yol.read_text(encoding="utf-8")
+          anahtar = os.environ["DEEPSEEK_API_KEY"]
+          metin = metin.replace('apiAnahtar: "",', f'apiAnahtar: "{anahtar}",')
+          yol.write_text(metin, encoding="utf-8")
+          PY
+
       # Pages bu depoda acildi (Settings > Pages > Source: GitHub Actions).
       # enablement kaldirildi: Actions token'i Pages sitesini OLUSTURAMIYOR
       # ("Resource not accessible by integration"), yalnizca mevcut siteye
