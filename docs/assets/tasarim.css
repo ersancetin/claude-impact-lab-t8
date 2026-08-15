@@ -1,66 +1,80 @@
 /* ============================================================
    DEPREM HAKLARIM — KURUMSAL TASARIM SİSTEMİ
-   Sürüm 2 · Kurumsal sivil toplum kimliği
+   Sürüm 3 · Kırmızı kurumsal kimlik + katmanlı gezinme
 
-   Palet gerekçesi (TASARIM.md Bölüm 4):
-   - Çini lacivert  : İznik çinisinin kobalt mavisi. Türk kamu ve
-                      sigorta kurumlarının kurumsal dili bu ailededir.
-   - İznik türkuazı : 16. yy'da çini paletine giren bakır-turkuaz.
-                      "Türkuaz" sözcüğü zaten "Türk taşı" demektir.
-   - Kökboya kırmızısı: Osmanlı'nın "Turkey red" kökboya kırmızısı.
-   - Bayrak kırmızısı #E30A17 yalnızca marka işaretinde kullanılır;
-     durum rengi olarak ASLA kullanılmaz (tehlikeyle karışmasın).
+   RENK MİMARİSİ — tek kural:
+     Marka kırmızısı SADECE kabukta (üst şerit, başlık bandı,
+     birincil eylem). İçerik gövdesinde asla durum rengi değildir.
+     Tehlike ayrı bir kırmızıdır (koyu kökboya) ve YANINDA her zaman
+     renge bağlı olmayan bir işaret taşır (kalın çubuk + versal etiket).
+     Böylece "marka kırmızısı" ile "süren doldu kırmızısı" karışmaz;
+     renk körlüğünde de ayırt edilir (WCAG 1.4.1).
 
-   Kurallar: keskin köşe, gölge yok, gradyan yok, web fontu yok,
-   dış istek yok, tek CSS dosyası.
+   Kurallar: web fontu yok, dış istek yok, gradyan yok, tek CSS dosyası.
+   Gölge yalnızca ÜSTE BİNEN katmanlarda (mega menü, danışma penceresi) —
+   bunlar sayfadan kopmak zorunda olduğu için tek istisna budur.
    ============================================================ */
 
 /* --- 1. Jetonlar: açık tema (varsayılan) ------------------- */
 :root {
-  --kagit:        #F2F4F7;
+  --kagit:        #F4F5F7;
   --yuzey:        #FFFFFF;
-  --yuzey-alt:    #E9EDF2;
-  --yuzey-koyu:   #0B2545;
+  --yuzey-alt:    #EBEEF2;
+  --yuzey-koyu:   #151A21;
 
-  --murekkep:     #10161C;
-  --murekkep-2:   #46525F;
-  --murekkep-3:   #5A6774;
-  --cizgi:        #D2D9E2;
-  --cizgi-koyu:   #AEB9C6;
+  --murekkep:     #12171D;
+  --murekkep-2:   #454F5B;
+  --murekkep-3:   #5C6773;
+  --cizgi:        #D7DCE3;
+  --cizgi-koyu:   #B0B9C4;
 
-  /* Kurumsal ana renk — çini laciverdi */
-  --vurgu:        #0E3A6B;
-  --vurgu-koyu:   #092A50;
-  --vurgu-acik:   #1D5A9E;
-  --vurgu-zemin:  #E4EAF3;
+  /* MARKA — kurumsal kırmızı, İKİ AYRI İŞ:
+     --marka       : açık yüzey ÜSTÜNDE okunan vurgu rengi (yazı, çizgi).
+                     Koyu temada açılır, yoksa okunmaz.
+     --marka-bant  : kırmızı KABUK ZEMİNİ (üst bant, düğme, danışma başlığı).
+                     Her iki temada da koyu kalır — üstündeki yazı beyazdır.
+     Bu ikisi ayrılmazsa koyu temada bant açık pembeye döner ve
+     üzerindeki beyaz yazı okunmaz hâle gelir. */
+  --marka:        #C8102E;
+  --marka-bant:   #C8102E;
+  --marka-bant-2: #A00C24;
+  --marka-zemin:  #FCE9EC;
+  --bant-yazi:    #FFFFFF;   /* kırmızı bant üzerindeki yazı */
+  --serit-yazi:   #FBDDE1;   /* koyu kırmızı şeritte okunan yazı */
 
-  /* İznik türkuazı — ikincil kurumsal renk, "güvence" anlamı */
+  /* YAPI — lacivert. Bağlantı, kart çubuğu, bölüm ayracı. */
+  --vurgu:        #14395F;
+  --vurgu-koyu:   #0D2743;
+  --vurgu-zemin:  #E7EDF4;
+
+  /* GÜVENCE — kalıcı hak, teminat altında */
   --turkuaz:      #0A6E6B;
   --turkuaz-zemin:#E0EFEE;
 
-  /* Kökboya kırmızısı — tehlike */
-  --tehlike:      #A32014;
-  --tehlike-zemin:#FAE7E4;
+  /* TEHLİKE — süre doldu, açıkta kalan tutar. Markadan KOYU. */
+  --tehlike:      #8E1B12;
+  --tehlike-zemin:#FBE8E5;
 
   --uyari:        #855100;
   --uyari-zemin:  #FBF0DC;
   --bilgi:        #1B4E7A;
   --bilgi-zemin:  #E5EEF6;
 
-  /* Marka işareti — yalnızca logoda */
-  --bayrak:       #E30A17;
-
   --olcek:        4px;
   --sinir:        1px solid var(--cizgi);
-  --dokun:        56px;              /* asgari dokunma hedefi */
-  --genislik:     44rem;             /* okuma ölçüsü */
-  --genislik-genis: 74rem;           /* kurumsal yerleşim */
+  --dokun:        56px;
+  --genislik:     44rem;
+  --genislik-genis: 76rem;
+
+  /* Yumuşatma yalnızca etkileşimli ögede: düğme, alan, rozet.
+     Kart ve panel keskin kalır — kurumsal duruşu bu taşıyor. */
+  --yuvarlak:     3px;
+  --katman:       0 6px 28px rgba(10, 15, 22, .16), 0 1px 0 var(--cizgi);
 
   --f-metin: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
              "Helvetica Neue", Arial, sans-serif;
   --f-mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
              "Liberation Mono", monospace;
-  --dugme-yazi:   #FFFFFF;
 
   color-scheme: light;
 }
@@ -68,56 +82,64 @@
 /* --- 2. Jetonlar: koyu tema -------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="acik"]) {
-    --kagit:        #0B0F14;
-    --yuzey:        #141A21;
-    --yuzey-alt:    #1C242D;
-    --yuzey-koyu:   #060D17;
-    --murekkep:     #E6ECF2;
-    --murekkep-2:   #A0AEBC;
-    --murekkep-3:   #8593A2;
-    --cizgi:        #263039;
-    --cizgi-koyu:   #38444F;
-    --vurgu:        #7FAEE6;
-    --vurgu-koyu:   #A8C8F0;
-    --vurgu-acik:   #A8C8F0;
+    --kagit:        #0C1015;
+    --yuzey:        #151B22;
+    --yuzey-alt:    #1E262F;
+    --yuzey-koyu:   #080B0F;
+    --murekkep:     #E7EDF3;
+    --murekkep-2:   #A5B2BF;
+    --murekkep-3:   #8B98A6;
+    --cizgi:        #28323C;
+    --cizgi-koyu:   #3B4753;
+    --marka:        #FF8A99;
+    --marka-bant:   #8E0C20;
+    --marka-bant-2: #6D0918;
+    --marka-zemin:  #2B1116;
+    --bant-yazi:    #FFFFFF;
+    --serit-yazi:   #F6D2D8;
+    --vurgu:        #82B0E6;
+    --vurgu-koyu:   #AACAF0;
     --vurgu-zemin:  #101E2E;
     --turkuaz:      #4FC2BE;
     --turkuaz-zemin:#0C2626;
-    --tehlike:      #F09088;
-    --tehlike-zemin:#2C1512;
+    --tehlike:      #F5948A;
+    --tehlike-zemin:#2E1512;
     --uyari:        #E0A85E;
     --uyari-zemin:  #2C2314;
     --bilgi:        #8CBBE4;
     --bilgi-zemin:  #12212E;
-    --bayrak:       #FF6A63;
-    --dugme-yazi:   #06121F;
+    --katman:       0 6px 28px rgba(0, 0, 0, .55), 0 1px 0 var(--cizgi);
     color-scheme: dark;
   }
 }
 :root[data-tema="koyu"] {
-  --kagit:        #0B0F14;
-  --yuzey:        #141A21;
-  --yuzey-alt:    #1C242D;
-  --yuzey-koyu:   #060D17;
-  --murekkep:     #E6ECF2;
-  --murekkep-2:   #A0AEBC;
-  --murekkep-3:   #8593A2;
-  --cizgi:        #263039;
-  --cizgi-koyu:   #38444F;
-  --vurgu:        #7FAEE6;
-  --vurgu-koyu:   #A8C8F0;
-  --vurgu-acik:   #A8C8F0;
+  --kagit:        #0C1015;
+  --yuzey:        #151B22;
+  --yuzey-alt:    #1E262F;
+  --yuzey-koyu:   #080B0F;
+  --murekkep:     #E7EDF3;
+  --murekkep-2:   #A5B2BF;
+  --murekkep-3:   #8B98A6;
+  --cizgi:        #28323C;
+  --cizgi-koyu:   #3B4753;
+  --marka:        #FF8A99;
+  --marka-bant:   #8E0C20;
+  --marka-bant-2: #6D0918;
+  --marka-zemin:  #2B1116;
+  --bant-yazi:    #FFFFFF;
+  --serit-yazi:   #F6D2D8;
+  --vurgu:        #82B0E6;
+  --vurgu-koyu:   #AACAF0;
   --vurgu-zemin:  #101E2E;
   --turkuaz:      #4FC2BE;
   --turkuaz-zemin:#0C2626;
-  --tehlike:      #F09088;
-  --tehlike-zemin:#2C1512;
+  --tehlike:      #F5948A;
+  --tehlike-zemin:#2E1512;
   --uyari:        #E0A85E;
   --uyari-zemin:  #2C2314;
   --bilgi:        #8CBBE4;
   --bilgi-zemin:  #12212E;
-  --bayrak:       #FF6A63;
-  --dugme-yazi:   #06121F;
+  --katman:       0 6px 28px rgba(0, 0, 0, .55), 0 1px 0 var(--cizgi);
   color-scheme: dark;
 }
 
@@ -165,20 +187,23 @@ body > main { flex: 1; }
   position: absolute; left: -9999px;
   background: var(--vurgu); color: #fff;
   padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
-  z-index: 100;
+  z-index: 200;
 }
 .atla:focus { left: calc(var(--olcek)*2); top: calc(var(--olcek)*2); }
 
 main { padding: calc(var(--olcek)*8) 0 calc(var(--olcek)*12); }
+/* Kahraman sayfanın ilk bölümüyse kabuğa yapışır: aradaki
+   gri şerit, main'in üst boşluğunun sızmasıydı. */
+main > .kahraman:first-child { margin-top: calc(var(--olcek)*-8); }
 
-/* --- 5. Kurumsal üst bar ---------------------------------- */
-/* Üstte ince kurum şeridi, altında marka + gezinme.
-   Kurumsal siteleri kurumsal yapan şey bu iki katmandır. */
+/* ============================================================
+   5. KABUK — kurum şeridi + kırmızı başlık bandı
+   Kurumsal siteyi kurumsal yapan iki katman budur.
+   ============================================================ */
 .kurum-serit {
-  background: var(--yuzey-koyu);
-  color: #C9D6E6;
+  background: var(--marka-bant-2);
+  color: var(--serit-yazi);
   font-size: .78rem;
-  border-bottom: 3px solid var(--vurgu);
 }
 .kurum-serit .kap-genis {
   display: flex; align-items: center; gap: calc(var(--olcek)*4);
@@ -186,93 +211,164 @@ main { padding: calc(var(--olcek)*8) 0 calc(var(--olcek)*12); }
 }
 .kurum-serit b { color: #fff; font-weight: 600; }
 .kurum-serit .bosluk { flex: 1; }
-.kurum-serit a { color: #C9D6E6; }
+.kurum-serit a { color: var(--serit-yazi); }
 .kurum-serit .tema-dugme {
-  background: none; border: 1px solid #34557F; color: #C9D6E6;
+  background: none; border: 1px solid rgba(255,255,255,.38);
+  color: var(--serit-yazi); border-radius: var(--yuvarlak);
   font: inherit; font-size: .74rem; cursor: pointer;
   padding: 2px calc(var(--olcek)*2); min-height: 26px;
 }
-.kurum-serit .tema-dugme:hover { border-color: #7FAEE6; color: #fff; }
+.kurum-serit .tema-dugme:hover { border-color: #fff; color: #fff; }
 
+/* Ana bant — tam kırmızı. Marka + gezinme + danışma çağrısı. */
 .ust {
-  background: var(--yuzey);
-  border-bottom: var(--sinir);
-  position: sticky; top: 0; z-index: 50;
+  background: var(--marka-bant);
+  position: sticky; top: 0; z-index: 90;
 }
 .ust-ic {
   max-width: var(--genislik-genis);
   margin: 0 auto;
-  padding: calc(var(--olcek)*3) calc(var(--olcek)*5);
-  display: flex; align-items: center; gap: calc(var(--olcek)*4);
+  padding: 0 calc(var(--olcek)*5);
+  display: flex; align-items: stretch; gap: calc(var(--olcek)*2);
+  min-height: 68px;
 }
 
-/* Marka: ad + kurumsal alt satır. Logo yok, tipografik kimlik. */
+/* Marka: beyaz kart içinde tipografik işaret — logosuz kurumsal çözüm */
 .marka {
   display: flex; align-items: center; gap: calc(var(--olcek)*3);
-  text-decoration: none; color: var(--murekkep); flex: none;
+  text-decoration: none; color: #fff; flex: none;
+  padding: calc(var(--olcek)*2) 0;
 }
 .marka-isaret {
-  width: 34px; height: 34px; flex: none;
-  border: 2px solid var(--vurgu);
+  width: 42px; height: 42px; flex: none;
+  background: #fff; color: var(--marka-bant);
   display: grid; place-items: center;
-  font-family: var(--f-mono); font-weight: 700; font-size: .95rem;
-  color: var(--vurgu);
-  position: relative;
-}
-/* Bayrak kırmızısı yalnızca burada: marka işaretinin köşe çentiği */
-.marka-isaret::after {
-  content: ""; position: absolute; top: -2px; right: -2px;
-  width: 8px; height: 8px; background: var(--bayrak);
+  font-family: var(--f-mono); font-weight: 700; font-size: 1.05rem;
+  letter-spacing: -.02em;
 }
 .marka-ad { display: flex; flex-direction: column; line-height: 1.15; }
-.marka-ad b { font-size: 1.02rem; font-weight: 700; letter-spacing: -.02em; }
+.marka-ad b { font-size: 1.06rem; font-weight: 700; letter-spacing: -.02em; color: #fff; }
 .marka-ad span {
   font-family: var(--f-mono); font-size: .62rem; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--murekkep-3);
+  text-transform: uppercase; color: var(--serit-yazi);
 }
 .ust .bosluk { flex: 1; }
 
-/* Ana gezinme */
-.gezinme { display: none; gap: calc(var(--olcek)*1); align-items: center; }
-@media (min-width: 62rem) { .gezinme { display: flex; } }
-.gezinme a {
-  color: var(--murekkep-2); text-decoration: none;
-  font-size: .93rem; font-weight: 600;
-  padding: calc(var(--olcek)*2) calc(var(--olcek)*3);
-  border-bottom: 3px solid transparent;
+/* ---- Mega gezinme (masaüstü) -------------------------------
+   JS yok. Açılış :hover ve :focus-within ile — klavyeyle sekme
+   tuşuna basıldığında da panel açılır. */
+.gezinme { display: none; }
+@media (min-width: 64rem) { .gezinme { display: flex; align-items: stretch; } }
+.gezinme > .oge { position: relative; display: flex; align-items: stretch; }
+
+.gezinme .bas {
+  display: inline-flex; align-items: center; gap: calc(var(--olcek)*2);
+  color: #fff; text-decoration: none;
+  font-size: .95rem; font-weight: 600;
+  padding: 0 calc(var(--olcek)*4);
+  background: none; border: 0; border-bottom: 4px solid transparent;
+  font-family: inherit; cursor: pointer;
 }
-.gezinme a:hover { color: var(--vurgu); border-bottom-color: var(--cizgi-koyu); }
-.gezinme a[aria-current="page"], .gezinme a.aktif {
-  color: var(--vurgu); border-bottom-color: var(--vurgu);
+.gezinme .bas::after {
+  content: ""; width: 0; height: 0; flex: none;
+  border: 4px solid transparent; border-top-color: currentColor;
+  margin-top: 3px; opacity: .8;
+}
+.gezinme .bas.duz::after { display: none; }
+.gezinme .oge:hover .bas,
+.gezinme .oge:focus-within .bas,
+.gezinme .bas[aria-current="page"] {
+  background: var(--marka-bant-2); border-bottom-color: #fff;
 }
 
-/* Mobil gezinme — JS yok, <details> ile */
-.gezinme-mobil { margin-left: auto; }
-@media (min-width: 62rem) { .gezinme-mobil { display: none; } }
+.mega {
+  position: absolute; top: 100%; left: 0;
+  /* İçeriğe göre genişler: minmax(0, …) sütunları sıfıra kadar
+     ezip açıklamaları dikey şeride çeviriyordu. Sütunlar sabit
+     genişlikte, panel max-content. */
+  width: max-content; max-width: min(56rem, 94vw);
+  padding: calc(var(--olcek)*6);
+  background: var(--yuzey); border-top: 4px solid var(--marka);
+  box-shadow: var(--katman);
+  display: none; z-index: 95;
+}
+.gezinme .oge:hover .mega,
+.gezinme .oge:focus-within .mega { display: block; }
+.mega.sag { left: auto; right: 0; }
+.mega-izgara { display: grid; gap: calc(var(--olcek)*6); }
+.mega-izgara.iki { grid-template-columns: repeat(2, 15.5rem); }
+.mega-izgara.uc  { grid-template-columns: repeat(3, 15.5rem); }
+.mega h3 {
+  font-family: var(--f-mono); font-size: .68rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  margin: 0 0 calc(var(--olcek)*3); font-weight: 600;
+  padding-bottom: calc(var(--olcek)*2); border-bottom: var(--sinir);
+}
+.mega ul { list-style: none; margin: 0; padding: 0; }
+.mega li { margin-bottom: calc(var(--olcek)*1); }
+.mega li > a {
+  display: block; text-decoration: none; color: var(--murekkep);
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*2);
+  border-left: 3px solid transparent; margin-left: -3px;
+  border-radius: var(--yuvarlak);
+}
+.mega li > a:hover, .mega li > a:focus-visible {
+  background: var(--marka-zemin); border-left-color: var(--marka); color: var(--murekkep);
+}
+.mega li > a b { display: block; font-size: .95rem; font-weight: 650; }
+.mega li > a span { display: block; font-size: .82rem; color: var(--murekkep-2); line-height: 1.45; }
+.mega-alt {
+  margin-top: calc(var(--olcek)*5); padding-top: calc(var(--olcek)*4);
+  border-top: var(--sinir); display: flex; gap: calc(var(--olcek)*4);
+  align-items: center; flex-wrap: wrap; font-size: .86rem;
+}
+.mega-alt a { font-weight: 650; }
+
+/* Danışma çağrısı — kabuğun sağ ucunda, beyaz kutu */
+.ust-danisma {
+  display: none; align-self: center; flex: none;
+  background: #fff; color: var(--marka-bant);
+  border: 0; border-radius: var(--yuvarlak);
+  font: inherit; font-size: .92rem; font-weight: 700;
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*4);
+  min-height: 42px; cursor: pointer;
+  align-items: center; gap: calc(var(--olcek)*2);
+}
+@media (min-width: 52rem) { .ust-danisma { display: inline-flex; } }
+.ust-danisma:hover { background: var(--marka-zemin); }
+
+/* ---- Mobil gezinme — <details>, JS yok --------------------- */
+.gezinme-mobil { margin-left: auto; align-self: center; }
+@media (min-width: 64rem) { .gezinme-mobil { display: none; } }
 .gezinme-mobil > summary {
   list-style: none; cursor: pointer;
-  border: var(--sinir); padding: calc(var(--olcek)*2) calc(var(--olcek)*3);
-  font-size: .85rem; font-weight: 650; color: var(--murekkep);
+  border: 1px solid rgba(255,255,255,.5); border-radius: var(--yuvarlak);
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*3);
+  font-size: .85rem; font-weight: 650; color: #fff;
   min-height: 44px; display: flex; align-items: center; gap: calc(var(--olcek)*2);
 }
 .gezinme-mobil > summary::-webkit-details-marker { display: none; }
-.gezinme-mobil[open] > summary { border-color: var(--vurgu); color: var(--vurgu); }
+.gezinme-mobil[open] > summary { background: var(--marka-bant-2); border-color: #fff; }
 .gezinme-mobil-panel {
   position: absolute; left: 0; right: 0;
-  background: var(--yuzey); border-bottom: var(--sinir); border-top: var(--sinir);
-  padding: calc(var(--olcek)*3) calc(var(--olcek)*5) calc(var(--olcek)*5);
-  z-index: 60;
+  background: var(--yuzey); border-bottom: var(--sinir);
+  box-shadow: var(--katman);
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*5) calc(var(--olcek)*6);
+  z-index: 95; max-height: 78vh; overflow-y: auto;
 }
 .gezinme-mobil-panel a {
   display: block; padding: calc(var(--olcek)*3) 0;
   border-bottom: var(--sinir); text-decoration: none;
   color: var(--murekkep); font-weight: 600; min-height: 48px;
 }
-.gezinme-mobil-panel .etiket { margin-top: calc(var(--olcek)*4); }
+.gezinme-mobil-panel .etiket {
+  margin-top: calc(var(--olcek)*5); color: var(--marka);
+  border-bottom: 2px solid var(--marka); padding-bottom: calc(var(--olcek)*1);
+}
 
 /* --- 6. Künye (breadcrumb) -------------------------------- */
 .kunye {
-  background: var(--yuzey-alt); border-bottom: var(--sinir);
+  background: var(--yuzey); border-bottom: var(--sinir);
   font-size: .82rem; padding: calc(var(--olcek)*2) 0;
 }
 .kunye ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*2); }
@@ -282,23 +378,28 @@ main { padding: calc(var(--olcek)*8) 0 calc(var(--olcek)*12); }
 .kunye [aria-current="page"] { color: var(--murekkep); font-weight: 600; }
 
 /* --- 7. Tipografi ----------------------------------------- */
-h1, h2, h3, h4 { letter-spacing: -.025em; line-height: 1.2; margin: 0 0 calc(var(--olcek)*3); }
-h1 { font-size: clamp(1.75rem, 4.5vw, 2.4rem); font-weight: 750; }
-h2 { font-size: clamp(1.28rem, 3.2vw, 1.55rem); font-weight: 700; margin-top: calc(var(--olcek)*10); }
-h3 { font-size: 1.1rem; font-weight: 650; margin-top: calc(var(--olcek)*7); }
-h4 { font-size: 1rem; font-weight: 650; margin-top: calc(var(--olcek)*6); }
+h1, h2, h3, h4 { letter-spacing: -.025em; line-height: 1.18; margin: 0 0 calc(var(--olcek)*3); }
+h1 { font-size: clamp(1.9rem, 5vw, 2.85rem); font-weight: 780; }
+h2 { font-size: clamp(1.35rem, 3.4vw, 1.7rem); font-weight: 720; margin-top: calc(var(--olcek)*10); }
+h3 { font-size: 1.12rem; font-weight: 660; margin-top: calc(var(--olcek)*7); }
+h4 { font-size: 1rem; font-weight: 660; margin-top: calc(var(--olcek)*6); }
 p  { margin: 0 0 calc(var(--olcek)*4); }
 .mt0 { margin-top: 0; }
 
 .giris { font-size: 1.08rem; color: var(--murekkep-2); }
 
-/* Bölüm başlığı — kurumsal ayraç */
-.bolum-baslik { border-top: 3px solid var(--vurgu); padding-top: calc(var(--olcek)*3); margin-top: calc(var(--olcek)*12); }
+/* Bölüm başlığı — kırmızı kısa çentik, tam genişlik çizgi değil.
+   Tam genişlik kırmızı çizgi sayfayı "uyarı" gibi gösteriyordu. */
+.bolum-baslik { margin-top: calc(var(--olcek)*12); padding-top: calc(var(--olcek)*4); position: relative; }
+.bolum-baslik::before {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 48px; height: 4px; background: var(--marka);
+}
 .bolum > .kap-genis > .bolum-baslik:first-child,
 .kap-genis > div > .bolum-baslik:first-child,
 .bolum-baslik:first-child { margin-top: 0; }
 .bolum-baslik h2 { margin-top: 0; }
-.bolum-baslik p  { color: var(--murekkep-2); margin-bottom: 0; }
+.bolum-baslik p  { color: var(--murekkep-2); margin-bottom: 0; max-width: 62ch; }
 
 .etiket {
   font-family: var(--f-mono);
@@ -310,7 +411,6 @@ p  { margin: 0 0 calc(var(--olcek)*4); }
 a { color: var(--vurgu); text-underline-offset: 3px; }
 a:hover { color: var(--vurgu-koyu); }
 
-/* Kanun dayanağı künyesi */
 .dayanak {
   font-family: var(--f-mono); font-size: .84rem;
   color: var(--murekkep-2);
@@ -321,19 +421,20 @@ a:hover { color: var(--vurgu-koyu); }
 }
 .dayanak b { color: var(--murekkep); }
 
-/* --- 8. Kurumsal giriş bölümü ----------------------------- */
+/* --- 8. Kahraman ------------------------------------------ */
 .kahraman {
   background: var(--yuzey);
   border-bottom: var(--sinir);
-  padding: calc(var(--olcek)*12) 0 calc(var(--olcek)*10);
+  padding: calc(var(--olcek)*14) 0 calc(var(--olcek)*12);
 }
 .kahraman-ic { display: grid; gap: calc(var(--olcek)*8); align-items: start; }
-@media (min-width: 62rem) { .kahraman-ic { grid-template-columns: 1.5fr 1fr; gap: calc(var(--olcek)*12); } }
-.kahraman h1 { max-width: 20ch; }
-.kahraman .giris { max-width: 60ch; font-size: 1.12rem; }
+@media (min-width: 64rem) { .kahraman-ic { grid-template-columns: 1.45fr 1fr; gap: calc(var(--olcek)*14); } }
+.kahraman h1 { max-width: 18ch; }
+.kahraman .giris { max-width: 58ch; font-size: 1.14rem; }
+.kahraman > .kap-genis > .kahraman-ic .etiket { color: var(--marka); }
 
-/* Kahraman yan paneli: en kritik üç süre, girişte görünür */
-.sure-panel { border: var(--sinir); border-top: 4px solid var(--tehlike); background: var(--yuzey); }
+/* Süre paneli: en kritik üç süre. Tehlike çubuğu + versal etiket. */
+.sure-panel { border: var(--sinir); border-top: 5px solid var(--tehlike); background: var(--yuzey); }
 .sure-panel-bas { padding: calc(var(--olcek)*4); border-bottom: var(--sinir); }
 .sure-panel-bas b { display: block; font-size: 1.02rem; }
 .sure-panel-bas span { font-size: .88rem; color: var(--murekkep-2); }
@@ -344,37 +445,64 @@ a:hover { color: var(--vurgu-koyu); }
   border-bottom: var(--sinir); font-size: .93rem;
 }
 .sure-panel li b {
-  font-family: var(--f-mono); font-size: 1.05rem; color: var(--tehlike);
-  min-width: 4.2rem; flex: none;
+  font-family: var(--f-mono); font-size: 1.1rem; color: var(--tehlike);
+  min-width: 4.2rem; flex: none; font-variant-numeric: tabular-nums;
 }
 .sure-panel li span { color: var(--murekkep-2); display: block; font-size: .82rem; }
 .sure-panel-alt { padding: calc(var(--olcek)*4); }
 .kahraman-alt {
   display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3);
-  margin-top: calc(var(--olcek)*6);
+  margin-top: calc(var(--olcek)*7);
 }
 
-/* Kurumsal ölçüt şeridi (kaç modül, kaç rehber, kaç dilekçe) */
+/* Ölçüt şeridi */
 .olcut-serit {
   display: grid; gap: 1px; background: var(--cizgi);
-  border: var(--sinir); margin-top: calc(var(--olcek)*10);
+  border: var(--sinir); margin-top: calc(var(--olcek)*12);
   grid-template-columns: repeat(2, 1fr);
 }
 @media (min-width: 46rem) { .olcut-serit { grid-template-columns: repeat(4, 1fr); } }
 .olcut { background: var(--yuzey); padding: calc(var(--olcek)*4); }
 .olcut b {
-  display: block; font-family: var(--f-mono); font-size: 1.6rem;
-  font-weight: 700; color: var(--vurgu); line-height: 1.1;
+  display: block; font-family: var(--f-mono); font-size: 1.7rem;
+  font-weight: 700; color: var(--marka); line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 .olcut span { display: block; font-size: .82rem; color: var(--murekkep-2); margin-top: calc(var(--olcek)*1); }
 
-/* --- 9. Izgara -------------------------------------------- */
+/* --- 9. Hızlı erişim şeridi (kahramanın altındaki kart sırası) --- */
+.hizli { display: grid; gap: calc(var(--olcek)*4); grid-template-columns: 1fr; }
+@media (min-width: 46rem) { .hizli { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 64rem) { .hizli { grid-template-columns: repeat(4, 1fr); } }
+.hizli-kart {
+  display: flex; flex-direction: column; gap: calc(var(--olcek)*2);
+  background: var(--yuzey); border: var(--sinir);
+  padding: calc(var(--olcek)*5);
+  text-decoration: none; color: var(--murekkep);
+  position: relative; overflow: hidden;
+  transition: border-color .12s, transform .12s;
+}
+.hizli-kart::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--marka);
+}
+.hizli-kart:hover, .hizli-kart:focus-visible {
+  border-color: var(--marka); color: var(--murekkep);
+}
+.hizli-kart .no {
+  font-family: var(--f-mono); font-size: .72rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--marka); font-weight: 700;
+}
+.hizli-kart b { font-size: 1.08rem; font-weight: 700; letter-spacing: -.02em; }
+.hizli-kart span { font-size: .9rem; color: var(--murekkep-2); flex: 1; }
+.hizli-kart .git { font-weight: 650; color: var(--marka); font-size: .9rem; }
+
+/* --- 10. Izgara ------------------------------------------- */
 .izgara { display: grid; gap: calc(var(--olcek)*4); }
 @media (min-width: 46rem) { .izgara.iki { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 62rem) { .izgara.uc  { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 46rem) and (max-width: 61.99rem) { .izgara.uc { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 64rem) { .izgara.uc  { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 46rem) and (max-width: 63.99rem) { .izgara.uc { grid-template-columns: repeat(2, 1fr); } }
 
-/* --- 10. Modül kartı (araçlar) ---------------------------- */
+/* --- 11. Modül ve rehber kartı ---------------------------- */
 .modul {
   display: flex; flex-direction: column;
   background: var(--yuzey); border: var(--sinir);
@@ -386,27 +514,27 @@ a:hover { color: var(--vurgu-koyu); }
 }
 .modul:hover, .modul:focus-visible { background: var(--vurgu-zemin); color: var(--murekkep); }
 .modul .etiket { color: var(--vurgu); }
-.modul b { display: block; font-size: 1.12rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: calc(var(--olcek)*2); }
+.modul b { display: block; font-size: 1.14rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: calc(var(--olcek)*2); }
 .modul span { display: block; color: var(--murekkep-2); font-size: .93rem; flex: 1; }
 .modul .git {
   display: block; margin-top: calc(var(--olcek)*4);
   font-weight: 650; color: var(--vurgu); font-size: .92rem;
 }
 
-/* Rehber kartı (bilgi merkezi) */
 .rehber {
   display: flex; flex-direction: column;
   background: var(--yuzey); border: var(--sinir);
   border-left: 4px solid var(--turkuaz);
   padding: calc(var(--olcek)*4);
   text-decoration: none; color: var(--murekkep);
+  transition: border-color .12s, background .12s;
 }
 .rehber:hover, .rehber:focus-visible { background: var(--turkuaz-zemin); color: var(--murekkep); }
 .rehber b { display: block; font-size: 1.02rem; font-weight: 700; margin-bottom: calc(var(--olcek)*2); }
 .rehber span { display: block; color: var(--murekkep-2); font-size: .9rem; flex: 1; }
 .rehber .etiket { color: var(--turkuaz); }
 
-/* --- 11. Kartlar ------------------------------------------ */
+/* --- 12. Durum kartları ----------------------------------- */
 .kart {
   background: var(--yuzey);
   border: var(--sinir);
@@ -417,12 +545,13 @@ a:hover { color: var(--vurgu-koyu); }
 .kart.vurgulu  { border-left-color: var(--vurgu); }
 .kart.guvence  { border-left-color: var(--turkuaz); background: var(--turkuaz-zemin); }
 .kart.uyarili  { border-left-color: var(--uyari);   background: var(--uyari-zemin); }
-.kart.tehlikeli{ border-left-color: var(--tehlike); background: var(--tehlike-zemin); }
 .kart.bilgili  { border-left-color: var(--bilgi);   background: var(--bilgi-zemin); }
+/* Tehlike kartı: 6px çubuk — marka kırmızısıyla karışmasın diye
+   renkten bağımsız olarak da daha ağır. */
+.kart.tehlikeli{ border-left: 6px solid var(--tehlike); background: var(--tehlike-zemin); }
 .kart > :last-child { margin-bottom: 0; }
 .kart h3:first-child, .kart h2:first-child { margin-top: 0; }
 
-/* Büyük seçim düğmesi (modül içi yönlendirme) */
 .secim {
   display: block; width: 100%; text-align: left;
   background: var(--yuzey); color: var(--murekkep);
@@ -437,25 +566,27 @@ a:hover { color: var(--vurgu-koyu); }
 .secim b { display: block; font-size: 1.12rem; font-weight: 700; letter-spacing: -.02em; }
 .secim span { display: block; color: var(--murekkep-2); font-size: .94rem; margin-top: calc(var(--olcek)*1); }
 
-/* --- 12. Düğmeler ----------------------------------------- */
+/* --- 13. Düğmeler ----------------------------------------- */
+/* Birincil düğme MARKA kırmızısıdır — sayfadaki tek "en güçlü eylem". */
 .dugme {
   display: inline-flex; align-items: center; justify-content: center;
   gap: calc(var(--olcek)*2);
-  background: var(--vurgu); color: var(--dugme-yazi);
-  border: 2px solid var(--vurgu);
+  background: var(--marka-bant); color: var(--bant-yazi);
+  border: 2px solid var(--marka-bant); border-radius: var(--yuvarlak);
   padding: calc(var(--olcek)*3) calc(var(--olcek)*6);
-  font: inherit; font-weight: 650; cursor: pointer;
+  font: inherit; font-weight: 680; cursor: pointer;
   min-height: var(--dokun); text-decoration: none;
+  transition: background .12s, border-color .12s;
 }
-.dugme:hover { background: var(--vurgu-koyu); border-color: var(--vurgu-koyu); color: var(--dugme-yazi); }
-.dugme.ikincil, .dugme.ikincil:hover {
+.dugme:hover { background: var(--marka-bant-2); border-color: var(--marka-bant-2); color: var(--bant-yazi); }
+.dugme.ikincil {
   background: transparent; color: var(--vurgu); border-color: var(--cizgi-koyu);
 }
 .dugme.ikincil:hover { background: var(--vurgu-zemin); border-color: var(--vurgu); color: var(--vurgu); }
 .dugme[disabled] { opacity: .45; cursor: not-allowed; }
 .dugme-sira { display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3); }
 
-/* --- 13. Form --------------------------------------------- */
+/* --- 14. Form --------------------------------------------- */
 .alan { margin-bottom: calc(var(--olcek)*5); }
 .alan label { display: block; font-weight: 650; margin-bottom: calc(var(--olcek)*2); }
 .alan .ipucu { display: block; color: var(--murekkep-2); font-size: .9rem; margin-bottom: calc(var(--olcek)*2); }
@@ -463,7 +594,7 @@ a:hover { color: var(--vurgu-koyu); }
 input[type="text"], input[type="date"], input[type="number"], select, textarea {
   width: 100%; font: inherit;
   background: var(--yuzey); color: var(--murekkep);
-  border: 2px solid var(--cizgi-koyu); border-radius: 0;
+  border: 2px solid var(--cizgi-koyu); border-radius: var(--yuvarlak);
   padding: calc(var(--olcek)*3);
   min-height: var(--dokun);
 }
@@ -475,7 +606,8 @@ legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
 
 .secenek {
   display: flex; align-items: flex-start; gap: calc(var(--olcek)*3);
-  border: 2px solid var(--cizgi); padding: calc(var(--olcek)*4);
+  border: 2px solid var(--cizgi); border-radius: var(--yuvarlak);
+  padding: calc(var(--olcek)*4);
   margin-bottom: calc(var(--olcek)*2); cursor: pointer; min-height: var(--dokun);
   background: var(--yuzey);
 }
@@ -484,26 +616,26 @@ legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
 .secenek span { flex: 1; }
 .secenek small { display: block; color: var(--murekkep-2); }
 
-/* --- 14. Adım göstergesi ---------------------------------- */
+/* --- 15. Adım göstergesi ---------------------------------- */
 .adimlar { display: flex; gap: calc(var(--olcek)*2); margin-bottom: calc(var(--olcek)*6); }
 .adim { flex: 1; height: 6px; background: var(--cizgi); }
-.adim.aktif { background: var(--vurgu); }
-.adim.bitti { background: var(--vurgu-koyu); }
+.adim.aktif { background: var(--marka); }
+.adim.bitti { background: var(--vurgu); }
 .adim-no {
   font-family: var(--f-mono); font-weight: 700;
-  background: var(--vurgu); color: var(--dugme-yazi);
+  background: var(--vurgu); color: #fff;
   width: 32px; height: 32px; flex: none;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: .9rem;
 }
 
-/* --- 15. Rozetler ----------------------------------------- */
+/* --- 16. Rozetler ----------------------------------------- */
 .rozet {
   display: inline-block; font-family: var(--f-mono);
   font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
   padding: calc(var(--olcek)*1) calc(var(--olcek)*2);
-  border: 1px solid currentColor; font-weight: 600;
-  white-space: nowrap;
+  border: 1px solid currentColor; border-radius: var(--yuvarlak);
+  font-weight: 600; white-space: nowrap;
 }
 .rozet.iyi      { color: var(--turkuaz); }
 .rozet.uyari    { color: var(--uyari); }
@@ -512,19 +644,17 @@ legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
 .rozet.kurumsal { color: var(--vurgu); }
 .rozet.dogrulanmamis { color: var(--uyari); }
 
-/* Hak niteliği rozeti: kalıcı mevzuat mı, geçmiş uygulama mı?
-   Bu ayrım platformun en önemli dürüstlük taahhüdüdür. */
 .nitelik {
   display: inline-flex; align-items: center; gap: calc(var(--olcek)*2);
   font-family: var(--f-mono); font-size: .72rem; letter-spacing: .06em;
   text-transform: uppercase; font-weight: 600;
   padding: calc(var(--olcek)*1) calc(var(--olcek)*2);
-  border: 1px solid currentColor;
+  border: 1px solid currentColor; border-radius: var(--yuvarlak);
 }
 .nitelik.kalici { color: var(--turkuaz); }
 .nitelik.emsal  { color: var(--uyari); }
 
-/* --- 16. Geri sayım listesi ------------------------------- */
+/* --- 17. Geri sayım listesi ------------------------------- */
 .sure-liste { list-style: none; padding: 0; margin: 0; }
 .sure-oge {
   border: var(--sinir); border-left: 4px solid var(--cizgi-koyu);
@@ -534,17 +664,27 @@ legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
   display: flex; gap: calc(var(--olcek)*4); align-items: flex-start;
 }
 .sure-oge.yakin  { border-left-color: var(--uyari);   background: var(--uyari-zemin); }
-.sure-oge.gecti  { border-left-color: var(--tehlike); background: var(--tehlike-zemin); }
+.sure-oge.gecti  { border-left: 6px solid var(--tehlike); background: var(--tehlike-zemin); }
 .sure-oge.acik   { border-left-color: var(--turkuaz); }
 .sure-sayi {
   font-family: var(--f-mono); font-size: 1.5rem; font-weight: 700;
   line-height: 1.1; min-width: 4.5rem; text-align: right; flex: none;
+  font-variant-numeric: tabular-nums;
 }
 .sure-govde { flex: 1; }
 .sure-govde b { display: block; font-size: 1.02rem; }
 .sure-govde small { color: var(--murekkep-2); display: block; margin-top: calc(var(--olcek)*1); }
+/* Renge bağlı olmayan durum işareti — renk körlüğü için zorunlu */
+.sure-durum {
+  display: inline-block; font-family: var(--f-mono); font-weight: 700;
+  font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: calc(var(--olcek)*1);
+}
+.sure-oge.gecti .sure-durum { color: var(--tehlike); }
+.sure-oge.yakin .sure-durum { color: var(--uyari); }
+.sure-oge.acik  .sure-durum { color: var(--turkuaz); }
 
-/* --- 17. Tablo -------------------------------------------- */
+/* --- 18. Tablo -------------------------------------------- */
 .tablo-sar { overflow-x: auto; margin-bottom: calc(var(--olcek)*5); border: var(--sinir); background: var(--yuzey); }
 table { border-collapse: collapse; width: 100%; font-size: .94rem; }
 th, td { text-align: left; padding: calc(var(--olcek)*3); border-bottom: var(--sinir); vertical-align: top; }
@@ -554,7 +694,7 @@ th { font-family: var(--f-mono); font-size: .74rem; letter-spacing: .08em;
 tbody tr:last-child td { border-bottom: 0; }
 td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
 
-/* --- 18. Teminat çubuğu ----------------------------------- */
+/* --- 19. Teminat çubuğu ----------------------------------- */
 .teminat-cubuk {
   display: flex; height: 44px; border: var(--sinir); margin-bottom: calc(var(--olcek)*2);
   overflow: hidden;
@@ -565,15 +705,15 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   color: #fff; min-width: 0; overflow: hidden; white-space: nowrap;
 }
 .teminat-dilim.kapsanan { background: #0A6E6B; }
-.teminat-dilim.acikta   { background: #A32014; }
+.teminat-dilim.acikta   { background: #8E1B12; }
 .teminat-aciklama { display: flex; gap: calc(var(--olcek)*5); flex-wrap: wrap;
                     font-size: .85rem; color: var(--murekkep-2); }
 .teminat-aciklama span { display: flex; align-items: center; gap: calc(var(--olcek)*2); }
 .kutucuk { width: 14px; height: 14px; flex: none; }
 .kutucuk.kapsanan { background: #0A6E6B; }
-.kutucuk.acikta   { background: #A32014; }
+.kutucuk.acikta   { background: #8E1B12; }
 
-/* --- 19. Dilekçe çıktısı ---------------------------------- */
+/* --- 20. Dilekçe çıktısı ---------------------------------- */
 .cikti {
   font-family: var(--f-mono); font-size: .85rem; line-height: 1.75;
   background: var(--yuzey); border: var(--sinir);
@@ -581,7 +721,7 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   max-height: 32rem; overflow-y: auto;
 }
 
-/* --- 20. Uyarı şeridi ------------------------------------- */
+/* --- 21. Uyarı şeridi ------------------------------------- */
 .serit {
   border: var(--sinir); border-left: 4px solid var(--uyari);
   background: var(--uyari-zemin);
@@ -590,23 +730,21 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 }
 .serit strong { display: block; margin-bottom: calc(var(--olcek)*1); }
 
-/* --- 21. Rehber (makale) yerleşimi ------------------------ */
-/* SEO içeriği için iki sütun: solda içindekiler, sağda metin.
-   Dar ekranda içindekiler metnin üstüne düşer. */
+/* --- 22. Rehber yerleşimi --------------------------------- */
 .yazi-duzen { display: grid; gap: calc(var(--olcek)*8); align-items: start; }
-@media (min-width: 62rem) {
+@media (min-width: 64rem) {
   .yazi-duzen { grid-template-columns: 16rem minmax(0, 1fr); }
-  .icindekiler { position: sticky; top: 5.5rem; }
+  .icindekiler { position: sticky; top: 6.5rem; }
 }
 .yazi { max-width: 42rem; }
-.yazi h2 { scroll-margin-top: 6rem; }
-.yazi h3 { scroll-margin-top: 6rem; }
+.yazi h2 { scroll-margin-top: 7rem; }
+.yazi h3 { scroll-margin-top: 7rem; }
 .yazi ul, .yazi ol { margin: 0 0 calc(var(--olcek)*4); padding-left: calc(var(--olcek)*6); }
 .yazi li { margin-bottom: calc(var(--olcek)*2); }
 .yazi li > ul, .yazi li > ol { margin-top: calc(var(--olcek)*2); }
 
 .icindekiler {
-  border: var(--sinir); border-top: 3px solid var(--vurgu);
+  border: var(--sinir); border-top: 3px solid var(--marka);
   background: var(--yuzey); padding: calc(var(--olcek)*4);
   font-size: .9rem;
 }
@@ -619,7 +757,6 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 .icindekiler a { color: var(--murekkep-2); text-decoration: none; }
 .icindekiler a:hover { color: var(--vurgu); text-decoration: underline; }
 
-/* Rehber künyesi: güncelleme, doğrulama, nitelik */
 .yazi-kunye {
   display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3);
   align-items: center;
@@ -628,7 +765,6 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   font-size: .84rem; color: var(--murekkep-2);
 }
 
-/* Alıntı / vurgulu uyarı bloğu */
 .yazi blockquote {
   margin: calc(var(--olcek)*5) 0;
   border-left: 4px solid var(--vurgu);
@@ -638,7 +774,6 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 }
 .yazi blockquote > :last-child { margin-bottom: 0; }
 
-/* Sık sorulanlar — <details>, JS yok, JSON-LD ile eşleşir */
 .sss { border: var(--sinir); background: var(--yuzey); }
 .sss > details { border-bottom: var(--sinir); }
 .sss > details:last-child { border-bottom: 0; }
@@ -648,54 +783,166 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   display: flex; align-items: center; gap: calc(var(--olcek)*3);
 }
 .sss summary::-webkit-details-marker { display: none; }
-.sss summary::before { content: "+"; font-family: var(--f-mono); color: var(--vurgu); font-weight: 700; flex: none; }
+.sss summary::before { content: "+"; font-family: var(--f-mono); color: var(--marka); font-weight: 700; flex: none; }
 .sss details[open] summary::before { content: "−"; }
 .sss details[open] summary { color: var(--vurgu); }
 .sss .cevap { padding: 0 calc(var(--olcek)*4) calc(var(--olcek)*4) calc(var(--olcek)*9); }
 .sss .cevap > :last-child { margin-bottom: 0; }
 
-/* İlgili içerik */
-.ilgili { border-top: 3px solid var(--vurgu); padding-top: calc(var(--olcek)*4); margin-top: calc(var(--olcek)*12); }
+.ilgili { border-top: 3px solid var(--marka); padding-top: calc(var(--olcek)*4); margin-top: calc(var(--olcek)*12); }
 
-/* --- 22. Kurumsal alt bilgi ------------------------------- */
+/* --- 23. Alt bilgi ---------------------------------------- */
 .alt {
-  background: var(--yuzey-koyu); color: #B9C7D8;
-  border-top: 3px solid var(--vurgu);
-  padding: calc(var(--olcek)*10) 0 calc(var(--olcek)*8);
+  background: var(--yuzey-koyu); color: #C3CCD6;
+  border-top: 5px solid var(--marka);
+  padding: calc(var(--olcek)*12) 0 calc(var(--olcek)*8);
   font-size: .88rem;
   margin-top: calc(var(--olcek)*14);
 }
-.alt a { color: #D8E2EE; text-decoration: none; }
+.alt a { color: #E2E8EF; text-decoration: none; }
 .alt a:hover { color: #fff; text-decoration: underline; }
 .alt-sutunlar { display: grid; gap: calc(var(--olcek)*8); }
 @media (min-width: 46rem) { .alt-sutunlar { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 62rem) { .alt-sutunlar { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+@media (min-width: 64rem) { .alt-sutunlar { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
 .alt h2, .alt h3 {
   font-family: var(--f-mono); font-size: .72rem; letter-spacing: .13em;
-  text-transform: uppercase; color: #8FA4BD; margin: 0 0 calc(var(--olcek)*3);
+  text-transform: uppercase; color: #96A3B1; margin: 0 0 calc(var(--olcek)*3);
   font-weight: 600;
 }
 .alt ul { list-style: none; margin: 0; padding: 0; }
 .alt li { margin-bottom: calc(var(--olcek)*2); }
 .alt-marka b { color: #fff; font-size: 1.05rem; display: block; margin-bottom: calc(var(--olcek)*2); }
 .alt-yasal {
-  border-top: 1px solid #22354F; margin-top: calc(var(--olcek)*8);
-  padding-top: calc(var(--olcek)*5); font-size: .82rem; color: #93A7BF;
+  border-top: 1px solid #2A323B; margin-top: calc(var(--olcek)*8);
+  padding-top: calc(var(--olcek)*5); font-size: .82rem; color: #9AA7B4;
 }
 .alt-yasal strong { color: #fff; }
 
-/* --- 23. Yardımcılar -------------------------------------- */
+/* ============================================================
+   24. DANIŞMA PENCERESİ (chatbot)
+   Sunucusuz. Soruyu sitedeki doğrulanmış içerikle eşleştirir.
+   Hiçbir veri cihazdan çıkmaz — bu yüzden dış istek yapan bir
+   dil modeli değil, yerel bir arama motoru kullanılır.
+   ============================================================ */
+.danisma-ac {
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  z-index: 120;
+  display: inline-flex; align-items: center; gap: calc(var(--olcek)*2);
+  background: var(--marka-bant); color: #fff;
+  border: 2px solid var(--marka-bant); border-radius: var(--yuvarlak);
+  font: inherit; font-weight: 700; font-size: .95rem;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*5);
+  min-height: 52px; cursor: pointer;
+  box-shadow: var(--katman);
+}
+.danisma-ac:hover { background: var(--marka-bant-2); border-color: var(--marka-bant-2); }
+.danisma-ac .nokta {
+  width: 8px; height: 8px; background: #fff; flex: none; border-radius: 50%;
+}
+
+.danisma {
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  width: min(28rem, calc(100vw - var(--olcek) * 8));
+  height: min(40rem, calc(100vh - var(--olcek) * 8));
+  z-index: 130;
+  background: var(--yuzey); border: var(--sinir);
+  box-shadow: var(--katman);
+  display: flex; flex-direction: column;
+}
+.danisma[hidden] { display: none; }
+.danisma-bas {
+  background: var(--marka-bant); color: #fff; flex: none;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
+  display: flex; align-items: center; gap: calc(var(--olcek)*3);
+}
+.danisma-bas b { font-size: 1rem; font-weight: 700; }
+.danisma-bas small { display: block; font-size: .74rem; color: var(--serit-yazi); }
+.danisma-bas .bosluk { flex: 1; }
+.danisma-kapat {
+  background: none; border: 1px solid rgba(255,255,255,.5); border-radius: var(--yuvarlak);
+  color: #fff; font: inherit; font-size: 1.1rem; line-height: 1;
+  width: 34px; height: 34px; cursor: pointer; flex: none;
+}
+.danisma-kapat:hover { background: var(--marka-bant-2); }
+
+.danisma-akis {
+  flex: 1; overflow-y: auto; padding: calc(var(--olcek)*4);
+  display: flex; flex-direction: column; gap: calc(var(--olcek)*3);
+  background: var(--kagit);
+}
+.balon {
+  max-width: 92%; padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
+  font-size: .92rem; line-height: 1.55; border: var(--sinir);
+}
+.balon.siz {
+  align-self: flex-end; background: var(--vurgu-zemin);
+  border-left: 3px solid var(--vurgu);
+}
+.balon.bot { align-self: flex-start; background: var(--yuzey); border-left: 3px solid var(--marka); }
+.balon p { margin: 0 0 calc(var(--olcek)*2); }
+.balon > :last-child { margin-bottom: 0; }
+.balon .kaynak {
+  display: block; margin-top: calc(var(--olcek)*2);
+  padding-top: calc(var(--olcek)*2); border-top: var(--sinir);
+  font-size: .82rem;
+}
+.balon .kaynak a { font-weight: 650; }
+.balon .kaynak .etiket { margin-bottom: calc(var(--olcek)*1); }
+.balon .sure-vurgu {
+  font-family: var(--f-mono); font-weight: 700; color: var(--tehlike);
+}
+
+/* Önerilen sorular */
+.danisma-oneri { display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*2); }
+.danisma-oneri button {
+  background: var(--yuzey); border: 1px solid var(--cizgi-koyu);
+  border-radius: var(--yuvarlak); color: var(--vurgu);
+  font: inherit; font-size: .84rem; font-weight: 600;
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*3);
+  cursor: pointer; text-align: left;
+}
+.danisma-oneri button:hover { background: var(--vurgu-zemin); border-color: var(--vurgu); }
+
+.danisma-alt { flex: none; border-top: var(--sinir); background: var(--yuzey); }
+.danisma-form { display: flex; gap: calc(var(--olcek)*2); padding: calc(var(--olcek)*3); }
+.danisma-form input {
+  flex: 1; min-height: 46px; min-width: 0;
+  border: 2px solid var(--cizgi-koyu); border-radius: var(--yuvarlak);
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*3); font: inherit;
+  background: var(--yuzey); color: var(--murekkep);
+}
+.danisma-form input:focus { border-color: var(--marka); outline: none; }
+.danisma-form button {
+  flex: none; min-height: 46px; padding: 0 calc(var(--olcek)*4);
+  background: var(--marka-bant); color: #fff; border: 2px solid var(--marka-bant);
+  border-radius: var(--yuvarlak); font: inherit; font-weight: 700; cursor: pointer;
+}
+.danisma-form button:hover { background: var(--marka-bant-2); border-color: var(--marka-bant-2); }
+.danisma-not {
+  padding: 0 calc(var(--olcek)*3) calc(var(--olcek)*3);
+  font-size: .74rem; color: var(--murekkep-2); line-height: 1.45;
+}
+
+@media (max-width: 30rem) {
+  .danisma {
+    right: 0; bottom: 0; width: 100vw; height: 100vh;
+    border: 0;
+  }
+}
+
+/* --- 25. Yardımcılar -------------------------------------- */
 .gizli { display: none !important; }
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .zemin-alt { background: var(--yuzey-alt); }
-.bolum { padding: calc(var(--olcek)*10) 0; }
+.bolum { padding: calc(var(--olcek)*11) 0; }
 .bolum-ince { padding: calc(var(--olcek)*8) 0; }
 
-/* --- 24. Yazdırma ----------------------------------------- */
+/* --- 26. Yazdırma ----------------------------------------- */
 @media print {
   .ust, .kurum-serit, .alt, .dugme-sira, .serit, .atla, .tema-dugme,
-  .gezinme-mobil, .icindekiler, .kunye { display: none !important; }
+  .gezinme-mobil, .icindekiler, .kunye,
+  .danisma, .danisma-ac, .hizli { display: none !important; }
   body { background: #fff; color: #000; font-size: 12pt; display: block; }
   .cikti { border: none; padding: 0; max-height: none; overflow: visible; font-size: 11pt; }
   .kart { border: 1px solid #999; break-inside: avoid; }

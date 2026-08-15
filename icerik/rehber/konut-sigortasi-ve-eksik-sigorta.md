@@ -10,24 +10,58 @@
   "dogrulama": "coklu",
   "guncelleme": "2026-08-15",
   "dayanaklar": [
-    {"ad": "TTK m.1462", "aciklama": "Eksik sigorta: sigorta bedeli sigorta değerinden az ise, sigortacı zararı bedelin değere olan oranına göre öder."},
-    {"ad": "Konut Sigortası Genel Şartları", "aciklama": "İhtiyari konut poliçesinin teminat kapsamını ve ek teminatları belirler."},
-    {"ad": "Ferdi Kaza Sigortası Genel Şartları", "aciklama": "Aksi sözleşmeyle kararlaştırılmadıkça deprem kaynaklı olayları teminat dışında bırakır."}
+    {
+      "ad": "TTK m.1462",
+      "aciklama": "Eksik sigorta: sigorta bedeli sigorta değerinden az ise, sigortacı zararı bedelin değere olan oranına göre öder."
+    },
+    {
+      "ad": "Konut Sigortası Genel Şartları",
+      "aciklama": "İhtiyari konut poliçesinin teminat kapsamını ve ek teminatları belirler."
+    },
+    {
+      "ad": "Ferdi Kaza Sigortası Genel Şartları",
+      "aciklama": "Aksi sözleşmeyle kararlaştırılmadıkça deprem kaynaklı olayları teminat dışında bırakır."
+    }
   ],
   "sss": [
-    {"soru": "DASK varken ayrıca konut sigortası gerekir mi?",
-     "cevap": "DASK yalnızca binayı ve azami teminat sınırına kadar karşılar. Eşya, konaklama, kira kaybı ve azami teminatı aşan bina değeri ancak ihtiyari konut sigortasıyla kapatılabilir."},
-    {"soru": "Eksik sigorta ne demek?",
-     "cevap": "Poliçedeki sigorta bedelinin, malın gerçek değerinin altında olmasıdır. Bu durumda tam hasarda bile ödeme, bedel/değer oranında yapılır. 1.000.000 TL değerindeki eşyayı 500.000 TL'ye sigortalattıysanız, 200.000 TL'lik hasarda 100.000 TL alırsınız."},
-    {"soru": "Kiracı hangi sigortayı yaptırabilir?",
-     "cevap": "Bina malikin, eşya kiracınındır. Kiracı kendi eşyası için konut/eşya sigortası yaptırabilir; birçok poliçe kiracıya özel paketler sunar."},
-    {"soru": "Ferdi kaza sigortam var, deprem kapsamda mı?",
-     "cevap": "Kural olarak hayır. Ferdi kaza poliçelerinde deprem, aksi açıkça kararlaştırılmadıkça teminat dışıdır. Poliçenizde deprem teminatının seçili olup olmadığını kontrol edin."}
+    {
+      "soru": "DASK varken ayrıca konut sigortası gerekir mi?",
+      "cevap": "DASK yalnızca binayı ve azami teminat sınırına kadar karşılar. Eşya, konaklama, kira kaybı ve azami teminatı aşan bina değeri ancak ihtiyari konut sigortasıyla kapatılabilir."
+    },
+    {
+      "soru": "Eksik sigorta ne demek?",
+      "cevap": "Poliçedeki sigorta bedelinin, malın gerçek değerinin altında olmasıdır. Bu durumda tam hasarda bile ödeme, bedel/değer oranında yapılır. 1.000.000 TL değerindeki eşyayı 500.000 TL'ye sigortalattıysanız, 200.000 TL'lik hasarda 100.000 TL alırsınız."
+    },
+    {
+      "soru": "Kiracı hangi sigortayı yaptırabilir?",
+      "cevap": "Bina malikin, eşya kiracınındır. Kiracı kendi eşyası için konut/eşya sigortası yaptırabilir; birçok poliçe kiracıya özel paketler sunar."
+    },
+    {
+      "soru": "Ferdi kaza sigortam var, deprem kapsamda mı?",
+      "cevap": "Kural olarak hayır. Ferdi kaza poliçelerinde deprem, aksi açıkça kararlaştırılmadıkça teminat dışıdır. Poliçenizde deprem teminatının seçili olup olmadığını kontrol edin."
+    }
   ],
   "arac": [
-    {"id": "teminat", "ad": "Teminat açığı hesabı", "ozet": "DASK'ın karşıladığı tutarı ve açıkta kalan kısmı görün."}
+    {
+      "id": "teminat",
+      "ad": "Teminat açığı hesabı",
+      "ozet": "DASK'ın karşıladığı tutarı ve açıkta kalan kısmı görün."
+    }
   ],
-  "ilgili": ["dask-neyi-karsilar", "sigortaciya-yazili-basvuru", "olum-halinde-sigorta-ve-sgk"]
+  "ilgili": [
+    "dask-neyi-karsilar",
+    "sigortaciya-yazili-basvuru",
+    "olum-halinde-sigorta-ve-sgk"
+  ],
+  "anahtar": [
+    "konut sigortası",
+    "eksik sigorta",
+    "ihtiyari sigorta",
+    "oransal ödeme",
+    "sigorta bedeli",
+    "ferdi kaza",
+    "eşya teminatı"
+  ]
 }
 ---
 DASK zorunlu ve dar bir teminattır. Onun bıraktığı boşluğu kapatan şey **ihtiyari konut

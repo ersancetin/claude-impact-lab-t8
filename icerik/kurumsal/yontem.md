@@ -3,7 +3,15 @@
   "ad": "Yöntemimiz",
   "sira": 2,
   "baslik": "Bilgiyi nasıl derliyor ve nasıl işaretliyoruz?",
-  "ozet": "Her rehberin kanuni dayanağı, doğrulama düzeyi ve niteliği (kalıcı hak mı, geçmiş uygulama mı) açıkça gösterilir. Bilmediğimizi bilmediğimizi söyleriz."
+  "ozet": "Her rehberin kanuni dayanağı, doğrulama düzeyi ve niteliği (kalıcı hak mı, geçmiş uygulama mı) açıkça gösterilir. Bilmediğimizi bilmediğimizi söyleriz.",
+  "anahtar": [
+    "yöntem",
+    "doğrulama",
+    "kaynak",
+    "kalıcı hak",
+    "geçmiş uygulama",
+    "nasıl derliyorsunuz"
+  ]
 }
 ---
 ## En önemli ayrım: kalıcı hak mı, geçmiş uygulama mı?

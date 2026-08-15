@@ -18,10 +18,11 @@ Kaynak içerik `icerik/` ve `kaynak/` altındadır; yayına giden statik site
 üreteç yalnızca Python standart kütüphanesini kullanır.
 
 ```bash
-python3 scripts/site-uret.py     # docs/ klasörünü üretir
-python3 scripts/bag-kontrol.py   # iç bağlantıları denetler
-python3 scripts/kontrast.py      # renk kontrastlarını ölçer
-python3 scripts/veri-kontrol.py  # parametreler.json ↔ veri.js tutarlılığı
+python3 scripts/site-uret.py       # docs/ klasörünü üretir
+python3 scripts/bag-kontrol.py     # iç bağlantıları denetler
+python3 scripts/kontrast.py        # renk kontrastlarını ölçer (52 çift)
+python3 scripts/veri-kontrol.py    # parametreler.json ↔ veri.js tutarlılığı
+node scripts/danisma-kontrol.mjs   # danışmanın arama isabeti (17 soru)
 
 cd docs && python3 -m http.server 8899   # http://localhost:8899
 ```
@@ -29,12 +30,14 @@ cd docs && python3 -m http.server 8899   # http://localhost:8899
 ### Yapı
 
 ```
-icerik/site.json        kurum bilgisi, gezinme, 9 konu başlığı
-icerik/rehber/*.md      Bilgi Merkezi rehberleri (JSON künye + markdown)
-icerik/kurumsal/*.md    kurumsal sayfalar
-kaynak/modul/*.html     etkileşimli araç sayfaları (JSON künye + HTML gövde)
-scripts/site-uret.py    üreteç: şablon, SEO etiketleri, JSON-LD, sitemap
-docs/                   üretilen site (yayına giden klasör)
+icerik/site.json          kurum bilgisi, gezinme, 9 konu başlığı
+icerik/rehber/*.md        Bilgi Merkezi rehberleri (JSON künye + markdown)
+icerik/kurumsal/*.md      kurumsal sayfalar
+kaynak/modul/*.html       etkileşimli araç sayfaları (JSON künye + HTML gövde)
+scripts/site-uret.py      üreteç: şablon, mega menü, SEO, JSON-LD, sitemap
+docs/                     üretilen site (yayına giden klasör)
+docs/assets/*.css,*.js    elle bakılan varlıklar — üreteç bunları silmez
+docs/assets/bilgi-tabani.js  ÜRETİLİR: danışmanın aradığı künye dizini
 ```
 
 Yeni bir rehber eklemek için `icerik/rehber/` altına tek bir dosya yazmak yeterlidir;
@@ -45,16 +48,28 @@ yeniden üretimde kendiliğinden güncellenir.
 
 | Bölüm | İş |
 |---|---|
-| **Araçlar** | Süre takvimi · Hak tarama · Dilekçe üretici · Teminat açığı hesabı |
+| **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı hesabı |
 | **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
+| **Danışma** | Her sayfada, sağ altta. Soruyu sitedeki doğrulanmış içerikle eşleştirir |
+
+### Danışma penceresi
+
+Sitede **hesap ve giriş yoktur**; bunun yerine her sayfada bir soru penceresi vardır.
+Bu pencere bir dil modeli değildir: soruyu `icerik/` ve `data/parametreler.json`'dan
+üretilen künye dizininde arar, ilgili rehbere/araca yönlendirir ve o kaydın
+**doğrulama rozetini** gösterir. Eşleşme bulamazsa uydurmaz, "bulamadım" der.
+
+Böyle olmasının nedeni mahremiyet taahhüdüdür: soruyu bir API'ye göndermek,
+kullanıcının hukuki durumunu üçüncü bir tarafa aktarmak olurdu. Ayrıntı:
+[`TASARIM.md`](./TASARIM.md) Bölüm 10.
 
 Her rehber iki etiketle işaretlenir: **kalıcı mevzuat mı, geçmiş uygulama mı** ve
 bilginin **doğrulama düzeyi**. Bu ayrım, kullanıcıya olmayan bir hakkın vaat
 edilmemesi için vardır.
 
-**Mahremiyet:** sunucu yok, analitik yok, çerez yok, dış istek yok. Girilen hiçbir
-bilgi cihazdan çıkmaz.
+**Mahremiyet:** sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok.
+Girilen hiçbir bilgi — danışmaya sorulan soru dâhil — cihazdan çıkmaz.
 
 ---
 

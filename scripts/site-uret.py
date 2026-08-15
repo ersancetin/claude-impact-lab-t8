@@ -27,6 +27,7 @@ from site_markdown import isle, kimlik  # noqa: E402
 KOK = Path(__file__).resolve().parent.parent
 ICERIK = KOK / "icerik"
 KAYNAK = KOK / "kaynak"
+VERI = KOK / "data"
 CIKTI = KOK / "docs"
 
 NITELIK = {
@@ -60,6 +61,15 @@ def kacir(m):
     return html.escape(str(m), quote=True)
 
 
+def kisalt(metin, sinir=96):
+    """Menü ve künye özetlerini cümle bütünlüğünü bozmadan kısaltır."""
+    metin = (metin or "").strip()
+    if len(metin) <= sinir:
+        return metin
+    kesme = metin[:sinir].rsplit(" ", 1)[0]
+    return kesme.rstrip(" ,.;:") + "…"
+
+
 # ---------------------------------------------------------------- şablon
 class Site:
     def __init__(self, yap):
@@ -73,20 +83,87 @@ class Site:
     def onek(derinlik):
         return "../" * derinlik
 
+    # ---- Mega gezinme ------------------------------------------------
+    # Üst menüde "neyin nerede olduğu" görünür olmalı: araçlar işlevine
+    # göre gruplanır, konular üç sütuna serilir. Açılış saf CSS
+    # (:hover + :focus-within) — klavyeyle de açılır, JS gerekmez.
+
+    def arac_gruplari(self):
+        """Araçları künyedeki 'grup' alanına göre, sırayı bozmadan kümeler."""
+        gruplar = {}
+        for m in MODULLER:
+            gruplar.setdefault(m.get("grup", "Araçlar"), []).append(m)
+        return gruplar
+
+    def mega_arac(self, p):
+        sutun = []
+        for grup, ler in self.arac_gruplari().items():
+            oge = "".join(
+                f'<li><a href="{p}arac/{m["id"]}.html">'
+                f'<b>{kacir(m["ad"])}</b><span>{kacir(kisalt(m["ozet"]))}</span></a></li>'
+                for m in ler)
+            sutun.append(f'<div><h3>{kacir(grup)}</h3><ul>{oge}</ul></div>')
+        return f"""<div class="mega">
+  <div class="mega-izgara uc">{"".join(sutun)}</div>
+  <div class="mega-alt">
+    <a href="{p}arac/index.html">Tüm araçlar →</a>
+    <span>Hepsi cihazınızda çalışır; hiçbir bilgi gönderilmez.</span>
+  </div>
+</div>"""
+
+    def mega_bilgi(self, p):
+        katlar = self.y["kategoriler"]
+        boy = -(-len(katlar) // 3)          # üç sütuna böl, yukarı yuvarla
+        sutun = []
+        for i in range(0, len(katlar), boy):
+            oge = "".join(
+                f'<li><a href="{p}bilgi/{k["id"]}.html">'
+                f'<b>{kacir(k["ad"])}</b><span>{kacir(kisalt(k["ozet"]))}</span></a></li>'
+                for k in katlar[i:i + boy])
+            sutun.append(f"<div><ul>{oge}</ul></div>")
+        return f"""<div class="mega">
+  <div class="mega-izgara uc">{"".join(sutun)}</div>
+  <div class="mega-alt">
+    <a href="{p}bilgi/index.html">Bilgi Merkezi ana sayfası →</a>
+    <span>Her rehber kalıcı mevzuat mı, geçmiş uygulama mı — etiketlidir.</span>
+  </div>
+</div>"""
+
+    def mega_kurumsal(self, p):
+        oge = "".join(
+            f'<li><a href="{p}kurumsal/{s["id"]}.html">'
+            f'<b>{kacir(s["ad"])}</b><span>{kacir(kisalt(s.get("ozet", ""), 78))}</span></a></li>'
+            for s in KURUMSAL)
+        return f'<div class="mega sag"><div class="mega-izgara iki">' \
+               f'<div><ul>{oge}</ul></div>' \
+               f'<div><h3>Taahhüdümüz</h3><ul>' \
+               f'<li><a href="{p}kurumsal/mahremiyet.html">' \
+               f'<b>Veri toplamıyoruz</b><span>Sunucu yok, analitik yok, çerez yok. ' \
+               f'Girdiğiniz hiçbir bilgi cihazınızdan çıkmaz.</span></a></li>' \
+               f'</ul></div></div></div>'
+
     def gezinme_html(self, derinlik, aktif):
         p = self.onek(derinlik)
+        paneller = {
+            "arac": ("Araçlar", f"{p}arac/index.html", self.mega_arac(p)),
+            "bilgi": ("Bilgi Merkezi", f"{p}bilgi/index.html", self.mega_bilgi(p)),
+            "kurumsal": ("Kurumsal", f"{p}kurumsal/hakkimizda.html", self.mega_kurumsal(p)),
+        }
         ogeler = []
-        for g in self.y["gezinme"]:
-            im = ' aria-current="page"' if g["anahtar"] == aktif else ""
-            ogeler.append(f'<a href="{p}{g["url"]}"{im}>{kacir(g["ad"])}</a>')
+        for anahtar in ("arac", "bilgi", "kurumsal"):
+            ad, url, mega = paneller[anahtar]
+            im = ' aria-current="page"' if anahtar == aktif else ""
+            ogeler.append(
+                f'<div class="oge"><a class="bas" href="{url}"{im}>{kacir(ad)}</a>{mega}</div>')
         return "".join(ogeler)
 
     def mobil_gezinme(self, derinlik):
         p = self.onek(derinlik)
         bag = [f'<a href="{p}index.html">Ana sayfa</a>']
-        bag.append('<span class="etiket">Araçlar</span>')
-        for m in MODULLER:
-            bag.append(f'<a href="{p}arac/{m["id"]}.html">{kacir(m["ad"])}</a>')
+        for grup, ler in self.arac_gruplari().items():
+            bag.append(f'<span class="etiket">{kacir(grup)}</span>')
+            for m in ler:
+                bag.append(f'<a href="{p}arac/{m["id"]}.html">{kacir(m["ad"])}</a>')
         bag.append('<span class="etiket">Bilgi Merkezi</span>')
         bag.append(f'<a href="{p}bilgi/index.html">Tüm konular</a>')
         for k in self.y["kategoriler"]:
@@ -112,8 +189,9 @@ class Site:
       <span class="marka-isaret" aria-hidden="true">{kacir(self.y["kisaAd"])}</span>
       <span class="marka-ad"><b>{kacir(self.y["ad"])}</b><span>Hak · Süre · Dilekçe</span></span>
     </a>
-    <span class="bosluk"></span>
     <nav class="gezinme" aria-label="Ana gezinme">{self.gezinme_html(derinlik, aktif)}</nav>
+    <span class="bosluk"></span>
+    <button class="ust-danisma" type="button" data-danisma-ac>Soru sor</button>
     <details class="gezinme-mobil">
       <summary aria-label="Menü">Menü</summary>
       <div class="gezinme-mobil-panel">{self.mobil_gezinme(derinlik)}</div>
@@ -173,6 +251,12 @@ class Site:
               kunye=None, ld=None, sinif="", oncelik="0.6", tarih=None,
               robots=None):
         p = self.onek(derinlik)
+        # ES modülü tanımlayıcısı "/" ya da "./" ile başlamak ZORUNDA.
+        # Kökteki sayfada önek boş olduğu için düz "assets/app.js"
+        # üretiliyordu ve tarayıcı modülü hiç yüklemiyordu (tema düğmesi
+        # ana sayfada bu yüzden çalışmıyordu). Göreli bağlar için p,
+        # modül yolları için p_mod kullanılır.
+        p_mod = p or "./"
         url = yol_dosya.replace("index.html", "") if yol_dosya.endswith("/index.html") else yol_dosya
         kanonik = f'{self.y["taban"]}/{yol_dosya}'
         serit, kunye_ld = self.kunye_serit(derinlik, kunye or [])
@@ -205,15 +289,16 @@ class Site:
 <link rel="stylesheet" href="{p}assets/tasarim.css">
 {ld_html}
 </head>
-<body{f' class="{sinif}"' if sinif else ""}>
+<body{f' class="{sinif}"' if sinif else ""} data-kok="{p}">
 <a class="atla" href="#ana">İçeriğe atla</a>
 {self.ust_html(derinlik, aktif)}
 {serit}
 {govde}
 {self.alt_html(derinlik)}
 <script type="module">
-  import {{ temaBaslat, temaBagla }} from "{p}assets/app.js";
-  temaBaslat(); temaBagla();
+  import {{ temaBaslat, temaBagla }} from "{p_mod}assets/app.js";
+  import {{ danismaBaslat }} from "{p_mod}assets/danisma.js";
+  temaBaslat(); temaBagla(); danismaBaslat();
 </script>
 </body>
 </html>
@@ -574,6 +659,16 @@ def kurumsal_sayfasi(site, s):
 
 def ana_sayfa(site):
     arac_kartlari = "".join(modul_kart(m, "") for m in MODULLER)
+    # Kahramanın hemen altındaki hızlı erişim şeridi: dört aracın
+    # tamamı katlamanın üstünde görünür. "Neyin nerede olduğu belli
+    # değil" sorununun ana sayfadaki karşılığı buydu.
+    hizli_kartlar = "".join(
+        f'<a class="hizli-kart" href="arac/{m["id"]}.html">'
+        f'<span class="no">{kacir(m.get("grup", "Araç"))}</span>'
+        f'<b>{kacir(m["ad"])}</b>'
+        f'<span>{kacir(kisalt(m["ozet"], 84))}</span>'
+        f'<span class="git">{kacir(m.get("eylem", "Aracı aç"))} →</span></a>'
+        for m in MODULLER)
     konu_kartlari = "".join(
         f'<a class="rehber" href="bilgi/{k["id"]}.html"><span class="etiket">Konu</span>'
         f'<b>{kacir(k["ad"])}</b><span>{kacir(k["ozet"])}</span></a>'
@@ -636,6 +731,12 @@ def ana_sayfa(site):
       <div class="olcut"><b>{len(site.y["kategoriler"])}</b><span>konu başlığı</span></div>
       <div class="olcut"><b>0</b><span>toplanan kişisel veri</span></div>
     </div>
+  </div>
+</section>
+
+<section class="bolum-ince zemin-alt">
+  <div class="kap-genis">
+    <div class="hizli">{hizli_kartlar}</div>
   </div>
 </section>
 
@@ -754,6 +855,149 @@ def ana_sayfa(site):
         aciklama=site.y["aciklama"], govde=govde, ld=ld, oncelik="1.0")
 
 
+# ---------------------------------------------------------------- danışma
+# Danışma penceresi sunucusuzdur: soru cihazdan çıkmaz. Bu yüzden
+# aranabilir künye burada, üretim anında hazırlanır ve statik bir ES
+# modülü olarak yazılır. Pencere ASLA metin üretmez; yalnızca buradaki
+# doğrulanmış özetleri gösterir.
+
+# Süre adları elle yazılır: parametre anahtarı ("daskHasarIhbari")
+# kullanıcının sorduğu dil değildir. Yanlış bir süre adı, kullanıcının
+# hakkını tamamen kaybetmesine yol açabilir — bu eşleme gözden geçirilir.
+SURE_ADI = {
+    "daskHasarIhbari": ("DASK hasar ihbarı", ["dask", "ihbar", "hasar bildirimi", "125"]),
+    "eksperRaporunaItiraz": ("Eksper raporuna itiraz", ["eksper", "rapor", "itiraz"]),
+    "daskHasarDosyasinaItiraz": ("DASK hasar dosyasına itiraz", ["dask", "dosya", "itiraz"]),
+    "hasarTespitineItiraz": ("Hasar tespitine itiraz", ["hasar tespit", "itiraz", "ağır hasarlı", "orta hasarlı"]),
+    "hakSahipligiBasvurusu": ("Hak sahipliği başvurusu", ["hak sahipliği", "afet konutu", "başvuru"]),
+    "hakSahipligiReddineItiraz": ("Hak sahipliği reddine itiraz", ["hak sahipliği", "ret", "itiraz"]),
+    "riskliYapiTespitineItiraz": ("Riskli yapı tespitine itiraz", ["riskli yapı", "kentsel dönüşüm", "6306"]),
+    "imarPlaniAskiItirazi": ("İmar planı askı itirazı", ["imar", "askı", "plan"]),
+    "idariDavaAcma": ("İdari dava açma", ["idari dava", "dava", "mahkeme"]),
+    "idariBasvuruyaCevap": ("İdareye başvuruda cevap süresi", ["zımni ret", "idare", "cevap"]),
+    "tamYargiOnBasvurusu": ("Tam yargı davası ön başvurusu", ["tam yargı", "tazminat", "idare"]),
+    "sigortaZamanasimi": ("Sigortaya karşı zamanaşımı", ["zamanaşımı", "sigorta", "tazminat"]),
+    "eserSozlesmesiZamanasimi": ("Müteahhide karşı zamanaşımı", ["müteahhit", "zamanaşımı", "ayıp", "eser"]),
+    "cezaDavasiZamanasimi": ("Ceza davası zamanaşımı", ["ceza", "zamanaşımı", "taksirle ölüm"]),
+    "isverenYarimUcret": ("İşverenin yarım ücret yükümlülüğü", ["işveren", "ücret", "iş sözleşmesi"]),
+    "besOdemesi": ("BES ödemesi", ["bes", "emeklilik", "birikim"]),
+}
+
+ONERILEN_SORULAR = [
+    "DASK hasar ihbarı kaç gün?",
+    "Hasar tespitine nasıl itiraz ederim?",
+    "Kiracıysam hangi haklarım var?",
+    "DASK neyi karşılamaz?",
+    "Hak sahipliği başvurusu ne zamana kadar?",
+]
+
+
+def duz_metin(markdown, sinir=1500):
+    """Markdown gövdesini arama için düz metne indirger."""
+    m = re.sub(r"```.*?```", " ", markdown, flags=re.S)      # kod blokları
+    m = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", m)          # bağ ve görsel
+    m = re.sub(r"[#>*_`|~-]+", " ", m)                        # işaretleme
+    m = re.sub(r"\s+", " ", m)
+    return m.strip()[:sinir]
+
+
+def sure_metni(anahtar, veri):
+    """'15 gün' / '2 ay' / '1 yıl (azami 5 yıl)' biçiminde okunur değer."""
+    for alan, birim in (("gun", "gün"), ("ay", "ay"), ("yil", "yıl"),
+                        ("isGunu", "iş günü")):
+        if alan in veri:
+            metin = f'{veri[alan]} {birim}'
+            if veri.get("azamiYil"):
+                metin += f' (azami {veri["azamiYil"]} yıl)'
+            return metin
+    return ""
+
+
+def bilgi_tabani_yaz(site):
+    kayitlar = []
+
+    for m in MODULLER:
+        kayitlar.append({
+            "tur": "arac", "turAd": "Araç",
+            "baslik": m["ad"], "ozet": m["ozet"],
+            "url": f'arac/{m["id"]}.html',
+            "dogrulama": "coklu",
+            "anahtar": m.get("anahtar", []),
+            "metin": m.get("aciklama", ""),
+        })
+
+    for k in site.y["kategoriler"]:
+        kayitlar.append({
+            "tur": "konu", "turAd": "Konu başlığı",
+            "baslik": k["ad"], "ozet": k["ozet"],
+            "url": f'bilgi/{k["id"]}.html',
+            "dogrulama": "coklu",
+            "anahtar": k.get("anahtar", []),
+            "metin": k.get("aciklama", ""),
+        })
+
+    for r in site.rehberler:
+        kayitlar.append({
+            "tur": "rehber", "turAd": "Rehber",
+            "baslik": r["baslik"], "ozet": r["ozet"],
+            "url": f'rehber/{r["id"]}.html',
+            "dogrulama": r.get("dogrulama", "tek"),
+            "anahtar": r.get("anahtar", []),
+            "metin": duz_metin(r["govde"]),
+        })
+
+    for s in KURUMSAL:
+        kayitlar.append({
+            "tur": "kurumsal", "turAd": "Kurumsal",
+            "baslik": s["ad"], "ozet": s["ozet"],
+            "url": f'kurumsal/{s["id"]}.html',
+            "dogrulama": "resmi",
+            "anahtar": s.get("anahtar", []),
+            "metin": duz_metin(s["govde"], 600),
+        })
+
+    # Hak düşürücü süreler — parametreler.json tek doğruluk kaynağıdır.
+    param = json.loads((VERI / "parametreler.json").read_text(encoding="utf-8"))
+    for anahtar, veri in param.get("sureler", {}).items():
+        if anahtar.startswith("$"):
+            continue
+        ad, kelimeler = SURE_ADI.get(anahtar, (anahtar, []))
+        deger = sure_metni(anahtar, veri)
+        if not deger:
+            continue
+        kayitlar.append({
+            "tur": "sure", "turAd": "Hak düşürücü süre",
+            "baslik": ad,
+            "ozet": f'{ad} için süre {deger}.',
+            "deger": deger,
+            "baslangic": veri.get("baslangic", ""),
+            "dayanak": veri.get("dayanak", ""),
+            "url": "arac/sureler.html",
+            "dogrulama": veri.get("dogrulama", "tek"),
+            "anahtar": kelimeler + ["süre", "kaç gün", "son tarih"],
+            "metin": " ".join(filter(None, [
+                veri.get("baslangic", ""), veri.get("dayanak", ""),
+                veri.get("aciklama", ""), veri.get("not", "")])),
+        })
+
+    govde = json.dumps(
+        {"surum": param.get("surum", ""),
+         "guncelleme": param.get("guncellemeTarihi", ""),
+         "oneriler": ONERILEN_SORULAR,
+         "kayitlar": kayitlar},
+        ensure_ascii=False, indent=1)
+
+    (CIKTI / "assets" / "bilgi-tabani.js").write_text(
+        "/* ÜRETİLMİŞ DOSYA — elle düzenlemeyin.\n"
+        "   Kaynak: icerik/, kaynak/modul/, data/parametreler.json\n"
+        "   Üreteç: scripts/site-uret.py → bilgi_tabani_yaz()\n\n"
+        "   Danışma penceresi yalnızca buradaki metinleri gösterir;\n"
+        "   cevap metni tarayıcıda üretilmez. */\n"
+        f"export const BILGI = {govde};\n",
+        encoding="utf-8")
+    return len(kayitlar)
+
+
 def sitemap_yaz(site):
     ogeler = "".join(
         f"  <url><loc>{u}</loc><lastmod>{t}</lastmod><priority>{o}</priority></url>\n"
@@ -800,10 +1044,12 @@ def main():
     for s in KURUMSAL:
         kurumsal_sayfasi(site, s)
     sitemap_yaz(site)
+    kayit = bilgi_tabani_yaz(site)
 
     print(f"{len(site.sayfalar)} sayfa üretildi:")
     print(f"  {len(MODULLER)} araç · {len(site.rehberler)} rehber · "
           f"{len(yap['kategoriler'])} kategori · {len(KURUMSAL)} kurumsal sayfa")
+    print(f"  danışma bilgi tabanı: {kayit} kayıt")
     return 0
 
 

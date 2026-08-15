@@ -47,7 +47,15 @@ CIFTLER = [
     ("murekkep-2", "kagit", 4.5, "ikincil metin / sayfa"),
     ("murekkep-3", "yuzey", 4.5, "etiket"),
     ("murekkep-3", "yuzey-alt", 4.5, "etiket / künye şeridi"),
-    ("vurgu", "yuzey", 4.5, "bağlantı ve kurumsal vurgu"),
+    # Marka: yüzey üstündeki vurgu ile kabuk zemini AYRI jetonlardır.
+    # İkisi de ayrı ayrı ölçülmelidir; birinin geçmesi diğerini kurtarmaz.
+    ("marka", "yuzey", 4.5, "marka vurgusu / kart"),
+    ("marka", "kagit", 4.5, "marka vurgusu / sayfa"),
+    ("marka", "marka-zemin", 4.5, "marka vurgusu / kendi zemini"),
+    ("bant-yazi", "marka-bant", 4.5, "kırmızı bant yazısı (gezinme, düğme)"),
+    ("bant-yazi", "marka-bant-2", 4.5, "kırmızı bant yazısı / vurgulu hâl"),
+    ("serit-yazi", "marka-bant-2", 4.5, "kurum şeridi yazısı"),
+    ("vurgu", "yuzey", 4.5, "bağlantı ve yapısal vurgu"),
     ("vurgu", "kagit", 4.5, "vurgu / sayfa"),
     ("vurgu", "vurgu-zemin", 4.5, "vurgu / kendi zemini"),
     ("turkuaz", "yuzey", 4.5, "güvence rengi"),
@@ -57,18 +65,18 @@ CIFTLER = [
     ("uyari", "yuzey", 4.5, "uyarı"),
     ("uyari", "uyari-zemin", 4.5, "uyarı / kendi zemini"),
     ("bilgi", "bilgi-zemin", 4.5, "bilgi / kendi zemini"),
-    ("dugme-yazi", "vurgu", 4.5, "birincil düğme yazısı"),
 ]
 
-# Koyu kurumsal şerit ve alt bilgi sabit renklerle çalışır.
+# Alt bilgi ve teminat çubuğu sabit renklerle çalışır.
+# Alt bilgi zemini açık temada #151A21, koyu temada daha da koyudur;
+# bu yüzden açık tema değeri en kötü hâldir ve onu ölçmek yeterlidir.
 SABIT = [
-    ("#C9D6E6", "#0B2545", 4.5, "kurum şeridi yazısı"),
-    ("#B9C7D8", "#0B2545", 4.5, "alt bilgi gövdesi"),
-    ("#8FA4BD", "#0B2545", 4.5, "alt bilgi başlığı"),
-    ("#93A7BF", "#0B2545", 4.5, "alt bilgi yasal notu"),
-    ("#D8E2EE", "#0B2545", 4.5, "alt bilgi bağlantısı"),
+    ("#C3CCD6", "#151A21", 4.5, "alt bilgi gövdesi"),
+    ("#96A3B1", "#151A21", 4.5, "alt bilgi başlığı"),
+    ("#9AA7B4", "#151A21", 4.5, "alt bilgi yasal notu"),
+    ("#E2E8EF", "#151A21", 4.5, "alt bilgi bağlantısı"),
     ("#FFFFFF", "#0A6E6B", 4.5, "teminat çubuğu — kapsanan"),
-    ("#FFFFFF", "#A32014", 4.5, "teminat çubuğu — açıkta"),
+    ("#FFFFFF", "#8E1B12", 4.5, "teminat çubuğu — açıkta"),
 ]
 
 

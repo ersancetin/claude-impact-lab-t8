@@ -10,23 +10,54 @@
   "dogrulama": "tek",
   "guncelleme": "2026-08-15",
   "dayanaklar": [
-    {"ad": "5684 sayılı Sigortacılık Kanunu m.22", "aciklama": "Sigorta eksperliğini ve eksperin bağımsızlığını düzenler."},
-    {"ad": "Sigorta Eksperleri Yönetmeliği", "aciklama": "Eksperin görevlendirilmesi, rapor düzenlenmesi ve hakem eksper uygulamasına ilişkin usul kurallarını içerir."}
+    {
+      "ad": "5684 sayılı Sigortacılık Kanunu m.22",
+      "aciklama": "Sigorta eksperliğini ve eksperin bağımsızlığını düzenler."
+    },
+    {
+      "ad": "Sigorta Eksperleri Yönetmeliği",
+      "aciklama": "Eksperin görevlendirilmesi, rapor düzenlenmesi ve hakem eksper uygulamasına ilişkin usul kurallarını içerir."
+    }
   ],
   "sss": [
-    {"soru": "İtiraz için süre var mı?",
-     "cevap": "Uygulamada rapor tebliğinden itibaren onbeş gün içinde yazılı itiraz beklenir. Sürenin kaçırılması tazminat hakkını doğrudan düşürmese de itirazın değerlendirilmesini zorlaştırır; gecikmeden yazılı başvurun."},
-    {"soru": "İkinci eksperin ücretini kim öder?",
-     "cevap": "Sigortacı tarafından görevlendirilen eksperin ücreti sigortacıya aittir. Kendi seçtiğiniz bağımsız eksperin ücretini ise siz karşılarsınız; bu masraf, tazminat talebinizin içinde ayrıca istenebilir."},
-    {"soru": "Bağımsız eksper raporu mahkemede işe yarar mı?",
-     "cevap": "Bağlayıcı değildir ama delil değeri taşır; özellikle hasar fotoğraflarıyla desteklendiğinde bilirkişi incelemesine yön verir."},
-    {"soru": "Eksper hiç gelmediyse ne yapmalıyım?",
-     "cevap": "Sigorta şirketine yazılı olarak başvurup görevlendirme talep edin ve başvurunuzun kaydını saklayın. Yanıt alamazsanız Sigorta Tahkim Komisyonu yolu açıktır."}
+    {
+      "soru": "İtiraz için süre var mı?",
+      "cevap": "Uygulamada rapor tebliğinden itibaren onbeş gün içinde yazılı itiraz beklenir. Sürenin kaçırılması tazminat hakkını doğrudan düşürmese de itirazın değerlendirilmesini zorlaştırır; gecikmeden yazılı başvurun."
+    },
+    {
+      "soru": "İkinci eksperin ücretini kim öder?",
+      "cevap": "Sigortacı tarafından görevlendirilen eksperin ücreti sigortacıya aittir. Kendi seçtiğiniz bağımsız eksperin ücretini ise siz karşılarsınız; bu masraf, tazminat talebinizin içinde ayrıca istenebilir."
+    },
+    {
+      "soru": "Bağımsız eksper raporu mahkemede işe yarar mı?",
+      "cevap": "Bağlayıcı değildir ama delil değeri taşır; özellikle hasar fotoğraflarıyla desteklendiğinde bilirkişi incelemesine yön verir."
+    },
+    {
+      "soru": "Eksper hiç gelmediyse ne yapmalıyım?",
+      "cevap": "Sigorta şirketine yazılı olarak başvurup görevlendirme talep edin ve başvurunuzun kaydını saklayın. Yanıt alamazsanız Sigorta Tahkim Komisyonu yolu açıktır."
+    }
   ],
   "arac": [
-    {"id": "dilekce", "ad": "Dilekçe üretici", "ozet": "Eksper raporuna itiraz dilekçesini doldurun."}
+    {
+      "id": "dilekce",
+      "ad": "Dilekçe üretici",
+      "ozet": "Eksper raporuna itiraz dilekçesini doldurun."
+    }
   ],
-  "ilgili": ["dask-hasar-ihbari", "sigortaciya-yazili-basvuru", "sigorta-tahkim-komisyonu"]
+  "ilgili": [
+    "dask-hasar-ihbari",
+    "sigortaciya-yazili-basvuru",
+    "sigorta-tahkim-komisyonu"
+  ],
+  "anahtar": [
+    "eksper",
+    "eksper raporu",
+    "itiraz",
+    "ikinci eksper",
+    "hakem eksper",
+    "bağımsız eksper",
+    "rapor"
+  ]
 }
 ---
 Sigorta sürecinde en çok kaçırılan basamak budur: eksper raporu, tazminat tutarını fiilen

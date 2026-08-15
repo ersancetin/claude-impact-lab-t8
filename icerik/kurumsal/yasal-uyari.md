@@ -3,7 +3,14 @@
   "ad": "Yasal uyarı",
   "sira": 4,
   "baslik": "Bu platform hukuki tavsiye vermez",
-  "ozet": "Buradaki bilgiler genel bilgilendirme amaçlıdır, avukatlık hizmetinin yerine geçmez ve somut olayınıza uygulanabilirliği garanti edilmez."
+  "ozet": "Buradaki bilgiler genel bilgilendirme amaçlıdır, avukatlık hizmetinin yerine geçmez ve somut olayınıza uygulanabilirliği garanti edilmez.",
+  "anahtar": [
+    "yasal uyarı",
+    "hukuki tavsiye",
+    "avukat",
+    "sorumluluk",
+    "adli yardım"
+  ]
 }
 ---
 ## Kapsam

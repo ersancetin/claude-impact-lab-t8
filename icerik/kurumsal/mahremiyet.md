@@ -3,7 +3,18 @@
   "ad": "Mahremiyet",
   "sira": 3,
   "baslik": "Verileriniz cihazınızdan çıkmıyor",
-  "ozet": "Sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok. Bu bir politika tercihi değil, mimari bir karardır."
+  "ozet": "Sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok. Bu bir politika tercihi değil, mimari bir karardır.",
+  "anahtar": [
+    "mahremiyet",
+    "veri",
+    "kişisel veri",
+    "kvkk",
+    "çerez",
+    "analitik",
+    "saklanıyor mu",
+    "gizlilik",
+    "sunucu"
+  ]
 }
 ---
 ## Mimari karar

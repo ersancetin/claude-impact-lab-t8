@@ -1,11 +1,29 @@
 # Tasarım Sistemi
 
 **Ürün:** Deprem Haklarım · **Kod:** [`docs/assets/tasarim.css`](./docs/assets/tasarim.css)
-**Sürüm:** 2 — kurumsal sivil toplum kimliği · **Son güncelleme:** 2026-08-15
+**Sürüm:** 3 — kırmızı kurumsal kimlik, katmanlı gezinme, danışma penceresi · **Son güncelleme:** 2026-08-15
 
 ---
 
-## 1. Sürüm 2 neyi değiştirdi?
+## 1. Sürüm 3 neyi değiştirdi?
+
+Sürüm 2 kurumsal ama **düz**dü: üç başlıklı ince bir menü, altında mobilde yirmi
+bağlantılık düz bir liste. Kullanıcı neyin nerede olduğunu ancak tıklayarak
+öğreniyordu. Palet de lacivert ağırlıklıydı; sayfa "kamu formu" gibi duruyordu.
+
+| Sürüm 2 | Sürüm 3 |
+|---|---|
+| Üç başlıklı ince menü | **Mega menü** — araçlar işlevine göre gruplu, 9 konu üç sütunda, açıklamalarıyla |
+| Lacivert kurumsal kabuk | **Kırmızı kurumsal bant** (üst şerit + başlık bandı) |
+| Kırmızı yalnızca durum rengiydi | Kırmızı **iki ayrı iş** yapar; jetonları ayrıldı (bkz. Bölüm 4) |
+| Araç etiketi "Araç 1", "Araç 2" | Etiket artık **işlev grubu**: `SÜRE VE HAK`, `DİLEKÇE VE BAŞVURU` |
+| Araçlara ancak menüden ulaşılırdı | Kahramanın altında **hızlı erişim şeridi** — dördü de katlamanın üstünde |
+| Yardım kanalı yok | **Danışma penceresi** — sunucusuz soru/cevap (Bölüm 10) |
+| Durum yalnızca renkle | Süre satırlarında **yazılı durum etiketi** (renk körlüğü) |
+
+---
+
+## 2. Sürüm 2 neyi değiştirmişti?
 
 Sürüm 1 tek sütunlu, "resmî form" hissi veren bir yerleşimdi. Modüller birbirinden bağımsız
 sayfalar gibi duruyordu; kullanıcı hangi modülün neye yaradığını ancak açtığında anlıyordu.
@@ -24,7 +42,7 @@ ayrıldığı, her sayfanın nerede olduğunu künye şeridinden okunabildiği b
 
 ---
 
-## 2. Tasarımın değişmeyen kuralı
+## 3. Tasarımın değişmeyen kuralı
 
 > Bu siteyi kullanan kişi muhtemelen **evini kaybetmiş, uykusuz, telefonunun şarjı azalmış**
 > ve şebekesi zayıf bir yerde. Tasarımın tek işi, o kişinin bir sonraki adımı görmesini
@@ -42,32 +60,44 @@ ayrıldığı, her sayfanın nerede olduğunu künye şeridinden okunabildiği b
 
 ---
 
-## 3. Renk paleti — neden bu renkler?
+## 4. Renk paleti — ve kırmızının iki işi
 
-Kullanıcı, DASK ve Türk Reasürans gibi kurumların kurumsal renklerini referans göstererek
-"Türkiye'ye özgü" bir palet istedi. Bu kurumların resmî kurumsal kimlik kılavuzlarına
-geliştirme ortamının ağ politikası nedeniyle **erişilemedi** (`dask.gov.tr` ve
-`turkreasurans.com.tr` engelli). Bu yüzden marka renk kodlarını tahmin etmek yerine palet,
-**belgelenebilir kültürel ve kurumsal kaynaklardan** türetildi:
+Kurumsal kimlik kırmızıdır. Ancak bu projede kırmızının **zaten bir anlamı vardı**:
+"süren doldu", "teminat açığı". Marka rengi ile tehlike rengi karışırsa kullanıcı
+gerçek bir riski marka süsü sanar. Çözüm üç katmanlı:
 
-| Jeton | Kaynak | Gerekçe |
+**1. Jetonlar ayrıldı.** Kırmızı tek bir değişken değildir:
+
+| Jeton | Açık tema | Koyu tema | İş |
+|---|---|---|---|
+| `--marka` | `#C8102E` | `#FF8A99` | Açık yüzey **üstünde** okunan vurgu: çizgi, küçük başlık, sayı |
+| `--marka-bant` | `#C8102E` | `#8E0C20` | Kırmızı **kabuk zemini**: üst bant, birincil düğme, danışma başlığı |
+| `--marka-bant-2` | `#A00C24` | `#6D0918` | Koyu kabuk: kurum şeridi, vurgulu hâl |
+| `--tehlike` | `#8E1B12` | `#F5948A` | **Yalnızca** süre doldu / açıkta kalan tutar |
+
+`--marka` ile `--marka-bant` ayrılmazsa koyu temada bant açık pembeye döner ve
+üstündeki beyaz yazı okunmaz hâle gelir. Bu ayrım kozmetik değil, erişilebilirlik
+gereğidir; `scripts/kontrast.py` ikisini **ayrı ayrı** ölçer.
+
+**2. Yerleşim kuralı.** Marka kırmızısı yalnızca kabukta ve birincil eylemde bulunur;
+içerik gövdesinde asla durum taşımaz. Tehlike kırmızısı yalnızca gövdede bulunur;
+kabukta asla görünmez. İkisi aynı ekran bölgesinde yan yana gelmez.
+
+**3. Renge bağlı olmayan işaret.** Tehlike her zaman renkten bağımsız bir sinyal
+taşır: kartta **6px** çubuk (diğerleri 4px) ve süre satırlarında yazılı durum
+etiketi — `SÜRE DOLDU` / `SÜRE YAKLAŞIYOR` / `SÜRE İŞLİYOR`. Renk körlüğünde de
+ayırt edilir (WCAG 1.4.1: bilgi yalnızca renkle aktarılamaz).
+
+### Diğer renkler
+
+| Jeton | Değer | Anlam |
 |---|---|---|
-| **Çini laciverdi** `#0E3A6B` | İznik çinisinin **kobalt mavisi** — 15. yy'dan itibaren tek renkli İznik dekorunun temel rengi | Türk kamu, sigorta ve reasürans kurumlarının kurumsal dili bu lacivert-mavi ailesindedir. Ana kurumsal renk. |
-| **İznik türkuazı** `#0A6E6B` | 16. yy'ın ikinci çeyreğinde İznik paletine giren **bakır-turkuaz** | "Türkuaz" sözcüğü zaten "Türk taşı" demektir. Güvence, teminat ve olumlu durum rengi. |
-| **Kökboya kırmızısı** `#A32014` | Osmanlı'nın kökboya (alizarin) ile elde ettiği ve Avrupa'da **"Turkey red"** diye anılan kırmızı | Tehlike ve açıkta kalan tutar rengi. Solmayan, ağır bir kırmızı. |
-| **Bayrak kırmızısı** `#E30A17` | Türk bayrağı kırmızısı | **Yalnızca marka işaretinin köşe çentiğinde.** Durum rengi olarak asla kullanılmaz. |
-| **Amber** `#855100` | — | Uyarı, süre yaklaşıyor, "geçmiş uygulama" etiketi |
+| `--vurgu` çini laciverdi | `#14395F` | **Yapı**: bağlantı, kart çubuğu, bölüm ayracı |
+| `--turkuaz` İznik türkuazı | `#0A6E6B` | **Güvence**: kalıcı hak, teminat altında |
+| `--uyari` amber | `#855100` | Süre yaklaşıyor, geçmiş uygulama (kalıcı hak değil) |
 
-### Renk anlamı sabittir
-
-- **Lacivert** = kurum, gezinme, sıradaki adım
-- **Türkuaz** = güvence altında, kalıcı hak
-- **Kırmızı** = süre doldu, teminat açığı, tehlike
-- **Amber** = süre yaklaşıyor, geçmiş uygulama (kalıcı hak değil)
-
-Kırmızı asla dekoratif kullanılmaz. Kriz sitesinde her kırmızı gerçek bir riski göstermelidir.
-Bayrak kırmızısının durum rengi olarak kullanılmaması da bu yüzdendir: markanın rengiyle
-tehlikenin rengi karışmamalıdır.
+Lacivert ve türkuaz gerekçesi sürüm 2'den korundu: İznik çinisinin kobalt mavisi ve
+bakır turkuazı; "türkuaz" sözcüğü zaten "Türk taşı" demektir.
 
 ### Kontrast ölçümü
 
@@ -75,23 +105,24 @@ tehlikenin rengi karışmamalıdır.
 python3 scripts/kontrast.py
 ```
 
-43 renk çifti (açık tema, koyu tema, koyu kurumsal şerit) ölçülür ve tamamının
-**4.5:1 eşiğinin üstünde** olması beklenir. En düşük ölçüm 4.92:1'dir.
+52 renk çifti (açık tema, koyu tema, alt bilgi ve teminat çubuğu) ölçülür; tamamının
+**4.5:1 eşiğinin üstünde** olması beklenir. En düşük ölçüm 4.95:1'dir.
 
 ---
 
-## 4. Ayırt edici işaretler
+## 5. Ayırt edici işaretler
 
 Yaygın yapay zekâ arayüz kalıplarından (yuvarlak köşe, krem/turuncu palet, yumuşak gölge,
 gradyan) bilinçli olarak uzaklaşıldı.
 
 | Öge | Karar |
 |---|---|
-| **Köşe** | `border-radius: 0` — her yerde |
-| **Gölge** | Hiç yok. Derinlik yerine **1px çizgi** |
+| **Köşe** | Kart ve panelde `0`. Yalnızca **etkileşimli** ögede 3px (düğme, alan, rozet) — kurumsal duruşu kart keskinliği taşır |
+| **Gölge** | Sayfa içinde hiç yok; derinlik yerine **1px çizgi**. Tek istisna **üste binen katman** (mega menü, danışma penceresi) — bunlar sayfadan kopmak zorunda |
 | **Gradyan** | Hiç yok |
 | **Kurum şeridi** | Sayfanın en üstünde koyu lacivert ince şerit — kurumsal siteleri kurumsal yapan katman |
-| **Marka** | Logo yok; kare çerçeve içinde monospace kısaltma + bayrak kırmızısı köşe çentiği |
+| **Marka** | Logo yok; kırmızı bant üzerinde **beyaz kare** içinde monospace kısaltma |
+| **Menü** | Mega panel; açılış saf CSS (`:hover` + `:focus-within`) — JS yok, klavyeyle de açılır |
 | **Kart** | Gölge yerine **4px vurgu çubuğu** — durumu renkle taşır |
 | **Modül kartı** | Üstten 4px lacivert çubuk; rehber kartı soldan türkuaz çubuk |
 | **Mikro etiket** | Monospace + versal + geniş harf aralığı |
@@ -101,7 +132,7 @@ gradyan) bilinçli olarak uzaklaşıldı.
 
 ---
 
-## 5. Yerleşim
+## 6. Yerleşim
 
 | Jeton | Değer | Kullanım |
 |---|---|---|
@@ -114,22 +145,27 @@ gradyan) bilinçli olarak uzaklaşıldı.
 Sayfa iskeleti:
 
 ```
-kurum-serit      koyu lacivert şerit: kurum adı, nitelik, tema düğmesi
-ust              marka + ana gezinme + mobil menü (details, JS yok)
+kurum-serit      koyu kırmızı şerit: kurum adı, nitelik, tema düğmesi
+ust              kırmızı bant: marka + mega gezinme + "Soru sor" + mobil menü
 kunye            breadcrumb — nerede olduğunuzu söyler
 main             sayfa gövdesi
 alt              4 sütunlu kurumsal alt bilgi + yasal şerit
+danisma          sağ altta sabit: soru penceresi (her sayfada)
 ```
 
 ---
 
-## 6. Bileşen sözlüğü
+## 7. Bileşen sözlüğü
 
 | Sınıf | İş |
 |---|---|
 | `.kap` / `.kap-genis` | Okuma sütunu / kurumsal sütun |
 | `.kurum-serit` | Üst kurum şeridi |
-| `.gezinme` / `.gezinme-mobil` | Ana gezinme / `<details>` tabanlı mobil menü |
+| `.gezinme` + `.mega` | Mega gezinme paneli (saf CSS açılır) |
+| `.gezinme-mobil` | `<details>` tabanlı mobil menü, işlev gruplarıyla |
+| `.hizli` / `.hizli-kart` | Kahraman altı hızlı erişim şeridi |
+| `.danisma` / `.danisma-ac` / `.balon` | Danışma penceresi, açma düğmesi, konuşma balonu |
+| `.sure-durum` | Renge bağlı olmayan durum etiketi (SÜRE DOLDU vb.) |
 | `.kunye` | Breadcrumb |
 | `.kahraman` + `.sure-panel` | Giriş bölümü ve süre paneli |
 | `.olcut-serit` / `.olcut` | Kurumsal sayı şeridi |
@@ -151,7 +187,7 @@ alt              4 sütunlu kurumsal alt bilgi + yasal şerit
 
 ---
 
-## 7. Neden framework yok?
+## 8. Neden framework yok?
 
 | Yaklaşım | Sorun |
 |---|---|
@@ -168,25 +204,57 @@ Bölüm 1) — sabit şablon + alan yerleştirme.
 
 ---
 
-## 8. Erişilebilirlik
+## 9. Erişilebilirlik
 
-- **Kontrast:** 43 çift, iki temada da ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
+- **Kontrast:** 52 çift, iki temada da ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
 - **Klavye:** her etkileşimli öge erişilebilir, `:focus-visible` 3px belirgin
 - **"İçeriğe atla"** bağlantısı her sayfada
 - **Sonuç bölgeleri** `aria-live="polite"`
 - Gezinme `<nav aria-label>`, künye `aria-current="page"`
-- Mobil menü ve SSS **JavaScript olmadan** çalışır (`<details>`)
+- Mobil menü, mega menü ve SSS **JavaScript olmadan** çalışır
+- **Renk tek başına bilgi taşımaz** (WCAG 1.4.1): süre durumları yazıyla da işaretlenir
+- Danışma penceresi `Esc` ile kapanır, `role="log"` + `aria-live` ile okunur
 - `prefers-reduced-motion` ve `prefers-color-scheme` desteklenir
 - Semantik HTML: `fieldset`/`legend`, gerçek `label`, gerçek `button`
 - **Yazdırma stili**: gezinme, künye, içindekiler ve düğmeler gizlenir
 
 ---
 
-## 9. Yapılacaklar
+## 10. Danışma penceresi
+
+Her sayfanın sağ altında, kabuktaki "Soru sor" düğmesiyle de açılan bir soru penceresi.
+
+**Ne değildir:** dil modeli değildir, metin üretmez, tahmin etmez.
+**Ne yapar:** soruyu sitedeki doğrulanmış içerik künyeleriyle eşleştirir ve ilgili
+rehbere, araca ya da süreye yönlendirir.
+
+Bunun bir tercih değil **zorunluluk** olmasının iki nedeni var: (1) platformun çekirdek
+taahhüdü "girdiğiniz hiçbir bilgi cihazdan çıkmaz" — soruyu bir API'ye göndermek,
+kullanıcının hukuki durumunu üçüncü tarafa aktarmak olurdu; (2) statik bir sitede API
+anahtarı saklanamaz, herkese açık olurdu.
+
+| Parça | Dosya | İş |
+|---|---|---|
+| Bilgi tabanı | `docs/assets/bilgi-tabani.js` | **Üretilir.** `icerik/`, `kaynak/modul/` ve `data/parametreler.json`'dan 38 kayıt |
+| Arama ve pencere | `docs/assets/danisma.js` | Normalleştirme, önek eşleşmesi, puanlama, arayüz |
+| Isabet sınaması | `scripts/danisma-kontrol.mjs` | 17 sorunun beklenen kaydı ilk sırada döndürmesi |
+
+**Uydurmama kuralı:** cevap metni tarayıcıda üretilmez; yalnızca bilgi tabanındaki
+künye metinleri gösterilir. Eşleşme yoksa "bulamadım" denir, yaklaştırma yapılmaz.
+Her cevap kaynak bağını ve o kaydın **doğrulama rozetini** taşır.
+
+**Arama:** Türkçe eklemeli bir dil olduğu için ek listesi yerine önek eşleşmesi
+kullanılır ("verilerim" → "veri" anahtarını bulur). Soru "kaç gün / ne zaman" tipiyse
+süre kayıtları öne çıkar; "nedir / nasıl" tipiyse konuyu anlatan rehber öne çıkar.
+
+---
+
+## 11. Yapılacaklar
 
 - [ ] Kalan rehber metinleri (Bilgi Merkezi'nde 5 kategori henüz boş)
 - [ ] Katmanlı SVG teminat kesiti (şu an oransal çubuk var)
 - [ ] Çevrimdışı çalışma için service worker
+- [ ] Danışma: eş anlamlı sözlüğü ("ev sahibi" ↔ "malik", "tazminat" ↔ "ödeme")
 - [ ] Çok dilli içerik (TR, AR, KU)
 - [ ] `.ics` takvim dışa aktarımı
 - [ ] 🔴 Şablonların avukat onayı — yayın öncesi zorunlu

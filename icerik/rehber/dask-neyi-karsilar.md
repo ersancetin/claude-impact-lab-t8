@@ -10,27 +10,71 @@
   "dogrulama": "coklu",
   "guncelleme": "2026-08-15",
   "dayanaklar": [
-    {"ad": "6305 sayılı Afet Sigortaları Kanunu", "aciklama": "Zorunlu deprem sigortasını ve Doğal Afet Sigortaları Kurumunu düzenler."},
-    {"ad": "ZDS Genel Şartları A.1", "aciklama": "Teminat kapsamına giren zararları sayar: deprem, deprem sonucu yangın, infilak, tsunami ve yer kayması."},
-    {"ad": "ZDS Genel Şartları A.2", "aciklama": "Sigorta kapsamı dışında kalan yapıları belirler."},
-    {"ad": "ZDS Genel Şartları A.3", "aciklama": "Teminat dışında kalan hâlleri sayar; bedeni zararlar ve manevi tazminat buradadır."}
+    {
+      "ad": "6305 sayılı Afet Sigortaları Kanunu",
+      "aciklama": "Zorunlu deprem sigortasını ve Doğal Afet Sigortaları Kurumunu düzenler."
+    },
+    {
+      "ad": "ZDS Genel Şartları A.1",
+      "aciklama": "Teminat kapsamına giren zararları sayar: deprem, deprem sonucu yangın, infilak, tsunami ve yer kayması."
+    },
+    {
+      "ad": "ZDS Genel Şartları A.2",
+      "aciklama": "Sigorta kapsamı dışında kalan yapıları belirler."
+    },
+    {
+      "ad": "ZDS Genel Şartları A.3",
+      "aciklama": "Teminat dışında kalan hâlleri sayar; bedeni zararlar ve manevi tazminat buradadır."
+    }
   ],
   "sss": [
-    {"soru": "DASK'ım varken eşyalarım için ödeme alabilir miyim?",
-     "cevap": "Hayır. DASK yalnızca **bina** teminatıdır. Ev eşyası için ayrıca ihtiyari konut/eşya sigortası gerekir."},
-    {"soru": "Deprem sırasında yakınım hayatını kaybetti; DASK ödeme yapar mı?",
-     "cevap": "Hayır. Ölüm dâhil tüm bedeni zararlar ve manevi tazminat talepleri teminat dışıdır. Bunların karşılığı hayat sigortası, ferdi kaza sigortası, SGK hakları ve tazminat davalarında aranır."},
-    {"soru": "Kiracıyım, DASK yaptırabilir miyim?",
-     "cevap": "DASK bina için ve malik adına düzenlenir; kiracı poliçenin lehtarı değildir. Ancak kendi ev eşyanız için konut/eşya sigortası yaptırabilirsiniz."},
-    {"soru": "Enkaz kaldırma masrafını DASK karşılar mı?",
-     "cevap": "Hayır. Enkaz kaldırma, teminat dışında sayılan kalemler arasındadır."},
-    {"soru": "Ödeme binanın piyasa değeri üzerinden mi yapılır?",
-     "cevap": "Hayır. Sigorta bedeli, yapı tarzına ve brüt yüzölçümüne göre belirlenen metrekare birim maliyetiyle hesaplanır; **arsa değeri teminata dâhil değildir** ve tutar azami teminatı aşamaz."}
+    {
+      "soru": "DASK'ım varken eşyalarım için ödeme alabilir miyim?",
+      "cevap": "Hayır. DASK yalnızca **bina** teminatıdır. Ev eşyası için ayrıca ihtiyari konut/eşya sigortası gerekir."
+    },
+    {
+      "soru": "Deprem sırasında yakınım hayatını kaybetti; DASK ödeme yapar mı?",
+      "cevap": "Hayır. Ölüm dâhil tüm bedeni zararlar ve manevi tazminat talepleri teminat dışıdır. Bunların karşılığı hayat sigortası, ferdi kaza sigortası, SGK hakları ve tazminat davalarında aranır."
+    },
+    {
+      "soru": "Kiracıyım, DASK yaptırabilir miyim?",
+      "cevap": "DASK bina için ve malik adına düzenlenir; kiracı poliçenin lehtarı değildir. Ancak kendi ev eşyanız için konut/eşya sigortası yaptırabilirsiniz."
+    },
+    {
+      "soru": "Enkaz kaldırma masrafını DASK karşılar mı?",
+      "cevap": "Hayır. Enkaz kaldırma, teminat dışında sayılan kalemler arasındadır."
+    },
+    {
+      "soru": "Ödeme binanın piyasa değeri üzerinden mi yapılır?",
+      "cevap": "Hayır. Sigorta bedeli, yapı tarzına ve brüt yüzölçümüne göre belirlenen metrekare birim maliyetiyle hesaplanır; **arsa değeri teminata dâhil değildir** ve tutar azami teminatı aşamaz."
+    }
   ],
   "arac": [
-    {"id": "teminat", "ad": "Teminat açığı hesabı", "ozet": "Binanızın sigorta bedelini, muafiyeti ve açıkta kalan tutarı hesaplayın."}
+    {
+      "id": "teminat",
+      "ad": "Teminat açığı hesabı",
+      "ozet": "Binanızın sigorta bedelini, muafiyeti ve açıkta kalan tutarı hesaplayın."
+    }
   ],
-  "ilgili": ["konut-sigortasi-ve-eksik-sigorta", "dask-hasar-ihbari", "hak-sahipligi-ve-afet-konutu"]
+  "ilgili": [
+    "konut-sigortasi-ve-eksik-sigorta",
+    "dask-hasar-ihbari",
+    "hak-sahipligi-ve-afet-konutu"
+  ],
+  "anahtar": [
+    "dask",
+    "zorunlu deprem sigortası",
+    "kapsam",
+    "teminat dışı",
+    "eşya",
+    "enkaz kaldırma",
+    "kira kaybı",
+    "alternatif konaklama",
+    "bedeni zarar",
+    "manevi tazminat",
+    "neyi karşılar",
+    "neyi karşılamaz"
+  ]
 }
 ---
 Zorunlu deprem sigortası (DASK) Türkiye'de en yaygın bilinen afet sigortasıdır; aynı zamanda
