@@ -1,0 +1,402 @@
+/* ============================================================
+   DEPREM HAKLARIM — TASARIM SİSTEMİ
+   Kriz anında okunabilirlik önceliklidir.
+   Kurallar: keskin köşe, gölge yok, gradyan yok, tek vurgu rengi.
+   Bağımlılık yok. Web fontu yok. Tek CSS dosyası.
+   ============================================================ */
+
+/* --- 1. Jetonlar: açık tema (varsayılan) ------------------- */
+:root {
+  --kagit:        #F4F6F4;
+  --yuzey:        #FFFFFF;
+  --yuzey-alt:    #ECEFEC;
+  --murekkep:     #14181A;
+  --murekkep-2:   #4B5560;
+  --murekkep-3:   #5E686F;
+  --cizgi:        #D5DBD6;
+  --cizgi-koyu:   #B4BDB6;
+
+  --vurgu:        #0B6B5B;
+  --vurgu-koyu:   #075044;
+  --vurgu-zemin:  #E4EFEB;
+
+  --uyari:        #8A5200;
+  --uyari-zemin:  #FBF0DE;
+  --tehlike:      #A02016;
+  --tehlike-zemin:#FBE7E5;
+  --bilgi:        #1B4E7A;
+  --bilgi-zemin:  #E5EEF6;
+
+  --olcek:        4px;
+  --sinir:        1px solid var(--cizgi);
+  --dokun:        56px;              /* asgari dokunma hedefi */
+  --genislik:     44rem;
+
+  --f-metin: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+             "Helvetica Neue", Arial, sans-serif;
+  --dugme-yazi:   #FFFFFF;
+
+  --f-mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+             "Liberation Mono", monospace;
+
+  color-scheme: light;
+}
+
+/* --- 2. Jetonlar: koyu tema -------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="acik"]) {
+    --kagit:        #0D1012;
+    --yuzey:        #161A1D;
+    --yuzey-alt:    #1E2427;
+    --murekkep:     #E7EDEA;
+    --murekkep-2:   #9EAAB1;
+    --murekkep-3:   #7C888F;
+    --cizgi:        #2A3135;
+    --cizgi-koyu:   #3C464B;
+
+    --vurgu:        #4FC0A7;
+    --vurgu-koyu:   #7BD6C1;
+    --vurgu-zemin:  #102C27;
+
+    --uyari:        #E3A75C;
+    --uyari-zemin:  #2E2415;
+    --tehlike:      #EC8C80;
+    --tehlike-zemin:#2F1917;
+    --bilgi:        #7FB3DE;
+    --bilgi-zemin:  #14232F;
+    --dugme-yazi:   #06201B;
+
+    color-scheme: dark;
+  }
+}
+:root[data-tema="koyu"] {
+  --kagit:        #0D1012;
+  --yuzey:        #161A1D;
+  --yuzey-alt:    #1E2427;
+  --murekkep:     #E7EDEA;
+  --murekkep-2:   #9EAAB1;
+  --murekkep-3:   #7C888F;
+  --cizgi:        #2A3135;
+  --cizgi-koyu:   #3C464B;
+  --vurgu:        #4FC0A7;
+  --vurgu-koyu:   #7BD6C1;
+  --vurgu-zemin:  #102C27;
+  --uyari:        #E3A75C;
+  --uyari-zemin:  #2E2415;
+  --tehlike:      #EC8C80;
+  --tehlike-zemin:#2F1917;
+  --bilgi:        #7FB3DE;
+  --bilgi-zemin:  #14232F;
+  --dugme-yazi:   #06201B;
+  color-scheme: dark;
+}
+
+/* --- 3. Temel --------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--kagit);
+  color: var(--murekkep);
+  font-family: var(--f-metin);
+  font-size: 17px;
+  line-height: 1.62;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 40rem) { body { font-size: 18px; } }
+
+:focus-visible {
+  outline: 3px solid var(--vurgu);
+  outline-offset: 2px;
+}
+
+/* Kriz UX: hareket duyarlılığı */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* --- 4. Yerleşim ------------------------------------------ */
+.kap {
+  max-width: var(--genislik);
+  margin: 0 auto;
+  padding: 0 calc(var(--olcek) * 5);
+}
+
+.atla {
+  position: absolute; left: -9999px;
+  background: var(--vurgu); color: #fff;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
+  z-index: 100;
+}
+.atla:focus { left: calc(var(--olcek)*2); top: calc(var(--olcek)*2); }
+
+/* --- 5. Üst bar ------------------------------------------- */
+.ust {
+  border-bottom: var(--sinir);
+  background: var(--yuzey);
+  position: sticky; top: 0; z-index: 50;
+}
+.ust-ic {
+  max-width: var(--genislik);
+  margin: 0 auto;
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*5);
+  display: flex; align-items: center; gap: calc(var(--olcek)*3);
+}
+.marka {
+  font-weight: 700; letter-spacing: -.02em;
+  color: var(--murekkep); text-decoration: none;
+  font-size: 1.05rem; display: flex; align-items: center; gap: calc(var(--olcek)*2);
+}
+.marka::before {
+  content: ""; width: 6px; height: 22px;
+  background: var(--vurgu); flex: none;
+}
+.ust .bosluk { flex: 1; }
+
+.tema-dugme {
+  background: none; border: var(--sinir); color: var(--murekkep-2);
+  font: inherit; font-size: .8rem; cursor: pointer;
+  padding: calc(var(--olcek)*2) calc(var(--olcek)*3);
+  min-height: 40px;
+}
+.tema-dugme:hover { border-color: var(--vurgu); color: var(--vurgu); }
+
+/* --- 6. Tipografi ----------------------------------------- */
+h1, h2, h3 { letter-spacing: -.025em; line-height: 1.2; margin: 0 0 calc(var(--olcek)*3); }
+h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 750; }
+h2 { font-size: clamp(1.3rem, 3.5vw, 1.6rem); font-weight: 700; margin-top: calc(var(--olcek)*10); }
+h3 { font-size: 1.1rem; font-weight: 650; margin-top: calc(var(--olcek)*7); }
+p  { margin: 0 0 calc(var(--olcek)*4); }
+
+.giris { font-size: 1.1rem; color: var(--murekkep-2); }
+
+/* Ayırt edici öge: küçük etiketler mono + versal */
+.etiket {
+  font-family: var(--f-mono);
+  font-size: .7rem; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--murekkep-3); display: block;
+  margin-bottom: calc(var(--olcek)*2);
+}
+
+/* Kanun dayanağı — mono, ayırt edici */
+.dayanak {
+  font-family: var(--f-mono); font-size: .85rem;
+  color: var(--murekkep-2);
+  border-left: 3px solid var(--cizgi-koyu);
+  padding-left: calc(var(--olcek)*3);
+  margin: calc(var(--olcek)*4) 0;
+}
+
+a { color: var(--vurgu); text-underline-offset: 3px; }
+a:hover { color: var(--vurgu-koyu); }
+
+/* --- 7. Kart: sol vurgu çubuğu, gölge yok ------------------ */
+.kart {
+  background: var(--yuzey);
+  border: var(--sinir);
+  border-left: 4px solid var(--cizgi-koyu);
+  padding: calc(var(--olcek)*5);
+  margin-bottom: calc(var(--olcek)*4);
+}
+.kart.vurgulu  { border-left-color: var(--vurgu); }
+.kart.uyarili  { border-left-color: var(--uyari);   background: var(--uyari-zemin); }
+.kart.tehlikeli{ border-left-color: var(--tehlike); background: var(--tehlike-zemin); }
+.kart.bilgili  { border-left-color: var(--bilgi);   background: var(--bilgi-zemin); }
+.kart > :last-child { margin-bottom: 0; }
+
+/* --- 8. Büyük seçim düğmesi (ana giriş) -------------------- */
+.secim {
+  display: block; width: 100%; text-align: left;
+  background: var(--yuzey); color: var(--murekkep);
+  border: var(--sinir); border-left: 4px solid var(--vurgu);
+  padding: calc(var(--olcek)*5);
+  margin-bottom: calc(var(--olcek)*3);
+  text-decoration: none; cursor: pointer;
+  font: inherit; min-height: var(--dokun);
+  transition: background .12s, border-color .12s;
+}
+.secim:hover, .secim:focus-visible {
+  background: var(--vurgu-zemin); border-left-width: 8px;
+}
+.secim b { display: block; font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; }
+.secim span { display: block; color: var(--murekkep-2); font-size: .95rem; margin-top: calc(var(--olcek)*1); }
+
+/* --- 9. Düğmeler ------------------------------------------ */
+.dugme {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: calc(var(--olcek)*2);
+  background: var(--vurgu); color: var(--dugme-yazi);
+  border: 2px solid var(--vurgu);
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*6);
+  font: inherit; font-weight: 650; cursor: pointer;
+  min-height: var(--dokun); text-decoration: none;
+}
+.dugme:hover {
+  background: var(--vurgu-koyu); border-color: var(--vurgu-koyu);
+  color: var(--dugme-yazi);
+}
+
+/* İkincil düğme, birincilden SONRA tanımlanır: aynı özgüllükte
+   sonraki kural kazanır, böylece yazı rengi koyu temada da okunur. */
+.dugme.ikincil,
+.dugme.ikincil:hover {
+  background: transparent; color: var(--vurgu); border-color: var(--cizgi-koyu);
+}
+.dugme.ikincil:hover { background: var(--vurgu-zemin); border-color: var(--vurgu); color: var(--vurgu); }
+.dugme[disabled] { opacity: .45; cursor: not-allowed; }
+
+.dugme-sira { display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3); }
+
+/* --- 10. Form --------------------------------------------- */
+.alan { margin-bottom: calc(var(--olcek)*5); }
+.alan label { display: block; font-weight: 650; margin-bottom: calc(var(--olcek)*2); }
+.alan .ipucu { display: block; color: var(--murekkep-2); font-size: .9rem; margin-bottom: calc(var(--olcek)*2); }
+
+input[type="text"], input[type="date"], input[type="number"], select, textarea {
+  width: 100%; font: inherit;
+  background: var(--yuzey); color: var(--murekkep);
+  border: 2px solid var(--cizgi-koyu); border-radius: 0;
+  padding: calc(var(--olcek)*3);
+  min-height: var(--dokun);
+}
+textarea { min-height: 7rem; resize: vertical; }
+input:focus, select:focus, textarea:focus { border-color: var(--vurgu); outline: none; }
+
+fieldset { border: var(--sinir); padding: calc(var(--olcek)*4); margin: 0 0 calc(var(--olcek)*5); }
+legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
+
+.secenek {
+  display: flex; align-items: flex-start; gap: calc(var(--olcek)*3);
+  border: 2px solid var(--cizgi); padding: calc(var(--olcek)*4);
+  margin-bottom: calc(var(--olcek)*2); cursor: pointer; min-height: var(--dokun);
+}
+.secenek:hover { border-color: var(--vurgu); background: var(--vurgu-zemin); }
+.secenek input { margin-top: .3em; width: 22px; height: 22px; flex: none; accent-color: var(--vurgu); }
+.secenek span { flex: 1; }
+.secenek small { display: block; color: var(--murekkep-2); }
+
+/* --- 11. Adım göstergesi: kare, yuvarlak değil ------------- */
+.adimlar { display: flex; gap: calc(var(--olcek)*2); margin-bottom: calc(var(--olcek)*6); }
+.adim {
+  flex: 1; height: 6px; background: var(--cizgi);
+}
+.adim.aktif { background: var(--vurgu); }
+.adim.bitti { background: var(--vurgu-koyu); }
+
+.adim-no {
+  font-family: var(--f-mono); font-weight: 700;
+  background: var(--vurgu); color: #fff;
+  width: 32px; height: 32px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+}
+
+/* --- 12. Durum rozetleri ---------------------------------- */
+.rozet {
+  display: inline-block; font-family: var(--f-mono);
+  font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+  padding: calc(var(--olcek)*1) calc(var(--olcek)*2);
+  border: 1px solid currentColor; font-weight: 600;
+}
+.rozet.iyi      { color: var(--vurgu); }
+.rozet.uyari    { color: var(--uyari); }
+.rozet.tehlike  { color: var(--tehlike); }
+.rozet.notr     { color: var(--murekkep-3); }
+
+/* Doğrulanmamış veri rozeti — dürüstlük gereği */
+.rozet.dogrulanmamis { color: var(--uyari); }
+
+/* --- 13. Geri sayım listesi ------------------------------- */
+.sure-liste { list-style: none; padding: 0; margin: 0; }
+.sure-oge {
+  border: var(--sinir); border-left: 4px solid var(--cizgi-koyu);
+  background: var(--yuzey);
+  padding: calc(var(--olcek)*4);
+  margin-bottom: calc(var(--olcek)*3);
+  display: flex; gap: calc(var(--olcek)*4); align-items: flex-start;
+}
+.sure-oge.yakin  { border-left-color: var(--uyari);   background: var(--uyari-zemin); }
+.sure-oge.gecti  { border-left-color: var(--tehlike); background: var(--tehlike-zemin); }
+.sure-oge.acik   { border-left-color: var(--vurgu); }
+.sure-sayi {
+  font-family: var(--f-mono); font-size: 1.5rem; font-weight: 700;
+  line-height: 1.1; min-width: 4.5rem; text-align: right; flex: none;
+}
+.sure-govde { flex: 1; }
+.sure-govde b { display: block; font-size: 1.02rem; }
+.sure-govde small { color: var(--murekkep-2); display: block; margin-top: calc(var(--olcek)*1); }
+
+/* --- 14. Tablo -------------------------------------------- */
+.tablo-sar { overflow-x: auto; margin-bottom: calc(var(--olcek)*5); }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+th, td { text-align: left; padding: calc(var(--olcek)*3); border-bottom: var(--sinir); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em;
+     text-transform: uppercase; color: var(--murekkep-3); }
+td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+/* --- 15. Teminat çubuğu (katmanlı kesit) ------------------ */
+.teminat-cubuk {
+  display: flex; height: 44px; border: var(--sinir); margin-bottom: calc(var(--olcek)*2);
+  overflow: hidden;
+}
+.teminat-dilim {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: .72rem; font-weight: 700;
+  color: #fff; min-width: 0; overflow: hidden; white-space: nowrap;
+}
+.teminat-dilim.kapsanan { background: var(--vurgu); }
+.teminat-dilim.acikta   { background: var(--tehlike); }
+.teminat-aciklama { display: flex; gap: calc(var(--olcek)*5); flex-wrap: wrap;
+                    font-size: .85rem; color: var(--murekkep-2); }
+.teminat-aciklama span { display: flex; align-items: center; gap: calc(var(--olcek)*2); }
+.kutucuk { width: 14px; height: 14px; flex: none; }
+.kutucuk.kapsanan { background: var(--vurgu); }
+.kutucuk.acikta   { background: var(--tehlike); }
+
+/* --- 16. Dilekçe çıktısı ---------------------------------- */
+.cikti {
+  font-family: var(--f-mono); font-size: .85rem; line-height: 1.75;
+  background: var(--yuzey); border: var(--sinir);
+  padding: calc(var(--olcek)*5); white-space: pre-wrap;
+  max-height: 32rem; overflow-y: auto;
+}
+
+/* --- 17. Uyarı şeridi ------------------------------------- */
+.serit {
+  border: var(--sinir); border-left: 4px solid var(--uyari);
+  background: var(--uyari-zemin);
+  padding: calc(var(--olcek)*4);
+  font-size: .92rem; margin-bottom: calc(var(--olcek)*5);
+}
+.serit strong { display: block; margin-bottom: calc(var(--olcek)*1); }
+
+/* --- 18. Alt bilgi ---------------------------------------- */
+.alt {
+  border-top: var(--sinir); margin-top: calc(var(--olcek)*14);
+  padding: calc(var(--olcek)*8) 0 calc(var(--olcek)*12);
+  color: var(--murekkep-2); font-size: .88rem;
+}
+.alt a { color: var(--murekkep-2); }
+.alt nav { display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*4); margin-bottom: calc(var(--olcek)*4); }
+
+/* --- 19. Yardımcılar -------------------------------------- */
+.gizli { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+main { padding: calc(var(--olcek)*8) 0; }
+.mt0 { margin-top: 0; }
+
+/* --- 20. Yazdırma: kağıt gerçek bir ihtiyaç --------------- */
+@media print {
+  .ust, .alt, .dugme-sira, .serit, .atla, .tema-dugme { display: none !important; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .cikti { border: none; padding: 0; max-height: none; overflow: visible; font-size: 11pt; }
+  .kart { border: 1px solid #999; break-inside: avoid; }
+  a { color: #000; text-decoration: none; }
+}

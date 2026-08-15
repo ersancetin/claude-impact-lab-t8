@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dilekçe hazırla · Deprem Haklarım</title>
+<meta name="description" content="Hazır dilekçe şablonunu doldurun, nereye ve nasıl göndereceğinizi öğrenin. Bilgileriniz tarayıcınızdan çıkmaz.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/tasarim.css">
+</head>
+<body>
+<main id="ana" class="kap">
+
+  <p class="etiket">Modül 2</p>
+  <h1>Dilekçe hazırla</h1>
+
+  <div class="serit">
+    <strong>Bu dilekçeler hazır şablonlardır, size özel hukuki metin değildir.</strong>
+    Yapay zekâ tarafından yazılmazlar; yalnızca girdiğiniz bilgiler boşluklara
+    yerleştirilir. İmzalayıp göndermeden önce bir avukata danışmanız önerilir.
+    Yazdıklarınız sunucuya gönderilmez.
+  </div>
+
+  <!-- 1. Şablon seçimi -->
+  <section id="secimBolum">
+    <h2 class="mt0">Hangi dilekçeye ihtiyacınız var?</h2>
+    <div id="sablonListe"></div>
+  </section>
+
+  <!-- 2. Form -->
+  <section id="formBolum" class="gizli">
+    <div class="dugme-sira" style="margin-bottom:1.5rem">
+      <button class="dugme ikincil" type="button" id="geri">← Başka dilekçe seç</button>
+    </div>
+    <h2 class="mt0" id="formBaslik"></h2>
+    <p class="giris" id="formOzet"></p>
+    <div id="formBilgi"></div>
+
+    <form id="form" novalidate>
+      <fieldset>
+        <legend>Bilgileriniz</legend>
+        <div id="alanlar"></div>
+      </fieldset>
+      <div class="dugme-sira">
+        <button class="dugme" type="submit">Dilekçeyi oluştur</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 3. Çıktı -->
+  <section id="ciktiBolum" class="gizli" aria-live="polite">
+    <h2>Dilekçeniz hazır</h2>
+    <div class="serit">
+      <strong>Kontrol edin.</strong> Metni okuyun, eksik veya yanlış bir yer varsa
+      formu düzeltip yeniden oluşturun. Bu bir taslaktır.
+    </div>
+    <pre class="cikti" id="cikti"></pre>
+    <div class="dugme-sira">
+      <button class="dugme" type="button" id="kopyala">Metni kopyala</button>
+      <button class="dugme ikincil" type="button" id="indir">Dosya olarak indir</button>
+      <button class="dugme ikincil" type="button" id="yazdir">Yazdır / PDF</button>
+      <button class="dugme ikincil" type="button" id="duzenle">Düzenle</button>
+    </div>
+    <div id="gonderim"></div>
+  </section>
+
+</main>
+
+<script type="module">
+import { iskelet, temaBaslat, el, metniIndir, panoyaKopyala,
+         kaydet, oku } from "./assets/app.js";
+import { SABLONLAR } from "./assets/veri.js";
+
+temaBaslat();
+iskelet({ aktif: "Dilekçe hazırla" });
+
+const secimBolum = document.getElementById("secimBolum");
+const formBolum  = document.getElementById("formBolum");
+const ciktiBolum = document.getElementById("ciktiBolum");
+const listeEl    = document.getElementById("sablonListe");
+const alanlarEl  = document.getElementById("alanlar");
+const form       = document.getElementById("form");
+let aktif = null;
+
+/* --- Şablon listesi -------------------------------------- */
+for (const s of [...SABLONLAR].sort((a, b) => a.oncelik - b.oncelik)) {
+  listeEl.append(
+    el("button", { class: "secim", type: "button", onclick: () => sablonAc(s.id) },
+      el("b", {}, s.ad),
+      el("span", {}, s.ozet),
+      el("span", { style: "margin-top:.5rem" },
+        el("span", { class: "rozet uyari" }, s.sure))
+    )
+  );
+}
+
+/* --- Şablon aç -------------------------------------------- */
+function sablonAc(id) {
+  aktif = SABLONLAR.find(s => s.id === id);
+  if (!aktif) return;
+
+  document.getElementById("formBaslik").textContent = aktif.ad;
+  document.getElementById("formOzet").textContent = aktif.ozet;
+
+  document.getElementById("formBilgi").replaceChildren(
+    el("div", { class: "kart uyarili" },
+      el("span", { class: "etiket" }, "Süre"),
+      el("p", { style: "margin-bottom:0" }, el("strong", {}, aktif.sure))),
+    el("div", { class: "dayanak" }, "Dayanak: " + aktif.dayanak)
+  );
+
+  alanlarEl.replaceChildren();
+  const kayitli = oku("dilekce-" + id, {});
+
+  for (const a of aktif.alanlar) {
+    const kimlik = "a-" + a.ad;
+    let girdi;
+    if (a.tip === "textarea") {
+      girdi = el("textarea", { id: kimlik, name: a.ad, rows: 3 });
+      girdi.value = kayitli[a.ad] || "";
+    } else if (a.tip === "select") {
+      girdi = el("select", { id: kimlik, name: a.ad },
+        el("option", { value: "" }, "Seçiniz…"),
+        ...a.secenekler.map(o => el("option", { value: o }, o)));
+      girdi.value = kayitli[a.ad] || "";
+    } else {
+      girdi = el("input", { type: a.tip, id: kimlik, name: a.ad,
+                            value: kayitli[a.ad] || "" });
+    }
+    alanlarEl.append(
+      el("div", { class: "alan" },
+        el("label", { for: kimlik }, a.etiket + (a.zorunlu ? " *" : "")),
+        a.ipucu ? el("span", { class: "ipucu" }, a.ipucu) : null,
+        girdi)
+    );
+  }
+
+  secimBolum.classList.add("gizli");
+  ciktiBolum.classList.add("gizli");
+  formBolum.classList.remove("gizli");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* --- Oluştur ---------------------------------------------- */
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = {};
+  const eksik = [];
+  for (const a of aktif.alanlar) {
+    v[a.ad] = (form.elements[a.ad].value || "").trim();
+    if (a.zorunlu && !v[a.ad]) eksik.push(a.etiket);
+  }
+  if (eksik.length) {
+    alert("Şu alanlar boş bırakılamaz:\n\n• " + eksik.join("\n• "));
+    return;
+  }
+  kaydet("dilekce-" + aktif.id, v);
+
+  document.getElementById("cikti").textContent = aktif.govde(v).trim();
+  gonderimCiz(aktif);
+
+  formBolum.classList.add("gizli");
+  ciktiBolum.classList.remove("gizli");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* --- "Nereye göndereceğim?" ------------------------------- */
+function gonderimCiz(s) {
+  document.getElementById("gonderim").replaceChildren(
+    el("h2", {}, "Nereye ve nasıl göndereceksiniz?"),
+    el("div", { class: "kart vurgulu" },
+      el("span", { class: "etiket" }, "Muhatap"),
+      el("p", {}, el("strong", {}, s.nereye.kurum)),
+      el("span", { class: "etiket" }, "Gönderim yolları"),
+      el("ul", {}, ...s.nereye.kanallar.map(k => el("li", {}, k))),
+      el("p", { style: "margin-bottom:0" }, el("strong", {}, "Dikkat: "), s.nereye.not)
+    ),
+    el("div", { class: "kart bilgili" },
+      el("p", { style: "margin-bottom:0" },
+        "Gönderdikten sonra tarihi ",
+        el("a", { href: "./sureler.html" }, "süre takviminize"),
+        " işleyin. Gönderim kaydınızı (KEP çıktısı, posta makbuzu, imzalı örnek) mutlaka saklayın.")
+    ),
+    el("div", { class: "kart" },
+      el("p", { style: "margin-bottom:0" },
+        el("strong", {}, "Avukata erişemiyorsanız: "),
+        "Bulunduğunuz ilin barosunun adli yardım birimi, ücretini karşılayamayacak " +
+        "durumdaki kişilere ücretsiz avukat görevlendirir.")
+    )
+  );
+}
+
+/* --- Eylemler --------------------------------------------- */
+document.getElementById("kopyala").addEventListener("click", async (e) => {
+  const ok = await panoyaKopyala(document.getElementById("cikti").textContent);
+  e.target.textContent = ok ? "Kopyalandı ✓" : "Kopyalanamadı — elle seçin";
+  setTimeout(() => { e.target.textContent = "Metni kopyala"; }, 2500);
+});
+
+document.getElementById("indir").addEventListener("click", () => {
+  metniIndir(`${aktif.id}-dilekce.txt`, document.getElementById("cikti").textContent);
+});
+
+document.getElementById("yazdir").addEventListener("click", () => window.print());
+
+document.getElementById("duzenle").addEventListener("click", () => {
+  ciktiBolum.classList.add("gizli");
+  formBolum.classList.remove("gizli");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("geri").addEventListener("click", () => {
+  formBolum.classList.add("gizli");
+  ciktiBolum.classList.add("gizli");
+  secimBolum.classList.remove("gizli");
+  history.replaceState(null, "", location.pathname);
+});
+
+/* --- Bağlantıyla doğrudan açma ---------------------------- */
+const istenen = new URLSearchParams(location.search).get("sablon");
+if (istenen && SABLONLAR.some(s => s.id === istenen)) sablonAc(istenen);
+</script>
+</body>
+</html>

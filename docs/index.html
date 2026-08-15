@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deprem Haklarım</title>
+<meta name="description" content="Deprem öncesi ve sonrasında hangi haklara sahipsiniz, hangi süreler işliyor, hangi dilekçeyi nereye göndermeniz gerekiyor. Ücretsiz, reklamsız, kayıt gerektirmez.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/tasarim.css">
+</head>
+<body>
+<main id="ana" class="kap">
+
+  <p class="etiket">Ücretsiz · Kayıt yok · Reklam yok</p>
+  <h1>Depremden sonra ne yapmanız gerektiğini biliyor musunuz?</h1>
+  <p class="giris">
+    Haklarınız var ama çoğunun <strong>süresi işliyor.</strong> Bu site hangi
+    hakka sahip olduğunuzu, kaç gününüz kaldığını ve hangi dilekçeyi nereye
+    göndereceğinizi gösterir.
+  </p>
+
+  <h2 class="mt0" style="margin-top:2.5rem">Nereden başlamak istiyorsunuz?</h2>
+
+  <a class="secim" href="./sureler.html">
+    <b>Deprem oldu — sürelerimi görmek istiyorum</b>
+    <span>Tarihleri girin, hangi hakkınızın ne zaman dolacağını takvim olarak görün.</span>
+  </a>
+
+  <a class="secim" href="./haklarim.html">
+    <b>Hangi haklarım olduğunu bilmiyorum</b>
+    <span>Birkaç soru cevaplayın, durumunuza uyan hakları listeleyelim.</span>
+  </a>
+
+  <a class="secim" href="./dilekce.html">
+    <b>Dilekçe hazırlamam gerekiyor</b>
+    <span>Hazır şablonu doldurun, nereye ve nasıl göndereceğinizi öğrenin.</span>
+  </a>
+
+  <a class="secim" href="./teminat.html">
+    <b>Deprem olmadan önce: sigortam yeterli mi?</b>
+    <span>DASK'ınızın neyi kapsamadığını ve ne kadarının açıkta kaldığını hesaplayın.</span>
+  </a>
+
+  <h2>En sık yapılan üç hata</h2>
+
+  <div class="kart tehlikeli">
+    <span class="etiket">Hata 1</span>
+    <h3 class="mt0" style="margin-top:0">30 günlük itiraz süresini kaçırmak</h3>
+    <p>Hasar tespit raporuna itiraz süresi, sonucun mahallî ilan tarihinden
+    itibaren 30 gündür. Bu süre geçtiğinde idari itiraz hakkı tamamen
+    kaybedilir; geriye yalnızca yargı yolu kalır.</p>
+    <p style="margin-bottom:0"><a href="./sureler.html">Sürelerimi hesapla</a></p>
+  </div>
+
+  <div class="kart tehlikeli">
+    <span class="etiket">Hata 2</span>
+    <h3 class="mt0" style="margin-top:0">DASK'ın her şeyi karşıladığını sanmak</h3>
+    <p>DASK yalnızca <strong>binayı</strong> sigortalar. Ev eşyanız, enkaz
+    kaldırma, alternatif konaklama, kira kaybı ve <strong>ölüm dâhil tüm bedeni
+    zararlar</strong> teminat dışıdır.</p>
+    <p style="margin-bottom:0"><a href="./teminat.html">Açığımı hesapla</a></p>
+  </div>
+
+  <div class="kart tehlikeli">
+    <span class="etiket">Hata 3</span>
+    <h3 class="mt0" style="margin-top:0">Sigortacıya başvurmadan mahkemeye gitmek</h3>
+    <p>Sigorta Tahkim Komisyonuna veya mahkemeye gitmeden önce sigorta
+    şirketine <strong>yazılı başvuru yapmak dava şartıdır.</strong> Bu adım
+    atlanırsa dosya usulden reddedilir.</p>
+    <p style="margin-bottom:0"><a href="./dilekce.html?sablon=sigorta-basvuru">Başvuru dilekçesini hazırla</a></p>
+  </div>
+
+  <h2>Kiracıysanız</h2>
+  <div class="kart vurgulu">
+    <p>Afet toparlanma sistemi mülkiyet üzerine kuruludur: DASK malike ödeme
+    yapar, hak sahipliği tapu ilişkisi arar, afet konutu malike verilir.
+    <strong>Ama tazminat davası açmak için tapu sahibi olmanız gerekmez.</strong></p>
+    <p style="margin-bottom:0">Kiracı olarak müteahhide, yapı denetim kuruluşuna
+    ve idareye karşı kendi zararınız için dava açabilirsiniz.
+    <a href="./haklarim.html">Kiracı haklarını görün</a></p>
+  </div>
+
+  <div class="serit">
+    <strong>Bu site hukuki tavsiye vermez.</strong>
+    Buradaki bilgiler genel bilgilendirme amaçlıdır ve avukatlık hizmetinin
+    yerine geçmez. Ücretsiz hukuki destek için bulunduğunuz ilin barosunun
+    adli yardım birimine başvurabilirsiniz.
+  </div>
+
+</main>
+
+<script type="module">
+  import { iskelet, temaBaslat } from "./assets/app.js";
+  temaBaslat();
+  iskelet();
+</script>
+</body>
+</html>
