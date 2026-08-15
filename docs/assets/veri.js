@@ -1,86 +1,20 @@
 /* ============================================================
    VERİ KATMANI
-   Kaynak: ../../data/parametreler.json  (kanonik)
-   Bu dosya `scripts/veri-uret.py` ile üretilir — elle düzenlemeyin.
+
+   PARAM (parasal değerler, hak düşürücü süreler, emsal uygulamalar)
+   data/parametreler.json'dan ÜRETİLİR — bkz. veri-parametre.js ve
+   scripts/veri-uret.py. Buradan yeniden dışa aktarılıyor ki mevcut
+   `import { PARAM } from "../assets/veri.js"` satırları değişmesin.
+
+   Bu dosyada ELLE bakılan iki şey kalır: HAKLAR ve SABLONLAR. İkisi de
+   JSON'a çevrilemez (şablon gövdeleri fonksiyondur), bu yüzden üretime
+   girmezler.
 
    UYARI: Değerlerin hiçbiri henüz resmî kaynaktan doğrulanmamıştır.
    Doğrulama planı: DOGRULAMA.md
    ============================================================ */
 
-export const PARAM = {
-  surum: "0.1.0-taslak",
-  guncelleme: "2026-08-15",
-
-  dask: {
-    azamiTeminat: 2271283,
-    azamiTeminatTarihi: "01.05.2026",
-    m2: { celik_betonarme_karkas: 10714, diger: 7142 },
-    muafiyetOrani: 0.02,
-    hasarPenceresiSaat: 72,
-    dogrulama: "tek"
-  },
-
-  /* Hak düşürücü süreler. Bir hata, kullanıcının hakkını
-     tamamen kaybetmesine yol açar — hepsi doğrulanmalı. */
-  sureler: [
-    { id: "dask-ihbar", ad: "DASK hasar ihbarı", gun: 15,
-      baslangicEtiket: "Depremi öğrendiğiniz tarih", baslangicAnahtar: "deprem",
-      dayanak: "ZDS Genel Şartları B.1", dogrulama: "tek",
-      neYapmali: "ALO DASK 125, e-Devlet veya poliçenizi düzenleyen sigorta şirketi.",
-      sablon: null },
-
-    { id: "hasar-itiraz", ad: "Hasar tespit raporuna itiraz", gun: 30,
-      baslangicEtiket: "Hasar tespit sonucunun ilan tarihi", baslangicAnahtar: "ilan",
-      dayanak: "7269 sayılı Kanun", dogrulama: "coklu", kritik: true,
-      neYapmali: "İl Çevre ve Şehircilik Müdürlüğü, valilik veya kaymakamlık.",
-      sablon: "hasar-itiraz" },
-
-    { id: "eksper-itiraz", ad: "Eksper raporuna itiraz", gun: 15,
-      baslangicEtiket: "Eksper raporunun size tebliğ tarihi", baslangicAnahtar: "eksper",
-      dayanak: "Sigorta şirketine yazılı itiraz", dogrulama: "tek",
-      neYapmali: "Poliçeyi düzenleyen sigorta şirketine yazılı başvuru.",
-      sablon: "eksper-itiraz" },
-
-    { id: "hak-sahipligi", ad: "Hak sahipliği başvurusu", gun: 60,
-      baslangicEtiket: "Hak sahipliği ilan tarihi", baslangicAnahtar: "haksahipligi",
-      dayanak: "7269 s.K. m.29 — iki ay", dogrulama: "coklu", kritik: true,
-      neYapmali: "Mahallin en büyük mülkî amirine yazılı talep ve taahhütname.",
-      sablon: "hak-sahipligi" },
-
-    { id: "riskli-yapi-itiraz", ad: "Riskli yapı tespitine itiraz", gun: 15,
-      baslangicEtiket: "Riskli yapı tespitinin tebliğ tarihi", baslangicAnahtar: "riskliyapi",
-      dayanak: "6306 Uygulama Yönetmeliği", dogrulama: "coklu",
-      neYapmali: "Çevre, Şehircilik ve İklim Değişikliği Bakanlığı / İl Müdürlüğü.",
-      sablon: null },
-
-    { id: "dask-dosya-itiraz", ad: "DASK hasar dosyasına itiraz", gun: 30,
-      baslangicEtiket: "Hasar dosyanızın kapatıldığı tarih", baslangicAnahtar: "dosyakapanis",
-      dayanak: "DASK Genel Müdürlüğüne yazılı itiraz", dogrulama: "tek",
-      neYapmali: "DASK Genel Müdürlüğüne yazılı itiraz.",
-      sablon: null },
-
-    { id: "idari-dava", ad: "İdari dava açma süresi", gun: 60,
-      baslangicEtiket: "Ret kararının tebliğ tarihi", baslangicAnahtar: "ret",
-      dayanak: "2577 sayılı Kanun", dogrulama: "coklu",
-      neYapmali: "İdare mahkemesi. Avukata danışın.",
-      sablon: null },
-
-    { id: "sigorta-zamanasimi", ad: "Sigorta tazminatı zamanaşımı", gun: 730,
-      baslangicEtiket: "Depremi öğrendiğiniz tarih", baslangicAnahtar: "deprem",
-      dayanak: "TTK m.1420 — 2 yıl", dogrulama: "coklu", kritik: true,
-      neYapmali: "Önce sigortacıya yazılı başvuru (dava şartı), sonra Tahkim veya mahkeme.",
-      sablon: "sigorta-basvuru" }
-  ],
-
-  /* Kalıcı hak değil — 2023 depremine özgü idari kararlar.
-     Arayüzde "geçmiş uygulama örneği" olarak sunulur. */
-  gecmisUygulama: {
-    kiraYardimiEvSahibi: 5000,
-    kiraYardimiKiraci: 3000,
-    tasinmaYardimi: 15000,
-    dogrulama: "tek"
-  }
-};
+export { PARAM } from "./veri-parametre.js";
 
 /* ------------------------------------------------------------
    HAK KARTLARI — profile göre gösterilir

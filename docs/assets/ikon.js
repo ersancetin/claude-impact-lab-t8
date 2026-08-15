@@ -1,0 +1,29 @@
+/* ÜRETİLMİŞ DOSYA — elle düzenlemeyin.
+   Kaynak: data/ikon.json · Üreteç: scripts/site-uret.py
+
+   Tarayıcı tarafı için ikon gövdeleri. Kullanım:
+     el('svg', { class: 'ikon', viewBox: '0 0 20 20',
+                 'aria-hidden': 'true', html: IKON.sure })
+ */
+export const IKON = {
+ "sure": "<circle cx='10' cy='11' r='6.2'/><path d='M10 7.6V11l2.4 1.5'/><path d='M7.8 2.8h4.4'/><path d='M10 2.8v2'/>",
+ "hak": "<path d='M10 3.2v13.4'/><path d='M6.2 16.6h7.6'/><path d='M3.4 6.6h13.2'/><path d='M10 6.6 10 4.4'/><path d='M3.4 6.6 1.4 11h4z'/><path d='M16.6 6.6 14.6 11h4z'/>",
+ "dilekce": "<path d='M11.6 2.8H6.2A1.4 1.4 0 0 0 4.8 4.2v11.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4V6.6z'/><path d='M11.6 2.8v3.8h3.6'/><path d='M7.6 10.6h4.8M7.6 13.4h3'/>",
+ "teminat": "<path d='M10 2.6 4.2 5v4.9c0 3.4 2.3 6.2 5.8 7.3 3.5-1.1 5.8-3.9 5.8-7.3V5z'/><path d='M7.2 10.2 10 7.9l2.8 2.3'/><path d='M8.1 10v3.2h3.8V10'/>",
+ "police": "<path d='M10 2.6 4.2 5v4.9c0 3.4 2.3 6.2 5.8 7.3 3.5-1.1 5.8-3.9 5.8-7.3V5z'/><path d='m7.3 9.9 2 2 3.4-3.6'/>",
+ "dosya": "<path d='M2.8 6.2A1.4 1.4 0 0 1 4.2 4.8h2.9l1.3 1.7h7.4a1.4 1.4 0 0 1 1.4 1.4v2.3'/><path d='M2.8 6.2v8.2a1.4 1.4 0 0 0 1.4 1.4h4.6'/><circle cx='13.4' cy='13.4' r='2.9'/><path d='m15.6 15.6 1.8 1.8'/>",
+ "konut-sigorta": "<path d='M2.6 8.6 9 3.4l4.2 3.4'/><path d='M4.5 10.1v6.5h4.8'/><path d='M14.2 8.6c1.7.6 2.6 1.1 2.6 1.1v2.9c0 1.9-1.1 3.5-2.6 4.2-1.5-.7-2.6-2.3-2.6-4.2V9.7s.9-.5 2.6-1.1z'/>",
+ "hasar-tespit": "<path d='M4.4 16.8V5.6L10 3.2l5.6 2.4v11.2'/><path d='M2.4 16.8h15.2'/><path d='M10.4 6.6 8.6 10.2l2.2 1.4-1.6 3.6'/>",
+ "devlet-destek": "<path d='M2.6 8.2 10 3.6l7.4 4.6'/><path d='M4.8 8.8v6.6M8 8.8v6.6M12 8.8v6.6M15.2 8.8v6.6'/><path d='M2.6 16.9h14.8'/>",
+ "mali-yukumluluk": "<circle cx='10' cy='10' r='7.1'/><path d='m7.4 12.6 5.2-5.2'/><circle cx='7.8' cy='7.8' r='1.1'/><circle cx='12.2' cy='12.2' r='1.1'/>",
+ "calisma-isyeri": "<rect x='2.8' y='6.6' width='14.4' height='9.8' rx='1.4'/><path d='M7.6 6.6V5.2A1.4 1.4 0 0 1 9 3.8h2a1.4 1.4 0 0 1 1.4 1.4v1.4'/><path d='M2.8 10.6h14.4'/>",
+ "kira-mulkiyet": "<path d='M2.8 8.8 10 3.4l7.2 5.4'/><path d='M4.8 10.3v6.3h10.4v-6.3'/><circle cx='10' cy='12.6' r='1.5'/><path d='M10 14.1v2.2'/>",
+ "kayip-miras": "<path d='M10 16.6s-5.4-3.2-5.4-7A3 3 0 0 1 10 7.7a3 3 0 0 1 5.4 1.9c0 3.8-5.4 7-5.4 7z'/><path d='M6.6 4.4h6.8'/>",
+ "dava-uyusmazlik": "<path d='m13.4 2.8 3.8 3.8-2 2-3.8-3.8z'/><path d='m11.6 8.4-7.4 7.4'/><path d='M2.6 17.4h6.8'/><path d='m11.4 5 3.6 3.6'/>",
+ "ozel-durumlar": "<circle cx='8' cy='6.8' r='2.7'/><path d='M2.9 16.4a5.1 5.1 0 0 1 10.2 0'/><path d='M16 3v3.4M14.3 4.7h3.4'/>",
+ "hakkimizda": "<circle cx='7.6' cy='6.8' r='2.6'/><path d='M2.7 16a4.9 4.9 0 0 1 9.8 0'/><path d='M13.2 4.7a2.6 2.6 0 0 1 0 4.3'/><path d='M14.3 11.7a4.9 4.9 0 0 1 3 4.3'/>",
+ "yontem": "<rect x='4.2' y='3.4' width='11.6' height='13.2' rx='1.4'/><path d='m6.9 7.8 1.3 1.3 2.6-2.6'/><path d='M6.9 12.6h6.2'/>",
+ "mahremiyet": "<rect x='4' y='8.6' width='12' height='8.4' rx='1.4'/><path d='M6.9 8.6V6.4a3.1 3.1 0 0 1 6.2 0v2.2'/><path d='M10 11.9v2.2'/>",
+ "yasal-uyari": "<path d='M10 3.2 17.9 16.6H2.1z'/><path d='M10 8.2v3.6'/><path d='M10 13.9v.01'/>",
+ "katki": "<path d='M10 17s-5.4-3.2-5.4-7A3 3 0 0 1 10 8.1a3 3 0 0 1 5.4 1.9c0 3.8-5.4 7-5.4 7z'/><path d='M10 2.6v3.4M8.3 4.3h3.4'/>"
+};

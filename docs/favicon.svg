@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#14181A"/>
-  <rect x="6" y="5" width="6" height="22" fill="#0B6B5B"/>
-  <rect x="16" y="5" width="10" height="3" fill="#E7EDEA"/>
-  <rect x="16" y="12" width="10" height="3" fill="#E7EDEA"/>
-  <rect x="16" y="19" width="7" height="3" fill="#6E7A83"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Deprem Haklarım">
+  <!-- Marka işaretinin sekme boyutundaki hâli: kırmızı zemin, beyaz
+       kalkan, kalkanın içinden oyulmuş ev. Üst bardaki işaretle aynı
+       şekil — favicon ile marka birbirinden ayrılmamalı. -->
+  <rect width="32" height="32" fill="#C8102E"/>
+  <path fill="#FFFFFF" d="M16 3.4 5.8 6.9v8.7c0 5.9 4.2 10.8 10.2 12.6 6-1.8 10.2-6.7 10.2-12.6V6.9z"/>
+  <path fill="#C8102E" d="M16 10.2 9.9 15.4h1.8v6.4h8.6v-6.4h1.8z"/>
 </svg>

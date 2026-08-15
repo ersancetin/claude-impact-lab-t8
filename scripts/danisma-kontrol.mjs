@@ -26,13 +26,20 @@ const SORULAR = [
   ["müteahhide dava zamanaşımı", "sureler"],
   ["verilerim saklanıyor mu", "mahremiyet"],
   ["eksik sigorta nedir", "sigorta"],
+  ["neden poliçe gerekli", "police"],
+  ["dask yeterli mi", "dask-yeterli-mi"],
+  ["kimden para alıyorsunuz", "model"],
+  ["alternatif konaklama teminatı", "police"],
 ];
 
 /* Eşleşme bulunmaması gereken sorular: danışma boş dönmeyi bilmeli.
    "Bilmiyorum" demek, uydurmaktan iyidir. */
 const BOS_OLMALI = [
   "pizza tarifi",
-  "bugün hava nasıl",
+  "bugün hava nasıl",      // "bugün" birçok sayfada geçer — tek kelime yetmemeli
+  "merhaba nasılsın",
+  "bu sayfa çok güzel",
+  "futbol maçı sonucu",
 ];
 
 let hata = 0;
