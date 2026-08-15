@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ersancetin.github.io/claude-impact-lab-t8/sitemap.xml

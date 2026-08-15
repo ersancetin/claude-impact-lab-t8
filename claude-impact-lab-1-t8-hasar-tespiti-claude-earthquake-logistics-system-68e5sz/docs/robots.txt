@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://saidsurucu.github.io/claude-impact-lab-1-t8-hasar-tespiti/sitemap.xml
