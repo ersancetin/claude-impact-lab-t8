@@ -41,6 +41,13 @@ tutmak, hasar anında yarı yarıya kayıp demektir. Dayanak: TTK m.1462.
 
 {{SIRKETLER}}
 
+:::guvence Teklif isterken yalnız kalmayın
+[Teminat açığı hesabı](../arac/teminat.html) kendi rakamlarınızla doldurulmuş bir
+**teklif talebi metni** üretir: hangi teminatı neden istediğiniz, açığınızın kaç lira
+olduğu ve teklifte görmek istediğiniz altı satır listelenir. Metni kopyalayıp
+**kendi seçtiğiniz** acenteye, sigorta şirketine veya bankanıza gönderirsiniz.
+:::
+
 ## Peki biz ne yapıyoruz?
 
 Bu platform hiçbir sigorta şirketine yönlendirme yapmaz ve hiçbir şirketten ödeme almaz.

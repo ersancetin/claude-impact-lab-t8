@@ -1,20 +1,21 @@
 /* ============================================================
-   3B KAPSAM SAHNESİ — hero'daki bina kesiti
+   3B KAPSAM SAHNESİ — DASK ile konut poliçesinin farkı
 
-   NE ANLATIR: yarı saydam bina kabuğu (DASK'ın karşıladığı) ve içinde
-   duran katı eşya blokları (karşılamadığı). Kabuk saydam olduğu için
-   içerideki kırmızı hacim dışarıdan görünür — "dört duvar sigortalı,
-   içindekiler değil" cümlesinin görsel karşılığı budur. Süs değil.
+   NE ANLATIR: sahne iki evrede döner ve farkı canlı gösterir.
+     Evre 1 — DASK: yalnızca bina kabuğu yeşile boyanır. İçerideki eşya
+              ve dışarıdaki çadır gri kalır: karşılanmıyorlar.
+     Evre 2 — + Konut poliçesi: eşya ve alternatif konaklama da renklenir.
+   Alt yazı her evrede değişir. Yani görsel sadece "ev" göstermiyor,
+   iki ürünün kapsam farkını anlatıyor — asıl mesaj bu.
 
    NEDEN ÜSTE BİNEN KATMAN:
    PROJE-AKIS.md §11 tam 3B'yi "mobilde ağır, erişilebilirlik sorunlu"
-   diye işaretlemiş ve haklı. three.js yerele gömülü olsa bile iki dosya
-   ~190 KB gzip. Bu yüzden 3B varsayılan DEĞİL: SVG afiş taban katman
-   olarak sayfada durur, bu modül ancak şu üç şart birlikte sağlanırsa
-   yüklenir:
+   diye işaretlemiş. three.js yerele gömülü olsa bile ~190 KB gzip.
+   Bu yüzden 3B varsayılan DEĞİL: etiketli SVG afiş taban katman olarak
+   sayfada durur, bu modül ancak şu şartlar birlikte sağlanırsa yüklenir:
      1. WebGL2 var
      2. prefers-reduced-motion: reduce KAPALI
-     3. Save-Data açık DEĞİL ve bağlantı yavaş değil
+     3. Save-Data açık DEĞİL ve bağlantı 2G/3G değil
    Şartlardan biri tutmazsa tek bayt bile indirilmez.
 
    Dış istek yok: three.js docs/vendor altından gelir.
@@ -22,111 +23,151 @@
 
 const KOSUL_YOK = "3B atlandı";
 
-/* --- Yüklenmeli mi? --------------------------------------- */
 export function uygunMu() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-
   const b = navigator.connection;
   if (b) {
     if (b.saveData) return false;
     if (/^(slow-2g|2g|3g)$/.test(b.effectiveType || "")) return false;
   }
-
   try {
-    const c = document.createElement("canvas");
-    if (!c.getContext("webgl2")) return false;
+    if (!document.createElement("canvas").getContext("webgl2")) return false;
   } catch { return false; }
-
   return true;
 }
 
-/* CSS değişkenini oku — sahne renkleri temayla aynı kalsın */
 function renk(ad, varsayilan) {
   const d = getComputedStyle(document.documentElement).getPropertyValue(ad).trim();
   return d || varsayilan;
 }
 
-/* --- Sahne ------------------------------------------------- */
-export async function sahneKur(kap) {
+/* Yumuşak geçiş — sert kesme yerine hızlanıp yavaşlama */
+const yumusat = (t) => t * t * (3 - 2 * t);
+
+/* --- Evreler ---------------------------------------------- */
+const EVRELER = [
+  {
+    ad: "DASK",
+    yazi: "DASK yalnızca binayı öder",
+    alt: "Eşyanız, barınmanız ve enkaz kaldırma teminat dışıdır.",
+    icerik: 0,
+  },
+  {
+    ad: "+ Konut poliçesi",
+    yazi: "Konut poliçesi eklendiğinde",
+    alt: "Ev eşyası ve alternatif konaklama da teminat altına girer.",
+    icerik: 1,
+  },
+];
+const EVRE_SURESI = 4200;      // ms
+const GECIS_SURESI = 900;      // ms
+
+export async function sahneKur(kap, yaziEl) {
   if (!kap || !uygunMu()) return KOSUL_YOK;
 
   const T = await import("../vendor/three.module.min.js");
 
   const sahne = new T.Scene();
-  const kamera = new T.PerspectiveCamera(38, 1, 0.1, 100);
-  kamera.position.set(5.2, 2.9, 6.1);
-  kamera.lookAt(0, 0.55, 0);
+  const kamera = new T.PerspectiveCamera(34, 1, 0.1, 60);
+  kamera.position.set(4.3, 2.5, 5.0);
+  kamera.lookAt(0, 0.3, 0);
 
   const cizer = new T.WebGLRenderer({ antialias: true, alpha: true });
   cizer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  cizer.shadowMap.enabled = true;
+  cizer.shadowMap.type = T.PCFSoftShadowMap;
+  cizer.toneMapping = T.ACESFilmicToneMapping;   /* yumuşak, modern ton */
+  cizer.toneMappingExposure = 1.15;
   kap.replaceChildren(cizer.domElement);
   cizer.domElement.setAttribute("aria-hidden", "true");
 
-  sahne.add(new T.AmbientLight(0xffffff, 1.5));
-  const isik = new T.DirectionalLight(0xffffff, 2.1);
-  isik.position.set(5, 8, 6);
-  sahne.add(isik);
+  /* Işık: yumuşak ortam + gölge veren ana ışık + dolgu */
+  sahne.add(new T.HemisphereLight(0xffffff, 0xd8dee6, 2.2));
+  const ana = new T.DirectionalLight(0xffffff, 2.6);
+  ana.position.set(4.5, 7, 4);
+  ana.castShadow = true;
+  ana.shadow.mapSize.set(1024, 1024);
+  ana.shadow.camera.near = 1;
+  ana.shadow.camera.far = 22;
+  ana.shadow.camera.left = -6;
+  ana.shadow.camera.right = 6;
+  ana.shadow.camera.top = 6;
+  ana.shadow.camera.bottom = -6;
+  ana.shadow.radius = 4;
+  sahne.add(ana);
+  const dolgu = new T.DirectionalLight(0xffffff, 0.7);
+  dolgu.position.set(-5, 2, -3);
+  sahne.add(dolgu);
+
+  /* Zemin — yalnızca gölgeyi tutar, kendisi görünmez */
+  const zemin = new T.Mesh(
+    new T.PlaneGeometry(26, 26),
+    new T.ShadowMaterial({ opacity: 0.15 }));
+  zemin.rotation.x = -Math.PI / 2;
+  zemin.position.y = -1.36;
+  zemin.receiveShadow = true;
+  sahne.add(zemin);
 
   const grup = new T.Group();
   sahne.add(grup);
 
-  const kabukRengi = new T.Color(renk("--turkuaz", "#0A6E6B"));
-  const acikRengi = new T.Color(renk("--tehlike", "#8E1B12"));
+  const YESIL = new T.Color(renk("--turkuaz", "#0A6E6B"));
+  const AMBER = new T.Color(renk("--uyari", "#855100"));
+  const GRI = new T.Color("#9AA3AD");
 
-  /* Kabuk: yarı saydam ki içerisi görünsün */
-  const kabukMalzeme = new T.MeshStandardMaterial({
-    color: kabukRengi, transparent: true, opacity: 0.28,
-    roughness: 0.75, metalness: 0, side: T.DoubleSide,
-    depthWrite: false,
+  /* Kabuk: camsı ve hafif parlak — içerisi görünsün */
+  const kabukMalzeme = new T.MeshPhysicalMaterial({
+    color: YESIL, transparent: true, opacity: 0.22,
+    roughness: 0.15, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.2,
+    side: T.DoubleSide, depthWrite: false,
   });
-  const cizgiMalzeme = new T.LineBasicMaterial({ color: kabukRengi });
-  const esyaMalzeme = new T.MeshStandardMaterial({
-    color: acikRengi, roughness: 0.55, metalness: 0,
+  const telMalzeme = new T.LineBasicMaterial({ color: YESIL });
+  /* İçerik: evreye göre gri ↔ amber */
+  const icerikMalzeme = new T.MeshStandardMaterial({
+    color: GRI.clone(), roughness: 0.5, metalness: 0.05,
   });
 
-  /* Bina gövdesi + kenar telleri (kenarlar kabuğu okunur kılar) */
-  const govde = new T.BoxGeometry(3.4, 2.6, 2.6);
-  grup.add(new T.Mesh(govde, kabukMalzeme));
-  grup.add(new T.LineSegments(new T.EdgesGeometry(govde), cizgiMalzeme));
+  function kabukParca(geo, y = 0, donus = 0) {
+    const m = new T.Mesh(geo, kabukMalzeme);
+    m.position.y = y; m.rotation.y = donus;
+    m.castShadow = true;
+    grup.add(m);
+    const t = new T.LineSegments(new T.EdgesGeometry(geo), telMalzeme);
+    t.position.y = y; t.rotation.y = donus;
+    grup.add(t);
+  }
 
-  /* Çatı: dört yüzlü prizma (silindirin 4 kenarlısı) */
-  const cati = new T.ConeGeometry(2.55, 1.25, 4);
-  const catiMesh = new T.Mesh(cati, kabukMalzeme);
-  catiMesh.position.y = 1.92;
-  catiMesh.rotation.y = Math.PI / 4;
-  grup.add(catiMesh);
-  const catiTel = new T.LineSegments(new T.EdgesGeometry(cati), cizgiMalzeme);
-  catiTel.position.copy(catiMesh.position);
-  catiTel.rotation.copy(catiMesh.rotation);
-  grup.add(catiTel);
+  kabukParca(new T.BoxGeometry(3.3, 2.5, 2.5), 0);
+  kabukParca(new T.ConeGeometry(2.45, 1.2, 4), 1.85, Math.PI / 4);
+  kabukParca(new T.BoxGeometry(3.3, 0.14, 2.5), -1.28);
 
-  /* Döşeme — kabuğun parçası */
-  const doseme = new T.BoxGeometry(3.4, 0.12, 2.6);
-  const dosemeMesh = new T.Mesh(doseme, kabukMalzeme);
-  dosemeMesh.position.y = 0;
-  grup.add(dosemeMesh);
-  const dosemeTel = new T.LineSegments(new T.EdgesGeometry(doseme), cizgiMalzeme);
-  dosemeTel.position.copy(dosemeMesh.position);
-  grup.add(dosemeTel);
-
-  /* İçerideki eşya — katı ve kırmızı: açıkta kalan */
+  /* İçerik: ev eşyası (binanın içinde) */
   const ESYA = [
-    [1.5, 0.55, 0.75, -0.85, -0.75, 0.6],    // kanepe
-    [0.65, 1.25, 0.6, 1.15, -0.4, -0.7],     // buzdolabı
-    [1.2, 0.35, 0.9, -0.9, 0.65, -0.55],     // yatak
-    [0.85, 1.0, 0.5, 1.05, 0.8, 0.75],       // dolap
-    [0.5, 0.45, 0.5, 0.1, -0.8, -0.8],       // sandık
+    [1.4, 0.5, 0.7, -0.8, 0.6],
+    [0.6, 1.15, 0.55, 1.05, -0.65],
+    [1.1, 0.32, 0.85, -0.85, -0.6],
+    [0.8, 0.9, 0.48, 1.0, 0.7],
   ];
-  for (const [g, y, d, x, py, z] of ESYA) {
-    const m = new T.Mesh(new T.BoxGeometry(g, y, d), esyaMalzeme);
-    m.position.set(x, py + y / 2 - 1.24, z);
+  for (const [g, y, d, x, z] of ESYA) {
+    const m = new T.Mesh(new T.BoxGeometry(g, y, d), icerikMalzeme);
+    m.position.set(x, -1.2 + y / 2, z);
+    m.castShadow = true;
     grup.add(m);
   }
 
-  /* --- Ölçü ve döngü --------------------------------------- */
+  /* İçerik: alternatif konaklama — binanın DIŞINDA bir çadır.
+     Konut poliçesinin kapsadığı ama DASK'ın kapsamadığı kalemin
+     bina dışında durması, farkı mekânsal olarak da anlatıyor. */
+  const cadir = new T.Mesh(new T.ConeGeometry(0.72, 1.05, 4), icerikMalzeme);
+  cadir.position.set(2.75, -0.83, 0.4);
+  cadir.rotation.y = Math.PI / 4;
+  cadir.castShadow = true;
+  grup.add(cadir);
+
+  /* --- Ölçü ------------------------------------------------ */
   function boyutla() {
     const g = kap.clientWidth || 480;
-    const y = Math.max(260, Math.round(g * 0.72));
+    const y = Math.max(280, Math.round(g * 0.74));
     cizer.setSize(g, y, false);
     kamera.aspect = g / y;
     kamera.updateProjectionMatrix();
@@ -135,52 +176,82 @@ export async function sahneKur(kap) {
   const gozlemci = new ResizeObserver(boyutla);
   gozlemci.observe(kap);
 
-  /* Sekme görünmezken çizme — pil ve işlemci boşa gitmesin */
+  /* --- Döngü ----------------------------------------------- */
   let calisiyor = true;
   let kare = 0;
-  const gorunurluk = () => { calisiyor = !document.hidden; if (calisiyor) don(); };
+  let gecenToplam = 0;
+  let baslangic = performance.now();
+  let sonEvre = -1;
+
+  const gorunurluk = () => {
+    calisiyor = !document.hidden;
+    if (calisiyor) { baslangic = performance.now() - gecenToplam; don(); }
+  };
   document.addEventListener("visibilitychange", gorunurluk);
 
-  function don() {
+  function yaziyiYaz(i) {
+    if (!yaziEl || i === sonEvre) return;
+    sonEvre = i;
+    const e = EVRELER[i];
+    const b = document.createElement("b");
+    b.textContent = e.yazi;
+    const s = document.createElement("span");
+    s.textContent = e.alt;
+    yaziEl.replaceChildren(b, s);
+    yaziEl.dataset.evre = e.ad;
+  }
+
+  function don(su) {
     if (!calisiyor) return;
     kare = requestAnimationFrame(don);
-    grup.rotation.y += 0.0025;
+    const simdi = su || performance.now();
+    /* requestAnimationFrame'in zaman damgası, karenin BAŞLANGICINI
+       gösterir ve hemen öncesinde alınan performance.now() değerinden
+       birkaç mikrosaniye GERİDE olabilir. Kırpılmazsa ilk karede
+       gecenToplam negatif oluyor, indis -1'e düşüyor ve sahne
+       "Cannot read properties of undefined" ile çöküyordu. */
+    gecenToplam = Math.max(0, simdi - baslangic);
+
+    /* Evre döngüsü ve yumuşak geçiş */
+    const tur = EVRE_SURESI * EVRELER.length;
+    const t = ((gecenToplam % tur) + tur) % tur;   /* her koşulda [0, tur) */
+    const i = Math.floor(t / EVRE_SURESI);
+    const icinde = t - i * EVRE_SURESI;
+    const gecis = icinde < GECIS_SURESI ? yumusat(icinde / GECIS_SURESI) : 1;
+    const onceki = (i - 1 + EVRELER.length) % EVRELER.length;
+    const oran = EVRELER[onceki].icerik +
+      (EVRELER[i].icerik - EVRELER[onceki].icerik) * gecis;
+
+    icerikMalzeme.color.copy(GRI).lerp(AMBER, oran);
+    icerikMalzeme.emissive.copy(AMBER).multiplyScalar(oran * 0.12);
+    yaziyiYaz(icinde > GECIS_SURESI / 2 ? i : onceki);
+
+    /* Yumuşak salınım: sabit dönüş yerine hafif gidip gelme —
+       kullanıcı modeli her açıdan görür ama baş döndürmez. */
+    const s = gecenToplam / 1000;
+    grup.rotation.y = Math.sin(s * 0.22) * 0.55 + 0.35;
+    grup.position.y = Math.sin(s * 0.7) * 0.035;
+
     cizer.render(sahne, kamera);
   }
   don();
 
-  /* Tema değişince renkleri tazele */
-  const temaGozlemci = new MutationObserver(() => {
-    kabukMalzeme.color.set(renk("--turkuaz", "#0A6E6B"));
-    cizgiMalzeme.color.set(renk("--turkuaz", "#0A6E6B"));
-    esyaMalzeme.color.set(renk("--tehlike", "#8E1B12"));
-  });
-  temaGozlemci.observe(document.documentElement, {
-    attributes: true, attributeFilter: ["data-tema"],
-  });
-
-  return () => {                       // sökme
+  return () => {
     cancelAnimationFrame(kare);
     calisiyor = false;
     document.removeEventListener("visibilitychange", gorunurluk);
     gozlemci.disconnect();
-    temaGozlemci.disconnect();
     cizer.dispose();
   };
 }
 
-/* --- Bağlama ---------------------------------------------- */
-/* Hero'daki SVG afiş sayfada zaten duruyor. 3B ancak yüklenirse afişin
-   YERİNE geçer; yüklenmezse hiçbir şey değişmez ve kullanıcı eksik bir
-   şey görmez. */
 export function sahneBaslat() {
   const sar = document.querySelector("[data-sahne3b]");
   const kap = sar && sar.querySelector(".sahne-3b");
   if (!kap || !uygunMu()) return;
+  const yazi = sar.querySelector("[data-sahne-yazi]");
 
-  /* Görünür alana girmeden yükleme — hero için hemen, ama yine de
-     tembel: modül import'u ancak burada tetiklenir. */
-  sahneKur(kap).then((sonuc) => {
+  sahneKur(kap, yazi).then((sonuc) => {
     if (sonuc !== KOSUL_YOK) {
       sar.hidden = false;
       const afis = document.querySelector("[data-afis-2b]");

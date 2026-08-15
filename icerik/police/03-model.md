@@ -16,6 +16,10 @@ Kısa cevap: **hiç kimseden, hiçbir ödeme almıyoruz.** Reklam yok, sponsor y
 Bu sayfadaki hiçbir şirket adı gerçek değildir. Sitede hiçbir sigorta şirketine giden
 bağlantı, form veya yönlendirme yoktur. Poliçe almak isteyen kullanıcı, şirketini
 kendisi seçer ve bizimle hiçbir teması olmaz.
+
+Teminat açığı hesabının sonunda üretilen **teklif talebi metni** de bir yönlendirme
+değildir: metin sizin cihazınızda oluşur, size verilir ve **kime göndereceğinize siz
+karar verirsiniz.** Biz kimin teklif verdiğini bilmeyiz.
 :::
 
 ## Hedeflediğimiz model

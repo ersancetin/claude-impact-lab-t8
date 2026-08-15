@@ -42,5 +42,15 @@ neredeyse hiç konuşulmaz.
 
 ## Sonra ne yapmalı?
 
-Önce kendi açığınızı görün, sonra neye bakacağınızı öğrenin. Bu sayfa size bir şirket
-önermez — hangi teminatı sormanız gerektiğini anlatır.
+Üç adım, sırayla:
+
+1. **Açığınızı görün.** [Teminat açığı hesabı](../arac/teminat.html) kaç liranın
+   sizde kaldığını kalem kalem çıkarır.
+2. **Neye bakacağınızı öğrenin.** [Hangi teminat neyi karşılar](./karsilastirma.html)
+   sayfası, teklifte aranacak altı satırı verir.
+3. **Teklif isteyin.** Hesap sonunda, kendi rakamlarınızla doldurulmuş bir teklif
+   talebi metni üretilir. Kopyalayıp kendi seçtiğiniz acenteye veya şirkete
+   gönderirsiniz.
+
+Bu platform size bir şirket önermez, hiçbirine yönlendirme yapmaz ve hiçbir ödeme
+almaz. Neden böyle olduğunu [şeffaflık sayfasında](./model.html) yazdık.

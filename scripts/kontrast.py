@@ -82,14 +82,12 @@ SABIT = [
 
 def main() -> int:
     metin = CSS.read_text(encoding="utf-8")
-    temalar = {
-        "açık": jetonlar(blok_bul(metin, ":root {")),
-        "koyu": jetonlar(blok_bul(metin, ':root[data-tema="koyu"]')),
-    }
+    # Tek tema: koyu palet kaldırıldı, ölçüm de tek blok üzerinden.
+    temalar = {"tek": jetonlar(blok_bul(metin, ":root {"))}
 
     hata = 0
     for tema, jeton in temalar.items():
-        print(f"\n=== {tema.upper()} TEMA ===")
+        print("\n=== PALET ===")
         for on, arka, esik, ad in CIFTLER:
             if on not in jeton or arka not in jeton:
                 print(f"  ?  {on} / {arka} — jeton bulunamadı")
