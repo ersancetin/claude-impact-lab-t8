@@ -2,7 +2,7 @@ name: GitHub Pages
 
 on:
   push:
-    branches: [claude/earthquake-logistics-system-68e5sz]
+    branches: [claude/stk-platform-corporate-design-aa1wlm]
     paths: ['docs/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 
@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # NOT: enablement yalnizca Pages daha once acildiysa calisir. Ilk kez
-      # acmak icin depo Settings > Pages > Source: GitHub Actions secilmeli;
-      # Actions token'i Pages sitesini olusturma yetkisine sahip degil.
+      # Pages 2026-08-15'te acildi ve Source: GitHub Actions secili.
+      # Tetikleyici dal, uzerinde calisilan dalla ayni olmalidir; aksi halde
+      # is akisi hic calismaz ve site sessizce eski surumde kalir.
       - uses: actions/configure-pages@v5
         with:
           enablement: true
