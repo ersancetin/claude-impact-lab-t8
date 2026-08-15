@@ -155,7 +155,7 @@ export async function sahneKur(kap, yaziEl) {
   function esya({ ton = 1, puruz = 0.7, metal = 0.02, vernik = 0 } = {}) {
     const m = new T.MeshPhysicalMaterial({
       color: ACIKTA.clone(), roughness: puruz, metalness: metal,
-      clearcoat: vernik, clearcoatRoughness: 0.25, envMapIntensity: 0.75,
+      clearcoat: vernik, clearcoatRoughness: 0.25, envMapIntensity: 0.5,
     });
     m.userData.ton = ton;
     esyaMalzemeleri.push(m);
@@ -172,11 +172,33 @@ export async function sahneKur(kap, yaziEl) {
   const BEZ_KOYU = esya({ puruz: 0.98, ton: 0.6 });
 
   const kabukMalzeme = new T.MeshPhysicalMaterial({
-    color: YESIL, transparent: true, opacity: 0.19,
+    color: YESIL, transparent: true, opacity: 0.12,
     roughness: 0.08, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.1,
     side: T.DoubleSide, depthWrite: false, envMapIntensity: 1.1,
   });
   const telMalzeme = new T.LineBasicMaterial({ color: YESIL });
+  /* Yapı elemanları — duvar dolgusu saydam kalırken çerçeve, kapı,
+     saçak, baca gibi parçalar mat: bina ancak bu parçalarla "ev" gibi
+     okunuyor. Hepsi DASK yeşilinin tonları — bina teminatı bir bütün. */
+  const AC_YESIL = YESIL.clone().lerp(new T.Color(0xffffff), 0.30);
+  const yapiMalzeme = new T.MeshPhysicalMaterial({
+    color: AC_YESIL, roughness: 0.45, metalness: 0.05,
+    clearcoat: 0.35, clearcoatRoughness: 0.3, envMapIntensity: 0.9,
+  });
+  const yapiKoyu = new T.MeshPhysicalMaterial({
+    color: YESIL.clone().multiplyScalar(0.78), roughness: 0.55, metalness: 0.06,
+    envMapIntensity: 0.8,
+  });
+  const catiMalzeme = new T.MeshPhysicalMaterial({
+    color: YESIL, transparent: true, opacity: 0.48,
+    roughness: 0.3, metalness: 0, clearcoat: 0.7, clearcoatRoughness: 0.2,
+    side: T.DoubleSide, envMapIntensity: 1.1,
+  });
+  const camMalzeme = new T.MeshPhysicalMaterial({
+    color: 0xE9F3F5, transparent: true, opacity: 0.17,
+    roughness: 0.03, metalness: 0, side: T.DoubleSide,
+    depthWrite: false, envMapIntensity: 1.5,
+  });
 
   /* --- Geometri yardımcıları --------------------------------
      Köşesi keskin kutu "mobilya" gibi okunmuyordu. Yuvarlatılmış kutu
@@ -221,31 +243,145 @@ export async function sahneKur(kap, yaziEl) {
   const silindir = (grup_, r, h, konum, malzeme, donus) =>
     parca(grup_, new T.CylinderGeometry(r, r, h, 12), malzeme, konum, donus);
 
-  /* --- Bina kabuğu ------------------------------------------ */
+  /* --- Bina: kutu değil, ev ---------------------------------
+     Önceki sürüm tek bir saydam kutu + koni çatıydı; "ev" değil
+     "kutu" gibi okunuyordu. Bina artık gerçek yapı elemanlarından
+     kuruluyor: temel, dört ayrı duvar paneli, duvarlarda GERÇEK
+     pencere ve kapı boşlukları (delikli şekil), çerçeve ve cam,
+     eşik, saçak, kırma çatı, baca.
+     Duvar dolgusu saydam kalıyor: kesit anlatımı bozulmasın, eşya
+     içeriden görünmeye devam etsin. */
   const grup = new T.Group();
   sahne.add(grup);
   const ev = new T.Group();          // bina + içindeki eşya (yakın kadraj)
   grup.add(ev);
 
-  const EN = 4.0, BOY = 2.45, DERINLIK = 3.0;
-  const TABAN = ZEMIN_Y + 0.12;      // eşyaların üstünde durduğu döşeme
+  const EN = 4.2, BOY = 2.3, DERINLIK = 3.1, KAL = 0.13, TEMEL = 0.24;
+  const TABAN = ZEMIN_Y + TEMEL;     // eşyaların üstünde durduğu döşeme
 
-  function kabuk(geo, y = 0, donus = 0, olcekZ = 1) {
-    const m = new T.Mesh(geo, kabukMalzeme);
-    m.position.y = y; m.rotation.y = donus; m.scale.z = olcekZ;
-    ev.add(m);
-    const t = new T.LineSegments(new T.EdgesGeometry(geo), telMalzeme);
-    t.position.y = y; t.rotation.y = donus; t.scale.z = olcekZ;
-    ev.add(t);
+  /* Temel + döşeme */
+  blok(ev, [EN + 0.26, TEMEL, DERINLIK + 0.26],
+       [0, ZEMIN_Y + TEMEL / 2, 0], yapiKoyu, 0.02);
+
+  /* Duvar paneli: delikli şekilden çıkarılır, boşluklar gerçek boşluktur */
+  function duvarGeo(w, h, delikler) {
+    const s = new T.Shape();
+    s.moveTo(-w / 2, 0); s.lineTo(w / 2, 0);
+    s.lineTo(w / 2, h); s.lineTo(-w / 2, h); s.lineTo(-w / 2, 0);
+    for (const d of delikler) {
+      const p = new T.Path();
+      p.moveTo(d.cx - d.hw, d.cy - d.hh); p.lineTo(d.cx + d.hw, d.cy - d.hh);
+      p.lineTo(d.cx + d.hw, d.cy + d.hh); p.lineTo(d.cx - d.hw, d.cy + d.hh);
+      p.lineTo(d.cx - d.hw, d.cy - d.hh);
+      s.holes.push(p);
+    }
+    const g = new T.ExtrudeGeometry(s, { depth: KAL, bevelEnabled: false });
+    g.translate(0, 0, -KAL / 2);
+    return g;
   }
-  kabuk(new T.BoxGeometry(EN, BOY, DERINLIK), ZEMIN_Y + BOY / 2);
-  kabuk(new T.BoxGeometry(EN, 0.12, DERINLIK), ZEMIN_Y + 0.06);
+
+  /* Boşluğu saran çerçeve — dört kenar + isteğe bağlı orta kayıt */
+  function cerceve(g, hw, hh, kayit) {
+    const k = 0.055, der = KAL + 0.05;
+    blok(g, [hw * 2 + k * 2, k, der], [0, hh + k / 2, 0], yapiMalzeme, 0.015);
+    blok(g, [hw * 2 + k * 2, k, der], [0, -hh - k / 2, 0], yapiMalzeme, 0.015);
+    blok(g, [k, hh * 2, der], [-hw - k / 2, 0, 0], yapiMalzeme, 0.015);
+    blok(g, [k, hh * 2, der], [hw + k / 2, 0, 0], yapiMalzeme, 0.015);
+    if (kayit) {
+      blok(g, [k * 0.6, hh * 2, der * 0.6], [0, 0, 0], yapiMalzeme, 0.01);
+      blok(g, [hw * 2, k * 0.6, der * 0.6], [0, 0, 0], yapiMalzeme, 0.01);
+    }
+  }
+
+  function pencere(d) {
+    const g = new T.Group();
+    g.position.set(d.cx, d.cy, 0);
+    cerceve(g, d.hw, d.hh, true);
+    const cam = new T.Mesh(new T.PlaneGeometry(d.hw * 2, d.hh * 2), camMalzeme);
+    g.add(cam);
+    /* Denizlik: pencerenin dışa taşan alt tablası */
+    blok(g, [d.hw * 2 + 0.20, 0.05, KAL + 0.16], [0, -d.hh - 0.09, 0.02], yapiKoyu, 0.015);
+    return g;
+  }
+
+  function kapi(d) {
+    const g = new T.Group();
+    g.position.set(d.cx, d.cy, 0);
+    cerceve(g, d.hw, d.hh, false);
+    const der = KAL * 0.7;
+    blok(g, [d.hw * 2 - 0.03, d.hh * 2 - 0.03, der], [0, 0, 0], yapiMalzeme, 0.02);
+    for (const y of [d.hh * 0.42, -d.hh * 0.42])          // kapı panoları
+      blok(g, [d.hw * 1.15, d.hh * 0.62, der + 0.02], [0, y, 0], yapiKoyu, 0.02);
+    silindir(g, 0.028, 0.11, [d.hw * 0.62, -0.02, der * 0.9], yapiKoyu,
+             [Math.PI / 2, 0, 0]);                        // kol
+    return g;
+  }
+
+  const DUVARLAR = [
+    { w: EN, don: 0, konum: [0, TABAN, DERINLIK / 2 - KAL / 2], delikler: [
+      { t: "kapi", cx: -1.12, cy: 1.00, hw: 0.42, hh: 0.95 },
+      { t: "pencere", cx: 1.10, cy: 1.42, hw: 0.55, hh: 0.42 },
+    ] },
+    { w: EN, don: Math.PI, konum: [0, TABAN, -DERINLIK / 2 + KAL / 2], delikler: [
+      { t: "pencere", cx: -1.15, cy: 1.42, hw: 0.50, hh: 0.42 },
+      { t: "pencere", cx: 1.15, cy: 1.42, hw: 0.50, hh: 0.42 },
+    ] },
+    { w: DERINLIK, don: Math.PI / 2, konum: [EN / 2 - KAL / 2, TABAN, 0], delikler: [
+      { t: "pencere", cx: 0, cy: 1.42, hw: 0.58, hh: 0.42 },
+    ] },
+    { w: DERINLIK, don: -Math.PI / 2, konum: [-EN / 2 + KAL / 2, TABAN, 0], delikler: [
+      { t: "pencere", cx: 0, cy: 1.42, hw: 0.58, hh: 0.42 },
+    ] },
+  ];
+  for (const d of DUVARLAR) {
+    const g = new T.Group();
+    g.position.set(...d.konum); g.rotation.y = d.don;
+    ev.add(g);
+    const geo = duvarGeo(d.w, BOY, d.delikler);
+    const m = new T.Mesh(geo, kabukMalzeme);
+    m.receiveShadow = true;
+    g.add(m);
+    g.add(new T.LineSegments(new T.EdgesGeometry(geo), telMalzeme));
+    for (const h of d.delikler) g.add(h.t === "kapi" ? kapi(h) : pencere(h));
+  }
+
+  /* Eşik: kapının önünde iki basamak */
+  blok(ev, [1.30, 0.10, 0.42], [-1.12, ZEMIN_Y + TEMEL - 0.05, DERINLIK / 2 + 0.19],
+       yapiKoyu, 0.02);
+  blok(ev, [1.52, 0.11, 0.34], [-1.12, ZEMIN_Y + 0.055, DERINLIK / 2 + 0.36],
+       yapiKoyu, 0.02);
+
+  /* Saçak: duvar üstünde, çatının oturduğu bilezik */
+  const CATI_Y = TABAN + BOY;
+  blok(ev, [EN + 0.36, 0.12, DERINLIK + 0.36], [0, CATI_Y + 0.06, 0], yapiMalzeme, 0.02);
+
   /* Kırma çatı: 4 kenarlı koni 45° döndürülünce eksenlere paralel bir
-     kare olur; yarıçap EN/2·√2, z ekseninde DERINLIK/EN oranında
-     sıkıştırılır. Böylece çatı duvarları tam örter, önceki sürümdeki
-     aşırı saçak taşması olmaz. */
-  kabuk(new T.ConeGeometry((EN / 2) * Math.SQRT2 * 1.06, 1.1, 4),
-        ZEMIN_Y + BOY + 0.55, Math.PI / 4, DERINLIK / EN);
+     kare olur; z ekseninde derinlik oranında sıkıştırılıp saçağa oturur. */
+  const catiGeo = new T.ConeGeometry(((EN + 0.36) / 2) * Math.SQRT2, 1.02, 4);
+  const cati = new T.Mesh(catiGeo, catiMalzeme);
+  cati.rotation.y = Math.PI / 4;
+  cati.scale.z = (DERINLIK + 0.36) / (EN + 0.36);
+  cati.position.y = CATI_Y + 0.12 + 1.02 / 2;
+  cati.castShadow = true;
+  ev.add(cati);
+  const catiTel = new T.LineSegments(new T.EdgesGeometry(catiGeo), telMalzeme);
+  catiTel.rotation.copy(cati.rotation);
+  catiTel.scale.copy(cati.scale);
+  catiTel.position.copy(cati.position);
+  ev.add(catiTel);
+
+  /* İç aydınlatma: çatı ve saçak gölge düşürdüğü için oda kararıyor,
+     eşya —anlatının asıl öznesi— seçilemiyordu. Odanın ortasındaki
+     yumuşak ışık yalnızca içeriyi kaldırır, gölge üretmez. */
+  const icIsik = new T.PointLight(0xfff6ea, 9, 7.5, 2);
+  icIsik.position.set(0, TABAN + 1.75, 0.1);
+  ev.add(icIsik);
+
+  /* Baca: çatıdan çıkar, evi silüetten tanıtan parça */
+  const baca = new T.Group(); ev.add(baca);
+  blok(baca, [0.30, 1.00, 0.30], [0, 0.50, 0], yapiKoyu, 0.02);
+  blok(baca, [0.42, 0.09, 0.42], [0, 1.02, 0], yapiMalzeme, 0.02);
+  baca.position.set(EN * 0.26, CATI_Y, -DERINLIK * 0.20);
 
   /* --- Eşya yerleşimi ---------------------------------------
      Oda dört çeyreğe bölünür ve her çeyreğe tek bir büyük parça
@@ -288,7 +424,7 @@ export async function sahneKur(kap, yaziEl) {
       silindir(s, 0.028, 0.45, [dx, 0.225, dz], AHSAP_KOYU);
     s.position.set(0, 0, yon * 0.70);
   }
-  masa.position.set(1.02, TABAN, -0.62);
+  masa.position.set(1.02, TABAN, -0.46);
   masa.rotation.y = -0.10;
 
   /* --- Televizyon: sehpa + ayak + ekran ---------------------- */
@@ -297,25 +433,71 @@ export async function sahneKur(kap, yaziEl) {
   blok(tv, [1.14, 0.04, 0.36], [0, 0.20, 0.01], AHSAP_KOYU, 0.02);
   blok(tv, [0.24, 0.10, 0.16], [0, 0.41, 0], METAL_KOYU, 0.03);
   blok(tv, [1.00, 0.60, 0.05], [0, 0.76, 0], CAM_KOYU, 0.02);
-  tv.position.set(1.42, TABAN, 0.98);
+  tv.position.set(1.34, TABAN, 0.92);
   tv.rotation.y = Math.PI * 0.82;   // koltuğa dönük
 
   /* --- Çadır: binanın DIŞINDA -------------------------------
      Alternatif konaklama, DASK'ın kapsamadığı ama konut poliçesinin
      kapsadığı kalem. Bina dışında durması farkı mekânsal olarak da
-     anlatıyor; evre 2'de kamera geri çekilip bunu kadraja alır. */
+     anlatıyor; evre 2'de kamera geri çekilip bunu kadraja alır.
+
+     Piramit koni "çadır" gibi okunmuyordu. Şimdi afet barınma çadırı
+     kurgusu: yer örtüsü, düşey bez duvarlar, beşik çatı (üçgen prizma),
+     iki ucundan çıkan mahya direği, kemerli giriş kapağı ve yere
+     kazıklarla gerilen ipler. */
   const cadir = new T.Group(); grup.add(cadir);
-  const kule = new T.Mesh(new T.ConeGeometry(1.02, 1.42, 4), BEZ);
-  kule.rotation.y = Math.PI / 4;
-  kule.position.y = 0.71;
-  kule.castShadow = true;
-  cadir.add(kule);
-  blok(cadir, [0.36, 0.72, 0.04], [0, 0.36, 0.60], BEZ_KOYU, 0.02);   // giriş kapağı
-  for (const yon of [-1, 1])                                          // gergi ipleri
-    silindir(cadir, 0.012, 0.86, [yon * 0.72, 0.30, 0.62], BEZ_KOYU,
-             [Math.PI / 5, 0, -yon * Math.PI / 4]);
-  cadir.position.set(3.30, ZEMIN_Y, 1.85);
-  cadir.rotation.y = -0.35;
+  const CE = 2.05, CD = 1.62, CDUVAR = 0.78, CCATI = 0.62, CSACAK = 0.10;
+
+  blok(cadir, [CE + 0.30, 0.05, CD + 0.30], [0, 0.025, 0], BEZ_KOYU, 0.02);  // yer örtüsü
+  blok(cadir, [CE, CDUVAR, CD], [0, CDUVAR / 2 + 0.04, 0], BEZ, 0.06);       // bez duvarlar
+
+  /* Beşik çatı: XY düzlemindeki üçgen Z boyunca ötelenir; mahya Z
+     ekseninde uzanır, saçak duvarların biraz dışına taşar. */
+  const ucgen = new T.Shape();
+  ucgen.moveTo(-CE / 2 - CSACAK, 0);
+  ucgen.lineTo(CE / 2 + CSACAK, 0);
+  ucgen.lineTo(0, CCATI);
+  ucgen.lineTo(-CE / 2 - CSACAK, 0);
+  const cadirCatiGeo = new T.ExtrudeGeometry(ucgen, {
+    depth: CD + CSACAK * 2, bevelEnabled: false,
+  });
+  cadirCatiGeo.translate(0, 0, -(CD + CSACAK * 2) / 2);
+  parca(cadir, cadirCatiGeo, BEZ, [0, CDUVAR + 0.04, 0]);
+
+  /* Mahya direği: iki uçtan dışarı taşar — çadırı çadır yapan detay */
+  silindir(cadir, 0.026, CD + 0.26, [0, CDUVAR + CCATI + 0.02, 0], BEZ_KOYU,
+           [Math.PI / 2, 0, 0]);
+
+  /* Giriş: kemerli kapak + iki yandan toplanmış bez */
+  const giris = new T.Group(); cadir.add(giris);
+  giris.position.set(0, 0, CD / 2 + 0.02);
+  const kemer = new T.Shape();
+  kemer.moveTo(-0.34, 0);
+  kemer.lineTo(-0.34, 0.62);
+  kemer.quadraticCurveTo(-0.34, 0.98, 0, 0.98);
+  kemer.quadraticCurveTo(0.34, 0.98, 0.34, 0.62);
+  kemer.lineTo(0.34, 0);
+  kemer.lineTo(-0.34, 0);
+  const kapakGeo = new T.ExtrudeGeometry(kemer, {
+    depth: 0.05, bevelEnabled: false, curveSegments: 8,
+  });
+  kapakGeo.translate(0, 0.05, 0);
+  parca(giris, kapakGeo, BEZ_KOYU);
+  for (const yon of [-1, 1])                       // toplanmış kapak bezi
+    blok(giris, [0.13, 0.86, 0.10], [yon * 0.41, 0.47, 0.02], BEZ, 0.05);
+
+  /* Gergi ipleri ve kazıklar */
+  for (const yx of [-1, 1])
+    for (const yz of [-1, 1]) {
+      silindir(cadir, 0.011, 0.92,
+               [yx * (CE / 2 + 0.30), 0.44, yz * (CD / 2 + 0.24)], BEZ_KOYU,
+               [yz * Math.PI / 6, 0, -yx * Math.PI / 5]);
+      silindir(cadir, 0.022, 0.16,
+               [yx * (CE / 2 + 0.46), 0.06, yz * (CD / 2 + 0.36)], BEZ_KOYU);
+    }
+
+  cadir.position.set(3.55, ZEMIN_Y, 1.55);
+  cadir.rotation.y = -0.42;
 
   /* --- Kadraj: tam çözüm, kürelemeden ------------------------
      Kamera hedefi H, bakış birim vektörü Y (hedeften kameraya) olsun.
