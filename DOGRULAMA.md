@@ -358,3 +358,23 @@ Ardından A bölümündeki 12 kritik maddeden başlanır. Her doğrulama sonras�
 | J3 | 6306 kira yardımında kiracıya ilişkin koşullar (18 ay, 2 kat, bir defalık) | 6306 Uygulama Yönetmeliği | ⚠️ tek kaynak | ☐ | |
 | J4 | Kayıt dışı kira ilişkisinde yardıma erişim — sözleşmesi olmayan kiracı | Yönetmelik + uygulama | ☐ | ☐ | |
 | J5 | Depozito ve peşin kiranın iadesi — yıkım hâlinde usul | TBK | ☐ | ☐ | |
+
+---
+
+## K. Parametrik ürün ve DASK protokolü — 🔴 ürün kararı öncesi zorunlu
+
+[`PROJE-PARAMETRIK.md`](./PROJE-PARAMETRIK.md) tespitleri ikincil kaynaklıdır. K1–K3 **ürünün hukuken ayakta durup duramayacağını** belirler.
+
+| # | Doğrulanacak iddia | Kaynak / MCP çağrısı | Çoklu kaynak | Resmî | Doğrulayan / tarih |
+|---|---|---|---|---|---|
+| K1 | 🔴 **Ruhsatsız kişiyle yapılan sigorta sözleşmesine kumar/bahis hükümleri uygulanır** — atıf yapılan TBK maddeleri ve güncel karşılıkları | `search_within_kanun(6102, "kumar")` + TBK 604-605 | ⚠️ tek kaynak | ☐ | |
+| K2 | 🔴 **TTK m.1461** — sigortacının sorumluluğunun sigorta bedeliyle sınırlı olması | `search_within_kanun(6102, "madde 1461")` | ⚠️ tek kaynak | ☐ | |
+| K3 | 🔴 **Sigortalanabilir menfaat** hükümleri (TTK m.1401 vd., zarar sigortalarında menfaat) | `search_within_kanun(6102, "menfaat")` | ⚠️ tek kaynak | ☐ | |
+| K4 | **6305'te DASK'ın faaliyet konusunu çizen madde** — yeni ürün sunma yetkisinin sınırı | `search_within_kanun(6305, "amaç OR kapsam")` | ⚠️ tek kaynak | ☐ | |
+| K5 | DASK hakkında 5684 ve TTK'nın doğrudan uygulanmadığı hükmü | `search_within_kanun(6305, "uygulanmaz")` | ⚠️ tek kaynak | ☐ | |
+| K6 | **AFAD-Türkiye Deprem Veri Merkezi Sistemi Yönetmeliği** (`MevzuatTur=7, MevzuatNo=21104`) — verinin resmî statüsü | `search_kurum_yonetmelik("Deprem Veri Merkezi")` | ☐ | ☐ | |
+| K7 | AFAD ShakeMap çıktılarının **revize edilip edilmediği** ve yayım süresi — sözleşmeye esas alınabilirliği belirler | AFAD / TADAS teknik dokümantasyon | ☐ | ☐ | |
+| K8 | SEDDK ürün ve genel şart onay süreci | SEDDK mevzuatı | ☐ | ☐ | |
+| K9 | DASK ödeme kapasitesi ve cat bond verileri (46 milyar TL / 400 milyon USD) | DASK faaliyet raporları | ⚠️ tek kaynak | ☐ | |
+| K10 | DASK poliçelerinin yetkili şirket ve acenteler eliyle DASK adına düzenlenmesi | 6305 + DASK Çalışma Esasları Yönetmeliği | ⚠️ tek kaynak | ☐ | |
+| K11 | Türkiye Deprem Tehlike Haritası'nın aktüeryal kullanıma elverişliliği (PGA/SS/S1 aşılma olasılıkları) | AFAD | ☐ | ☐ | |
