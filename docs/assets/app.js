@@ -59,6 +59,31 @@ export function gunEkle(tarih, gun) {
   return new Date(tarih.getTime() + gun * GUN_MS);
 }
 
+/* Takvim süresi ekler: { gun } | { ay } | { yil }.
+ *
+ * NEDEN AYRI BİR İŞLEV: "iki ay" 60 gün DEĞİLDİR — takvime göre 59 ile 62
+ * gün arasında değişir. Ayı 30 günle çarpmak, kullanıcıya olmayan bir gün
+ * vaat edebilir; hak düşürücü sürede bu doğrudan hak kaybıdır.
+ *
+ * Ay sonu taşması: 31 Ocak + 1 ay JS'te 3 Mart'a taşar. Süre hesabında
+ * kabul edilen çözüm, hedef ayda o gün yoksa AYIN SON GÜNÜdür (TBK m.92
+ * ile aynı mantık). Aşağıda bu kırpma açıkça yapılır.
+ */
+export function sureEkle(tarih, sure) {
+  if (sure.gun != null) return gunEkle(tarih, sure.gun);
+
+  const d = new Date(tarih.getTime());
+  const gun = d.getDate();
+  if (sure.ay != null) d.setMonth(d.getMonth() + sure.ay, 1);
+  else if (sure.yil != null) d.setFullYear(d.getFullYear() + sure.yil, d.getMonth(), 1);
+  else return new Date(tarih.getTime());
+
+  /* Hedef ayın gün sayısı: bir sonraki ayın 0. günü */
+  const ayinSonu = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  d.setDate(Math.min(gun, ayinSonu));
+  return d;
+}
+
 export function gunFarki(a, b) {
   return Math.round((a.getTime() - b.getTime()) / GUN_MS);
 }

@@ -48,7 +48,7 @@
 
 <script type="module">
 import {el, tarihOku, gunEkle, gunFarki, bugun,
-         tarihYaz, kaydet, oku, sil, dogrulamaRozeti } from "../assets/app.js";
+         tarihYaz, kaydet, oku, sil, dogrulamaRozeti, sureEkle } from "../assets/app.js";
 import { PARAM } from "../assets/veri.js";
 /* Tekil başlangıç anahtarları — her biri bir soru olur */
 const SORULAR = [
@@ -107,6 +107,15 @@ document.getElementById("temizle").addEventListener("click", () => {
 
 document.getElementById("yazdir").addEventListener("click", () => window.print());
 
+/* Sürenin insan diliyle adı — "60 gün" yerine kanundaki birim.
+   Kanun "iki ay" diyorsa ekranda da iki ay yazmalı. */
+function sureAdi(s) {
+  if (s.gun != null) return `${s.gun} gün`;
+  if (s.ay  != null) return `${s.ay} ay`;
+  if (s.yil != null) return `${s.yil} yıl`;
+  return "süre";
+}
+
 function ciz(veri) {
   listeEl.replaceChildren();
   const su = bugun();
@@ -118,7 +127,7 @@ function ciz(veri) {
       satirlar.push({ s, durum: "bilinmiyor" });
       continue;
     }
-    const bitis = gunEkle(bas, s.gun);
+    const bitis = sureEkle(bas, s);
     const kalan = gunFarki(bitis, su);
     let durum = "acik";
     if (kalan < 0) durum = "gecti";
@@ -173,7 +182,7 @@ function ciz(veri) {
           ? `${s.baslangicEtiket} girilmedi.`
           : durum === "gecti"
             ? `Son gün ${tarihYaz(bitis)} idi.`
-            : `Son gün: ${tarihYaz(bitis)} (${s.gun} gün).`),
+            : `Son gün: ${tarihYaz(bitis)} (${sureAdi(s)}).`),
       el("small", {}, s.neYapmali)
     );
 
