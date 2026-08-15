@@ -58,12 +58,12 @@
     },
     "muafiyetOrani": {
       "deger": 0.02,
-      "aciklama": "Sigorta bedelinin %2'si oraninda tenzili muafiyet. DASK muafiyeti asan kisimdan sorumludur.",
+      "aciklama": "Sigorta bedelinin %2'si oranında tenzili muafiyet. DASK, hasarın muafiyeti aşan kısmından sorumludur; muafiyet her ödemeden düşülür.",
       "dogrulama": "coklu"
     },
     "hasarBirlestirmePenceresi": {
       "saat": 72,
-      "aciklama": "Her 72 saatlik donem bir hasar sayilir. Sigortalinin LEHINEDIR: 6 Subat gibi kisa arayla iki deprem oldugunda muafiyet bir kez uygulanir.",
+      "aciklama": "Her 72 saatlik dönem bir hasar sayılır. Sigortalının LEHİNEDİR: 6 Şubat gibi kısa arayla iki deprem olduğunda muafiyet bir kez uygulanır.",
       "dogrulama": "coklu"
     }
   },
@@ -73,33 +73,73 @@
       "gun": 15,
       "baslangic": "rizikoyu öğrenme tarihi",
       "dayanak": "ZDS Genel Şartları B.1",
-      "dogrulama": "tek"
+      "dogrulama": "tek",
+      "sunum": {
+        "id": "dask-ihbar",
+        "ad": "DASK hasar ihbarı",
+        "baslangicEtiket": "Depremi öğrendiğiniz tarih",
+        "baslangicAnahtar": "deprem",
+        "neYapmali": "ALO DASK 125, e-Devlet veya poliçenizi düzenleyen sigorta şirketi.",
+        "sablon": null
+      }
     },
     "eksperRaporunaItiraz": {
       "gun": 15,
       "baslangic": "raporun tebliği",
       "dayanak": "sigorta şirketine yazılı itiraz",
-      "dogrulama": "tek"
+      "dogrulama": "tek",
+      "sunum": {
+        "id": "eksper-itiraz",
+        "ad": "Eksper raporuna itiraz",
+        "baslangicEtiket": "Eksper raporunun size tebliğ tarihi",
+        "baslangicAnahtar": "eksper",
+        "neYapmali": "Poliçeyi düzenleyen sigorta şirketine yazılı başvuru.",
+        "sablon": "eksper-itiraz"
+      }
     },
     "daskHasarDosyasinaItiraz": {
       "gun": 30,
       "baslangic": "hasar dosyasının kapatılması",
       "dayanak": "DASK Genel Müdürlüğüne yazılı itiraz",
-      "dogrulama": "tek"
+      "dogrulama": "tek",
+      "sunum": {
+        "id": "dask-dosya-itiraz",
+        "ad": "DASK hasar dosyasına itiraz",
+        "baslangicEtiket": "Hasar dosyanızın kapatıldığı tarih",
+        "baslangicAnahtar": "dosyakapanis",
+        "neYapmali": "DASK Genel Müdürlüğüne yazılı itiraz.",
+        "sablon": null
+      }
     },
     "hasarTespitineItiraz": {
       "gun": 30,
       "baslangic": "mahallî ilan tarihi",
       "dayanak": "7269 sayılı Kanun",
       "dogrulama": "coklu",
-      "kritik": true
+      "kritik": true,
+      "sunum": {
+        "id": "hasar-itiraz",
+        "ad": "Hasar tespit raporuna itiraz",
+        "baslangicEtiket": "Hasar tespit sonucunun ilan tarihi",
+        "baslangicAnahtar": "ilan",
+        "neYapmali": "İl Çevre ve Şehircilik Müdürlüğü, valilik veya kaymakamlık.",
+        "sablon": "hasar-itiraz"
+      }
     },
     "hakSahipligiBasvurusu": {
       "ay": 2,
       "baslangic": "ilan tarihi",
       "dayanak": "7269 s.K. m.29 — mülkiye amirine yazılı talep ve taahhütname",
       "dogrulama": "coklu",
-      "kritik": true
+      "kritik": true,
+      "sunum": {
+        "id": "hak-sahipligi",
+        "ad": "Hak sahipliği başvurusu",
+        "baslangicEtiket": "Hak sahipliği ilan tarihi",
+        "baslangicAnahtar": "haksahipligi",
+        "neYapmali": "Mahallin en büyük mülkî amirine yazılı talep ve taahhütname.",
+        "sablon": "hak-sahipligi"
+      }
     },
     "hakSahipligiReddineItiraz": {
       "gun": 15,
@@ -111,7 +151,15 @@
       "gun": 15,
       "baslangic": "tebliğ",
       "dayanak": "6306 Uygulama Yönetmeliği",
-      "dogrulama": "coklu"
+      "dogrulama": "coklu",
+      "sunum": {
+        "id": "riskli-yapi-itiraz",
+        "ad": "Riskli yapı tespitine itiraz",
+        "baslangicEtiket": "Riskli yapı tespitinin tebliğ tarihi",
+        "baslangicAnahtar": "riskliyapi",
+        "neYapmali": "Çevre, Şehircilik ve İklim Değişikliği Bakanlığı / İl Müdürlüğü.",
+        "sablon": null
+      }
     },
     "imarPlaniAskiItirazi": {
       "gun": 30,
@@ -123,7 +171,15 @@
       "gun": 60,
       "baslangic": "tebliğ veya zımni ret",
       "dayanak": "2577 s.K.",
-      "dogrulama": "coklu"
+      "dogrulama": "coklu",
+      "sunum": {
+        "id": "idari-dava",
+        "ad": "İdari dava açma süresi",
+        "baslangicEtiket": "Ret kararının tebliğ tarihi",
+        "baslangicAnahtar": "ret",
+        "neYapmali": "İdare mahkemesi. Avukata danışın.",
+        "sablon": null
+      }
     },
     "idariBasvuruyaCevap": {
       "gun": 30,
@@ -144,7 +200,15 @@
       "baslangic": "alacağın muaccel olduğu tarih / riziko tarihi",
       "dayanak": "TTK m.1420",
       "dogrulama": "coklu",
-      "kritik": true
+      "kritik": true,
+      "sunum": {
+        "id": "sigorta-zamanasimi",
+        "ad": "Sigorta tazminatı zamanaşımı",
+        "baslangicEtiket": "Depremi öğrendiğiniz tarih",
+        "baslangicAnahtar": "deprem",
+        "neYapmali": "Önce sigortacıya yazılı başvuru (dava şartı), sonra Tahkim veya mahkeme.",
+        "sablon": "sigorta-basvuru"
+      }
     },
     "eserSozlesmesiZamanasimi": {
       "yil": 5,
@@ -171,7 +235,8 @@
       "isGunu": 20,
       "baslangic": "lehtar veya mirasçıların talebi",
       "dogrulama": "tek"
-    }
+    },
+    "$sunum": "Bir sürenin araç sayfasında GÖSTERİLECEĞİ, 'sunum' bloğu olup olmamasıyla belirlenir. Böylece 'bu süreyi kullanıcıya gösterelim mi' kararı hukuki değerin yanında durur; yeni süre ekleyen kişi bu kararı vermek zorunda kalır. Üreteç, yarım sunum bloğunu hata sayar, sessizce atlamaz."
   },
   "sigortaTahkim": {
     "$kaynak": "Sigorta Tahkim Komisyonu duyurulari",

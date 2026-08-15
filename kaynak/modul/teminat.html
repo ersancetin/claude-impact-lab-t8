@@ -88,7 +88,7 @@
   <section id="sonuc" class="gizli" aria-live="polite"></section>
 
 <script type="module">
-import {el, paraYaz, kaydet, oku } from "../assets/app.js";
+import {el, paraYaz, kaydet, oku, tarihYaz, tarihOku } from "../assets/app.js";
 import { PARAM } from "../assets/veri.js";
 const form     = document.getElementById("form");
 const sonucEl  = document.getElementById("sonuc");
@@ -261,7 +261,7 @@ function ciz(v) {
   parcalar.push(
     el("div", { class: "serit" },
       el("strong", {}, "Bu hesap yaklaşıktır."),
-      ` DASK azami teminat tutarı ${d.azamiTeminatTarihi} tarihli tarifeye göre `
+      ` DASK azami teminat tutarı ${tarihYaz(tarihOku(d.azamiTeminatTarihi))} tarihli tarifeye göre `
       + `${paraYaz(d.azamiTeminat)} alınmıştır ve bu tutar yıl içinde değişmektedir. `
       + "Kesin bilgi için DASK'ın güncel tarifesine ve poliçenize bakın. "
       + "Buradaki değerler henüz resmî kaynaktan doğrulanmamıştır."),
