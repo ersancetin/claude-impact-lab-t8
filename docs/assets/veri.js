@@ -41,7 +41,10 @@ export const PARAM = {
       neYapmali: "Poliçeyi düzenleyen sigorta şirketine yazılı başvuru.",
       sablon: "eksper-itiraz" },
 
-    { id: "hak-sahipligi", ad: "Hak sahipliği başvurusu", gun: 60,
+    /* DİKKAT: 7269 s.K. m.29 "iki ay" der — 60 gün DEĞİL. Takvim ayı
+       59-62 gün sürer; 60 gün yazmak kullanıcıya olmayan bir gün vaat
+       edebiliyordu. app.js → sureEkle() takvim aritmetiği yapar. */
+    { id: "hak-sahipligi", ad: "Hak sahipliği başvurusu", ay: 2,
       baslangicEtiket: "Hak sahipliği ilan tarihi", baslangicAnahtar: "haksahipligi",
       dayanak: "7269 s.K. m.29 — iki ay", dogrulama: "coklu", kritik: true,
       neYapmali: "Mahallin en büyük mülkî amirine yazılı talep ve taahhütname.",

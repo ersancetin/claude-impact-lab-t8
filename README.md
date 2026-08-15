@@ -22,7 +22,9 @@ python3 scripts/site-uret.py       # docs/ klasörünü üretir
 python3 scripts/bag-kontrol.py     # iç bağlantıları denetler
 python3 scripts/kontrast.py        # renk kontrastlarını ölçer (52 çift)
 python3 scripts/veri-kontrol.py    # parametreler.json ↔ veri.js tutarlılığı
-node scripts/danisma-kontrol.mjs   # danışmanın arama isabeti (17 soru)
+node scripts/danisma-kontrol.mjs   # danışmanın arama isabeti (24 soru)
+node scripts/sure-kontrol.mjs      # takvim süresi aritmetiği (12 örnek)
+python3 scripts/markdown-kontrol.py  # markdown işleyici sınamaları
 
 cd docs && python3 -m http.server 8899   # http://localhost:8899
 ```
@@ -31,6 +33,8 @@ cd docs && python3 -m http.server 8899   # http://localhost:8899
 
 ```
 icerik/site.json          kurum bilgisi, gezinme, 9 konu başlığı
+icerik/police/*.md        "Neden poliçe?" bölümü
+data/ikon.json            ikon sözlüğü (tek kaynak; ikon.js buradan üretilir)
 icerik/rehber/*.md        Bilgi Merkezi rehberleri (JSON künye + markdown)
 icerik/kurumsal/*.md      kurumsal sayfalar
 kaynak/modul/*.html       etkileşimli araç sayfaları (JSON künye + HTML gövde)
@@ -48,6 +52,7 @@ yeniden üretimde kendiliğinden güncellenir.
 
 | Bölüm | İş |
 |---|---|
+| **Neden poliçe?** | DASK'ın kapsamı, teminat bazında karşılaştırma, şeffaflık ve gelir modeli |
 | **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı hesabı |
 | **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |

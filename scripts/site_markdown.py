@@ -107,13 +107,28 @@ def isle(kaynak: str):
             continue
 
         # Listeler
+        #
+        # Sarma satırı desteği: bir madde birden fazla satıra yayılabilir.
+        # Önceden döngü ilk sarma satırında kopuyordu; sonraki madde yeni
+        # bir <ol> açtığı için numaralandırma her maddede 1'e dönüyor ve
+        # sarma metni ayrı bir paragrafa düşüyordu. Metinleri 80 sütuna
+        # sarmak bu depoda yerleşik bir alışkanlık olduğu için hata
+        # yayımlanmış içeriği de etkiliyordu.
         if re.match(r"^[-*]\s+", cip) or re.match(r"^\d+\.\s+", cip):
             sirali = bool(re.match(r"^\d+\.\s+", cip))
             desen = r"^\d+\.\s+" if sirali else r"^[-*]\s+"
+            isaretli = r"^(#{2,4}\s|[-*]\s|\d+\.\s|\||>|:::)"
             ogeler = []
             while i < n and re.match(desen, satirlar[i].strip()):
-                ogeler.append(re.sub(desen, "", satirlar[i].strip()))
+                parcalar = [re.sub(desen, "", satirlar[i].strip())]
                 i += 1
+                # Boş satıra ya da yeni bir işarete kadar olan satırlar
+                # aynı maddenin devamıdır.
+                while (i < n and satirlar[i].strip()
+                       and not re.match(isaretli, satirlar[i].strip())):
+                    parcalar.append(satirlar[i].strip())
+                    i += 1
+                ogeler.append(" ".join(parcalar))
             etiket = "ol" if sirali else "ul"
             ic = "".join(f"<li>{satir_ici(o)}</li>" for o in ogeler)
             cikti.append(f"<{etiket}>{ic}</{etiket}>")

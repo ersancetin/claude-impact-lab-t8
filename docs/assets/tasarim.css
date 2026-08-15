@@ -616,6 +616,146 @@ legend { font-weight: 700; padding: 0 calc(var(--olcek)*2); }
 .secenek span { flex: 1; }
 .secenek small { display: block; color: var(--murekkep-2); }
 
+/* ---- Araç sayfası yerleşimi -------------------------------
+   Araç sayfaları geniş kapta (76rem) üretilir ki form iki sütuna
+   açılabilsin. Ama METİN geniş kapta okunmaz: satır ölçüsü 42-44rem'i
+   aşmamalı. Bu yüzden başlık bloğu ve serbest metin kendi ölçüsünde
+   sınırlanır, yalnızca form ve sonuç ızgaraları genişler. */
+.arac-bas { max-width: 44rem; }
+.arac-bas + form, .arac-bas + section { margin-top: calc(var(--olcek)*6); }
+
+/* Kap genişledi ama her form iki sütuna hazır değil. Varsayılan olarak
+   araç formu ve sonuç bölümü okuma ölçüsünde kalır; iki sütuna geçen
+   araç kendi kökünde .genis sınıfını alır. Böylece kapsayıcıyı
+   genişletmek, henüz dönüştürülmemiş bir aracı bozmaz. */
+main.kap-genis > form,
+main.kap-genis > section:not(.ilgili) { max-width: 44rem; }
+main.kap-genis > form.genis,
+main.kap-genis > section.genis { max-width: none; }
+
+/* Form ızgarası: ilişkili alanlar yan yana. Tek sütun varsayılan,
+   46rem'den itibaren iki, 72rem'den itibaren istenirse üç. */
+.form-izgara { display: grid; gap: 0 calc(var(--olcek)*5); }
+@media (min-width: 46rem) { .form-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 72rem) { .form-izgara.uc { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Tam satır kaplaması gereken alan (uzun metin, açıklama, seçenek listesi) */
+.form-izgara > .tam { grid-column: 1 / -1; }
+
+/* İlişkili alanları tek çerçevede toplayan grup — fieldset'in içinde
+   ikinci bir kırılım seviyesi. Başlık monospace mikro etikettir. */
+.alan-grup {
+  border: var(--sinir); border-left: 3px solid var(--cizgi-koyu);
+  padding: calc(var(--olcek)*4);
+  margin-bottom: calc(var(--olcek)*4);
+  background: var(--yuzey);
+}
+.alan-grup > .baslik {
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  display: block; margin-bottom: calc(var(--olcek)*3);
+  padding-bottom: calc(var(--olcek)*2); border-bottom: var(--sinir);
+}
+.alan-grup > :last-child { margin-bottom: 0; }
+.alan-grup.vurgulu { border-left-color: var(--marka); }
+
+/* Sonuç bölgesi de geniş kapta ızgaraya açılır */
+.sonuc-izgara { display: grid; gap: calc(var(--olcek)*4); align-items: start; }
+@media (min-width: 62rem) { .sonuc-izgara { grid-template-columns: 1.15fr 1fr; } }
+.sonuc-izgara .yazi-olcu { max-width: 44rem; }
+
+/* ---- İkonlar ----------------------------------------------
+   Satır içi SVG, tek renk (currentColor), 20x20. Font yok, istek yok. */
+.ikon {
+  width: 20px; height: 20px; flex: none;
+  display: inline-block; vertical-align: -.22em;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.ikon.buyuk { width: 28px; height: 28px; }
+/* Mega menüde ikon başlığın soluna hizalanır */
+.mega li > a { display: flex; gap: calc(var(--olcek)*3); align-items: flex-start; }
+.mega li > a .ikon { margin-top: .18em; color: var(--marka); }
+.mega li > a > div { min-width: 0; }
+.gezinme-mobil-panel a { display: flex; align-items: center; gap: calc(var(--olcek)*3); }
+.gezinme-mobil-panel a .ikon { color: var(--marka); }
+
+/* ---- Kapsam kesiti afişi ----------------------------------
+   "DASK dört duvarı öder" sezgisini tek bakışta anlatır. Renk tek
+   başına bilgi taşımaz: aynı içerik altındaki kapsam tablosunda da
+   yazılıdır (PROJE-AKIS.md §11 zorunlu şartı). */
+.kesit-afis { margin: 0 0 calc(var(--olcek)*6); }
+.kesit {
+  width: 100%; height: auto; display: block;
+  background: var(--yuzey); border: var(--sinir);
+}
+.kesit-zemin { stroke: var(--cizgi-koyu); stroke-width: 2; }
+/* Kapsanan: bina kabuğu */
+.kesit-yapi {
+  stroke: var(--turkuaz); stroke-width: 3;
+  fill: var(--turkuaz-zemin);
+  stroke-linejoin: round; stroke-linecap: round;
+}
+/* Açıkta kalan: eşya, barınma, enkaz */
+.kesit-acik {
+  stroke: var(--tehlike); stroke-width: 3;
+  fill: var(--tehlike-zemin);
+  stroke-linejoin: round; stroke-linecap: round;
+}
+/* Afiş etiketleri — görsel süs değil, taşıdığı bilgi bunlar */
+.kesit-etiket text {
+  font-family: var(--f-mono); font-size: 15px; font-weight: 700;
+  letter-spacing: .08em; fill: var(--murekkep); stroke: none;
+}
+.kesit-etiket text.kucuk {
+  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  fill: var(--murekkep-2);
+}
+.kesit-cizgi { stroke: var(--cizgi-koyu); stroke-width: 1.5; fill: none; }
+
+.kesit-afis figcaption {
+  display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*5);
+  margin-top: calc(var(--olcek)*3); font-size: .88rem; color: var(--murekkep-2);
+}
+.kesit-anahtar { display: flex; align-items: center; gap: calc(var(--olcek)*2); }
+
+/* Kapsam tablosu — afişin metinsel karşılığı */
+.kapsam-tablo td small { display: block; color: var(--murekkep-2); margin-top: 2px; }
+.kapsam-tablo td:last-child { white-space: nowrap; }
+
+/* ---- Temsilî poliçe profili kartı -------------------------
+   Adlar uydurmadır; kart üstündeki "Temsilî" rozeti dipnota değil
+   kartın kendisine konur ki bağlamdan koparıldığında da görünsün. */
+.profil {
+  background: var(--yuzey); border: var(--sinir);
+  border-top: 4px solid var(--vurgu);
+  padding: calc(var(--olcek)*5);
+  display: flex; flex-direction: column;
+}
+.profil > .rozet { align-self: flex-start; margin-bottom: calc(var(--olcek)*3); }
+.profil b { font-size: 1.1rem; font-weight: 700; letter-spacing: -.02em; }
+.profil .tip {
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  display: block; margin-top: calc(var(--olcek)*1);
+}
+.profil p { font-size: .92rem; color: var(--murekkep-2); margin: 0; }
+.profil-teminat {
+  list-style: none; margin: calc(var(--olcek)*4) 0; padding: 0;
+  border-top: var(--sinir); flex: 1;
+}
+.profil-teminat li {
+  display: flex; align-items: center; gap: calc(var(--olcek)*3);
+  padding: calc(var(--olcek)*2) 0; border-bottom: var(--sinir);
+  font-size: .92rem;
+}
+/* İşaret renkle değil, simgeyle de ayrışır (WCAG 1.4.1) */
+.profil-teminat li > span:first-child {
+  font-family: var(--f-mono); font-weight: 700; width: 1.1em; flex: none;
+}
+.profil-teminat li.var  > span:first-child { color: var(--turkuaz); }
+.profil-teminat li.yok  > span:first-child { color: var(--tehlike); }
+.profil-teminat li.yok  > span:last-child  { color: var(--murekkep-2); }
+
 /* --- 15. Adım göstergesi ---------------------------------- */
 .adimlar { display: flex; gap: calc(var(--olcek)*2); margin-bottom: calc(var(--olcek)*6); }
 .adim { flex: 1; height: 6px; background: var(--cizgi); }
@@ -943,6 +1083,12 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   .ust, .kurum-serit, .alt, .dugme-sira, .serit, .atla, .tema-dugme,
   .gezinme-mobil, .icindekiler, .kunye,
   .danisma, .danisma-ac, .hizli { display: none !important; }
+  /* Afiş ve profil kartları kâğıtta da işe yarar; renk yerine çizgiyle
+     ayrışsınlar ve sayfa ortasından bölünmesinler. */
+  .kesit { border: 1px solid #999; break-inside: avoid; max-height: 9cm; }
+  .kesit-yapi, .kesit-acik { fill: none !important; stroke: #000 !important; }
+  .kesit-acik { stroke-dasharray: 5 3; }
+  .profil, .kapsam-tablo tr { break-inside: avoid; }
   body { background: #fff; color: #000; font-size: 12pt; display: block; }
   .cikti { border: none; padding: 0; max-height: none; overflow: visible; font-size: 11pt; }
   .kart { border: 1px solid #999; break-inside: avoid; }

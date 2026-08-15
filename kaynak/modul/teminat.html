@@ -1,5 +1,6 @@
 {
   "id": "teminat",
+  "ikon": "teminat",
   "ad": "Teminat açığı hesabı",
   "grup": "Sigorta ve teminat",
   "etiket": "Sigorta ve teminat",
@@ -163,9 +164,21 @@ function ciz(v) {
 
       el("div", { class: "kart uyarili" },
         el("span", { class: "etiket" }, "Muafiyet"),
+        /* DİKKAT — bu cümlenin sırası önemli. Önceki metin yalnızca
+           "bu tutarın altındaki hasarlarda ödeme yapılmaz" diyordu; bu,
+           tenzili muafiyetin bir SONUCU ama tanımı değil. Kullanıcı o
+           cümleyi okuyunca "eşiği geçtim, tamamını alırım" sanıyordu.
+           Doğrusu: muafiyet HER ödemeden düşülür.
+           Dayanak: ZDS Genel Şartları — PROJE-LEGAL.md §6.5 (✅ çoklu). */
+        el("p", {},
+          el("strong", {}, paraYaz(muafiyet)),
+          ` — sigorta bedelinizin %${d.muafiyetOrani * 100}'si oranında `,
+          el("strong", {}, "tenzili muafiyet"), ". Bu tutar ",
+          el("strong", {}, "her ödemeden düşülür"),
+          "; DASK yalnızca muafiyeti aşan kısımdan sorumludur."),
         el("p", { style: "margin-bottom:0" },
-          el("strong", {}, paraYaz(muafiyet)), " — bu tutarın altındaki hasarlarda ödeme yapılmaz. ",
-          `Sigorta bedelinin %${d.muafiyetOrani * 100}'si oranında tenzili muafiyet uygulanır. `,
+          "Yani bu tutarın altındaki hasarlarda hiç ödeme çıkmaz; üstündeki ",
+          "hasarlarda da tamamı değil, muafiyet düşülmüş hâli ödenir. ",
           `Muafiyet açısından her ${d.hasarPenceresiSaat} saatlik dönem tek hasar sayılır — `,
           "art arda gelen depremlerde bu kural sizin lehinizedir."))
     );
