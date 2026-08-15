@@ -165,6 +165,11 @@ Bu maddelerdeki hata, kullanıcının **hak kaybına** yol açar.
 
 Bu değerler **kanun metninde değil**, yıl (hatta ay) içinde değişen tebliğ/karar/duyurularda yer alır. **Metne gömülmeyecek**, sürümlü yapılandırma dosyasından okunacak.
 
+> ✅ **Bu dosya oluşturuldu: [`data/parametreler.json`](./data/parametreler.json)**
+> 16 süre, DASK tarife değerleri, Tahkim parasal sınırları, deprem yönetmeliği kuşakları ve 2023 emsal uygulamaları tek yerde toplandı. Her değerde geçerlilik tarihi ve doğrulama durumu var.
+> **Mevcut durum:** `resmi` **0** · `coklu` 19 · `tek` 25 · `celiskili` 3.
+> Doğrulama yapıldıkça bu dosyadaki `dogrulama` alanları `resmi` yapılacak — ilerlemenin ölçüldüğü yer burasıdır.
+
 ### D1. DASK azami teminat tutarı — 🔴 aylık güncelleniyor
 
 Araştırmada üç farklı 2026 değeri çıktı. **Bu bir çelişki değil, tutarın aylık güncellendiğinin kanıtı:**

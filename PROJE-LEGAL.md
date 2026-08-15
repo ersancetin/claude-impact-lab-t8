@@ -323,6 +323,24 @@ Bu iki kural birlikte, kullanıcıların en çok yanıldığı noktadır:
 
 DASK'ın ödediği tutar gerçek hasarın altındaysa **bakiye tazminat** talep edilebilir. 6 Şubat depremleri sonrasında bu yönde emsal kararlar oluşmuştur ⚠️. İzlenecek yol Bölüm 8'de.
 
+### 6.9 🔴 Eksper raporuna itiraz — kaçırılan basamak ⚠️
+
+Kullanıcıların çoğu, eksper raporunu **nihai** sanıp doğrudan mahkemeye gitmeyi düşünür. Oysa arada, çok daha hızlı ve ucuz üç basamak vardır:
+
+| Basamak | Usul | Süre |
+|---|---|---|
+| **1. Eksper raporuna itiraz** | Raporun tebliğinden itibaren sigorta şirketine **yazılı** itiraz | **15 gün** ⚠️ |
+| **2. İkinci eksper talebi** | Raporun taraflı/eksik olduğu gerekçesiyle yeni eksper atanması istenir | — |
+| **3. Hakem eksper** | İki rapor arasında ciddi fark varsa üçüncü bir **hakem eksper** atanır; **kararı nihai** kabul edilir | — |
+| **Bağımsız eksper hakkı** | Sigorta Eksperleri Yönetmeliği uyarınca sigortalı, **masrafını kendi karşılamak kaydıyla** dilediği eksperden rapor alabilir | — |
+| **DASK'a itiraz** | Hasar dosyasının kapatılmasından itibaren DASK Genel Müdürlüğü'ne **yazılı** itiraz | **30 gün** ⚠️ |
+
+İtirazı güçlendiren belgeler: eksper raporu, **fotoğraflar**, yapı ruhsatı, bağımsız mühendis raporu. ⚠️
+
+Bu basamaklar tüketilmeden Sigorta Tahkim Komisyonu'na veya asliye ticaret mahkemesine gidilebilir; ancak önce bunları kullanmak hem hızlı hem de dosyayı güçlendirir.
+
+> **Ürün notu:** "Bağımsız eksper tutma hakkı" ve "hakem eksper" mekanizmaları neredeyse hiç bilinmez. Bu tablo tek başına, DASK ödemesini az bulan kullanıcının en çok işine yarayacak içeriktir. **Fotoğraf çekme uyarısı** ise deprem sonrası ilk saatlerde verilmesi gereken bir tavsiyedir — sonradan telafisi yoktur.
+
 ---
 
 ## 7. KONUT SİGORTASI (İHTİYARİ) — DASK'IN BIRAKTIĞI BOŞLUK
@@ -567,7 +585,26 @@ DASK ölümü karşılamaz (Bölüm 6.2). Bedeni zararların karşılığı **ba
 | **Ferdi kaza sigortası** | 🔴 **Aksi sözleşmeyle kararlaştırılmadıkça deprem teminat dışıdır.** Poliçede deprem teminatının seçilip seçilmediği mutlaka kontrol edilmelidir | ⚠️ |
 | **SGK ölüm (dul-yetim) aylığı** | 4/a kapsamında **en az 5 yıl sigortalılık + 900 prim günü** koşuluyla hak sahiplerine bağlanır. Başvuru: e-Devlet "Gelir, Aylık, Ödenek Talep Belgesinin Verilmesi" | ⚠️ |
 | **İş kazası tartışması** | Deprem sırasında iş yerinde ölüm hâlinde olayın iş kazası sayılıp sayılmayacağı — sayılırsa prim gün şartları farklılaşır | ⚠️ tartışmalı |
-| **BES birikimleri** | Bireysel emeklilik birikimlerine erişim ve intikal usulü | ⚠️ |
+| **BES birikimleri** | Katılımcının vefatı hâlinde birikim, devlet katkısı ve getirileri **sözleşmedeki lehtara**, yoksa **yasal mirasçılara** ödenir. Talepten itibaren **20 iş günü** içinde, getiriler üzerinden **%5 stopaj** kesilerek ödenir. Vefat edenin sözleşmesi olup olmadığı **e-Devlet lehtar sorgulama** veya BES Mobil'den öğrenilir | ⚠️ |
+| **BES'te veraset vergisi istisnası** | 6 Şubat 2023'te vefat edenlerin BES birikimlerinin mirasçılara intikali **veraset ve intikal vergisinden istisna** tutulmuştur | ⚠️ |
+
+> **Az bilinen ve çok değerli bilgi:** Vefat edenin BES sözleşmesi olup olmadığı **e-Devlet üzerinden sorgulanabilir.** Aileler çoğu zaman böyle bir birikimin varlığından habersizdir; 2024'te 1,65 milyar TL'lik BES birikiminin miras kaldığı bildirilmektedir. ⚠️ Platformun "yakınımı kaybettim" akışında bu sorgulama adımı mutlaka yer almalıdır.
+
+### 10.5.1 🔴 Yabancı uyruklular ve geçici koruma altındakiler ⚠️
+
+Deprem bölgesinin gerçek nüfus profili göz önüne alındığında bu, kapsam dışı bırakılamayacak bir başlıktır. Uluslararası koruma başvuru sahipleri, statü sahipleri ve **geçici koruma** kapsamındakiler de 6 Şubat depremlerinden doğan zararlar bakımından hak ve başvuru yollarına sahiptir.
+
+Ancak bu grubun karşılaştığı sorunlar farklıdır ve ayrı araştırma gerektirir:
+
+- **Mülkiyet ve kira ilişkisi:** Tapulu mülkiyeti olmayan, kayıt dışı kira ilişkisiyle oturan kişilerin hak sahipliği ve kira yardımına erişimi
+- **Hak sahipliğinde vatandaşlık şartı** aranıp aranmadığı — 7269 ve yönetmelikte açıkça teyit edilmeli
+- **DASK** poliçesinin kiracı değil malik adına olması nedeniyle doğan boşluk
+- **Kayıt/il dışına çıkış** kısıtlarının yardıma erişime etkisi
+- **Dil engeli** — platformun çok dilli olmasının (TR, AR, KU) gerekçesi tam olarak budur
+
+**Referans kaynak:** [UNHCR Türkiye — Deprem ile ilgili hukuki bilgiler ve başvuru yolları](https://help.unhcr.org/turkiye/tr/earthquake-resources/legal/)
+
+> Bu başlıkta içerik üretmeden önce UNHCR ve ilgili STK'larla temas kurulması, hem doğruluk hem de hassasiyet açısından doğru olur.
 
 > **Ürün notu:** Ferdi kaza poliçesindeki deprem istisnası, "sigortam var" diyen kullanıcının en büyük yanılgısıdır. "Sigortam yeterli mi?" testinin bir sorusu bunu kontrol etmelidir.
 
@@ -1035,5 +1072,21 @@ Bu doküman tartışmaya açıktır ve **hukuki bir metin olduğu için farklı 
 |---|---|
 | [`PROJE.md`](./PROJE.md) | Afet lojistik koordinasyon sistemi — arz/talep eşleştirme motoru |
 | `PROJE-LEGAL.md` | Bu dosya — hukuki altyapı ve bilgilendirme platformu tasarımı |
-| [`DOGRULAMA.md`](./DOGRULAMA.md) | 34 kalemlik mevzuat doğrulama görev listesi |
+| [`DOGRULAMA.md`](./DOGRULAMA.md) | 60 kalemlik mevzuat doğrulama görev listesi |
+| [`data/parametreler.json`](./data/parametreler.json) | Zamanla değişen tüm parasal değerler ve süreler — tek kaynak |
 | [`.mcp.json`](./.mcp.json) | Mevzuat MCP yapılandırması (ağ erişimli ortamda otomatik yüklenir) |
+
+### `data/parametreler.json` neden ayrı bir dosya?
+
+DASK azami teminatının **aylık** güncellendiği tespiti (Bölüm 6.4), bu dosyanın varlık sebebidir. Değerler metne gömülürse platform kısa sürede yanlış bilgi yayan bir kaynağa dönüşür.
+
+Dosyadaki her değer üç bilgiyi taşır: **değerin kendisi**, **geçerlilik tarihi** ve **doğrulama durumu** (`resmi` / `coklu` / `tek` / `celiskili`). Mevcut durum dürüstçe şöyle:
+
+| Doğrulama durumu | Adet |
+|---|---|
+| `resmi` — resmî kaynaktan birebir | **0** |
+| `coklu` — birden fazla bağımsız kaynak | 19 |
+| `tek` — tek kaynak, güvenilmez | 25 |
+| `celiskili` — **yayınlanamaz** | 3 |
+
+> **Yapı kuralı:** `celiskili` işaretli hiçbir değer arayüze çıkmaz; `tek` işaretliler "doğrulanmamış" rozetiyle gösterilir. Hesaplayıcılar kullanıcıya **hangi tarihli tarifeyle** hesap yaptığını her zaman söyler.
