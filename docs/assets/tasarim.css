@@ -844,14 +844,57 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   font-family: var(--f-mono); font-size: .72rem; font-weight: 700;
   color: #fff; min-width: 0; overflow: hidden; white-space: nowrap;
 }
-.teminat-dilim.kapsanan { background: #0A6E6B; }
+/* Şelale dilimleri: kim ödüyor. Üç ayrı ödeyen üç ayrı renk;
+   ayrıca lejantta tutarlar yazıyla da veriliyor (WCAG 1.4.1). */
+.teminat-dilim.kapsanan,
+.teminat-dilim.dask     { background: #0A6E6B; }
+.teminat-dilim.police   { background: #855100; }
 .teminat-dilim.acikta   { background: #8E1B12; }
 .teminat-aciklama { display: flex; gap: calc(var(--olcek)*5); flex-wrap: wrap;
                     font-size: .85rem; color: var(--murekkep-2); }
 .teminat-aciklama span { display: flex; align-items: center; gap: calc(var(--olcek)*2); }
 .kutucuk { width: 14px; height: 14px; flex: none; }
-.kutucuk.kapsanan { background: #0A6E6B; }
+.kutucuk.kapsanan,
+.kutucuk.dask     { background: #0A6E6B; }
+.kutucuk.police   { background: #855100; }
 .kutucuk.acikta   { background: #8E1B12; }
+
+/* ---- Kalem kalem "kim öder" listesi ------------------------
+   Her satır: zarar → ödenen → açıkta. Tek bakışta hangi kalemin
+   karşılıksız kaldığı görünmeli. */
+.kalem-liste { display: grid; gap: calc(var(--olcek)*3); }
+@media (min-width: 62rem) { .kalem-liste { grid-template-columns: repeat(2, 1fr); } }
+.kalem {
+  background: var(--yuzey); border: var(--sinir);
+  border-left: 4px solid var(--cizgi-koyu);
+  padding: calc(var(--olcek)*4);
+}
+.kalem-bas {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: calc(var(--olcek)*3); margin-bottom: calc(var(--olcek)*3);
+}
+.kalem-bas b { font-size: 1.02rem; font-weight: 700; }
+.kalem-bas .rozet { flex: none; }
+.kalem-sayi {
+  display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*4);
+  padding: calc(var(--olcek)*3) 0; margin-bottom: calc(var(--olcek)*2);
+  border-top: var(--sinir); border-bottom: var(--sinir);
+  font-size: .84rem; color: var(--murekkep-2);
+}
+.kalem-sayi b {
+  display: block; font-family: var(--f-mono); font-size: .98rem;
+  color: var(--murekkep); font-variant-numeric: tabular-nums;
+}
+.kalem-sayi b.iyi  { color: var(--turkuaz); }
+.kalem-sayi b.kotu { color: var(--tehlike); }
+.kalem small { color: var(--murekkep-2); font-size: .88rem; }
+
+/* Değerin nereden geldiğini söyleyen künye satırı */
+.kaynak-satiri {
+  display: block; margin-top: calc(var(--olcek)*3);
+  padding-top: calc(var(--olcek)*2); border-top: var(--sinir);
+  font-size: .8rem; color: var(--murekkep-2);
+}
 
 /* --- 20. Dilekçe çıktısı ---------------------------------- */
 .cikti {
