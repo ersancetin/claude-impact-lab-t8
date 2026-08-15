@@ -333,3 +333,28 @@ claude          # .mcp.json otomatik yüklenir, mevzuat MCP devreye girer
 Ardından A bölümündeki 12 kritik maddeden başlanır. Her doğrulama sonrası:
 - `PROJE-LEGAL.md`'deki ilgili ⚠️ işareti ✅'e çevrilir ve madde metni eklenir,
 - bu dosyada satır işaretlenir, doğrulayan ve tarih yazılır.
+
+---
+
+## I. Gelir modeli ve sigorta aracılığı — 🔴 model kararı öncesi zorunlu
+
+[`PROJE-AKIS.md`](./PROJE-AKIS.md) Bölüm 10'daki tespitler ikincil kaynaklıdır ve **iş modelini doğrudan belirler.** Model seçilmeden önce doğrulanmalı:
+
+| # | Doğrulanacak iddia | Kaynak / MCP çağrısı | Çoklu kaynak | Resmî | Doğrulayan / tarih |
+|---|---|---|---|---|---|
+| I1 | 🔴 **Dernek/vakıf doğrudan sigorta acenteliği yapamaz; ayrı tüzel kişi (A.Ş./Ltd.) kurmalı, iktisadi işletme yetmez** | `search_kurum_yonetmelik("Sigorta Acenteleri Yönetmeliği")` → m.5 | ⚠️ tek kaynak | ☐ | |
+| I2 | Sigorta aracılığının ruhsata tabi olması; izinsiz aracılığın yaptırımı | `search_within_kanun(5684, "acente")` | ⚠️ tek kaynak | ☐ | |
+| I3 | Brokerlik ile acentelik ayrımı; STK'nın hangi rolü üstlenebileceği | Sigorta ve Reasürans Brokerleri Yönetmeliği | ☐ | ☐ | |
+| I4 | "Yönlendirme" faaliyetinin aracılık sayılıp sayılmayacağı sınırı | 2016/27 sayılı Genelge + Yönetmelik | ☐ | ☐ | |
+| I5 | Kiracının kendi adına eşya/konut sigortası yaptırabilmesi | Konut Sigortası Genel Şartları | ⚠️ tek kaynak | ☐ | |
+| I6 | Parametrik sigortanın Türk mevzuatındaki durumu — ürün onayı gerekir mi? | SEDDK düzenlemeleri | ☐ | ☐ | |
+
+## J. Kiracı hakları — ek doğrulama
+
+| # | Doğrulanacak iddia | Kaynak | Çoklu kaynak | Resmî | Doğrulayan / tarih |
+|---|---|---|---|---|---|
+| J1 | 🔴 **Tazminat davasında mülkiyet şartı aranmaması** — kiracının müteahhit/idare/yapı denetime karşı dava ehliyeti | TBK haksız fiil + içtihat | ☐ | ☐ | |
+| J2 | Kiraya verenin, güvenli olmayan yapıyı kiraya vermekten doğan sorumluluğu | TBK m.305 vd. + içtihat | ☐ | ☐ | |
+| J3 | 6306 kira yardımında kiracıya ilişkin koşullar (18 ay, 2 kat, bir defalık) | 6306 Uygulama Yönetmeliği | ⚠️ tek kaynak | ☐ | |
+| J4 | Kayıt dışı kira ilişkisinde yardıma erişim — sözleşmesi olmayan kiracı | Yönetmelik + uygulama | ☐ | ☐ | |
+| J5 | Depozito ve peşin kiranın iadesi — yıkım hâlinde usul | TBK | ☐ | ☐ | |
