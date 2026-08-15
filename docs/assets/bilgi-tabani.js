@@ -70,6 +70,23 @@ export const BILGI = {
   {
    "tur": "arac",
    "turAd": "Araç",
+   "baslik": "Dosya kodu",
+   "ozet": "Süre ve hak bilgilerinizi tek bir koda çevirin; kodu başka bir cihaza yazarak dosyanızı orada açın. Sunucu yok, kayıt yok.",
+   "url": "arac/dosya.html",
+   "dogrulama": "coklu",
+   "anahtar": [
+    "dosya kodu",
+    "hasar dosyası sorgula",
+    "dosya sorgula",
+    "takip kodu",
+    "kaydımı aç",
+    "başka cihazda aç"
+   ],
+   "metin": "Deprem hasar dosyanızın tarihlerini ve durumunuzu taşıyan kod üretin veya elinizdeki kodu sorgulayın. Kod verinin kendisini taşır; hiçbir kayıt tutulmaz."
+  },
+  {
+   "tur": "arac",
+   "turAd": "Araç",
    "baslik": "Teminat açığı ve tazminat hesabı",
    "ozet": "DASK sigorta bedelini, %2 tenzili muafiyeti ve açıkta kalan tutarı hesaplayın; hasar tutarı girerseniz kalem kalem kimin ne ödeyeceğini görün.",
    "url": "arac/teminat.html",
