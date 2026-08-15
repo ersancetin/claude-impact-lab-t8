@@ -1044,7 +1044,8 @@ def ana_sayfa(site):
                Görsel tek başına anlatmaz; farkı yazı tamamlar. -->
           <p class="sahne-yazi" data-sahne-yazi aria-live="polite"></p>
           <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>DASK öder: bina kabuğu</span>
-          <span class="kesit-anahtar"><i class="kutucuk police"></i>Konut poliçesi öder: eşya ve konaklama</span>
+          <span class="kesit-anahtar"><i class="kutucuk acikta"></i>DASK'ta açıkta: eşya ve barınma</span>
+          <span class="kesit-anahtar"><i class="kutucuk police"></i>Konut poliçesi eklenince karşılanır</span>
         </figcaption>
       </figure>
     </div>
