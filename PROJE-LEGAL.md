@@ -199,8 +199,8 @@ Bina yaşı, dayanıklılık hakkında kaba ama anlamlı bir göstergedir. Türk
 | Dönem | Yönetmelik | Resmî Gazete | Durum |
 |---|---|---|---|
 | 1975 | Afet Bölgelerinde Yapılacak Yapılar Hakkında Yönetmelik (ABYYHY) | — | ⚠️ RG tarihi gerekli |
-| 1998 | ABYYHY (kapsamlı revizyon) | — | ⚠️ RG tarihi gerekli |
-| 2007 | Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY) | — | ⚠️ RG tarihi gerekli |
+| 1998 | ABYYHY (kapsamlı revizyon) | 02.09.1997 / 23098 ⚠️ | ⚠️ yayım 1997, uygulama 1998 — teyit gerekli |
+| 2007 | Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY) | 06.03.2007 / 26454 ⚠️ | ⚠️ tek kaynak |
 | **2018** | **Türkiye Bina Deprem Yönetmeliği (TBDY)** | **18.03.2018 / 30364 (Mükerrer)** — yürürlük **01.01.2019** | ✅ doğrulandı |
 
 TBDY 2018, DBYBHY 2007'yi yürürlükten kaldırmıştır. Amacı, yeni yapılacak/değiştirilecek/büyütülecek kamu ve özel binaların depreme dayanıklı tasarımı ile **mevcut binaların deprem etkisi altında değerlendirilmesi ve güçlendirilmesi** için gerekli kuralları belirlemektir. ✅
@@ -476,6 +476,30 @@ Deprem nedeniyle açılan tam yargı davaları **idarenin hizmet kusuru sorumlul
 
 İdarenin sorumluluğu değerlendirilirken bakılan ölçütler: yapının bulunduğu **zeminin özelliği**, zemin durumuna göre depreme dayanıklılığın kontrol edilip edilmediği, **yapı kullanma izninin** bulunup bulunmadığı, imar planları ve inşaat ruhsatlarının hangi idarelerce verildiği, yapıların imar açısından denetlenip denetlenmediği, afet bölgelerinin tespit ve ilan edilip edilmediği, idarece gerekli önlemlerin alınıp alınmadığı. ✅
 
+### 9.5 🔴 Uygulamada ne oluyor? — 2023 davalarının sonuçları ⚠️
+
+Bir bilgilendirme platformunun en zor ve en dürüst olması gereken sorusu: *"Dava açsam ne olur?"* Teorik çerçeve yeterli değildir; kullanıcı gerçek sonuçları bilmelidir. 6 Şubat davalarından çıkan tablo:
+
+**Verilen cezalar (örnekler):**
+
+| Olay | Sonuç |
+|---|---|
+| Hamidiye Sitesi, Kahramanmaraş (148 ölü) | Müteahhide **21 yıl** hapis — *bilinçli taksirle birden fazla kişinin ölümüne ve yaralanmasına neden olma* |
+| Ebrar Sitesi G Blok, Kahramanmaraş (123 ölü) | Müteahhide **17 yıl 4 ay**; iki belediye görevlisine **6 yıl 8'er ay** |
+| Gaziantep (17.01.2025 kararı) | Müteahhit ve fennî mesule **21 yıl 9 ay** — aynı suç |
+
+**Genel tablo:** Deprem davalarında bir müteahhide **62 kez müebbet ve 865 yıl** hapis cezası istendiği, diğer sanıklara **2 ilâ 21 yıl** arasında cezalar verildiği aktarılmaktadır. ⚠️
+
+**Bu verilerin hukuki anlamı — üç kritik çıkarım:**
+
+1. **Uygulama "bilinçli taksir" üzerinden ilerliyor.** Mahkemeler TCK m.85/2 + m.22/3 birlikteliğini uyguluyor; doktrindeki "olası kast" tartışması (Bölüm 9.2) pratikte henüz baskın hâle gelmemiş. Bu, ceza üst sınırının 15 yıl + 1/2 artırım ile ~22,5 yıl civarında kaldığı anlamına geliyor.
+2. **Belediye görevlileri de mahkûm oluyor.** İdari sorumluluk yalnızca tazminat davası konusu değil; kamu görevlisinin kişisel cezai sorumluluğu da gerçekleşiyor.
+3. **Süreç çok yavaş ve bilirkişiye bağımlı.** Davaların bir kısmı üçüncü yılında hâlâ bilirkişi raporu bekliyor. Kullanıcıya "dava açarsanız hızlı sonuç alırsınız" izlenimi verilmemelidir.
+
+> 🔴 **Dürüstlük ilkesi:** Cezaların toplu ölüm sayısına oranı kamuoyunda ağır biçimde eleştirilmiştir ("ölen her bir can için 2 ay hapis" başlıkları). Platform bu eleştiriyi gizlememeli; kullanıcı beklentisini gerçekçi düzeyde tutmalıdır. **Yanlış umut vermek, bilgi vermemekten daha zararlıdır.**
+
+> ⚠️ Bu bölümdeki tüm veriler haber kaynaklıdır. Yayına alınmadan önce **karar metinlerinden veya UYAP/Yargıtay karar arama üzerinden** doğrulanmalı; kesinleşip kesinleşmedikleri kontrol edilmelidir. Kesinleşmemiş kararlar "kesinleşmemiştir" ibaresiyle sunulmalıdır.
+
 ---
 
 ## 10. GÜNDELİK HAYATA İLİŞKİN HAKLAR
@@ -517,7 +541,21 @@ Bu ayrım, aylarca "kayıp" statüsünde bekleyip miras, sigorta ve banka işlem
 - **VUK m.13 — Mücbir sebep:** Yangın, **yer sarsıntısı (deprem)**, su basması gibi afetler vergi ödevlerinin yerine getirilmesine engel olan mücbir sebep hâlleri arasındadır. Mücbir sebep süresince **süreler işlemez** (VUK m.15).
 - **Emsal uygulama:** 6 Şubat 2023 depremlerinin ardından Hazine ve Maliye Bakanlığı, Adana, Adıyaman, Diyarbakır, Gaziantep, Hatay, Kahramanmaraş, Kilis, Malatya, Osmaniye, Elâzığ ve Şanlıurfa illerinde deprem tarihinden **31 Temmuz 2023**'e kadar mücbir sebep hâli ilan etmiştir. ✅
 - **VUK m.115 — Terkin:** Yangın, yer sarsıntısı, yer kayması, su basması, kuraklık, don, zararlı hayvan ve haşere istilası gibi afetler yüzünden **varlıklarının veya mahsullerinin en az üçte birini kaybedenlerin**, afete uğrayan gelir kaynakları ile ilgili kamu borçları **Cumhurbaşkanı kararıyla kısmen veya tamamen terkin edilebilir.** ✅
-- Yıkılan veya ağır hasarlı binalarda **emlak vergisi mükellefiyeti** açısından ayrı bir değerlendirme gerekir. ⚠️
+**Emlak vergisi (1319 sayılı Kanun)** ⚠️ — az bilinen üç kural:
+
+- **Mükellefiyetin sona ermesi:** Yanan, yıkılan, tamamen kullanılmaz hâle gelen binalardan dolayı mükellefiyet, **olayın vuku bulduğu tarihi takip eden taksitten itibaren** sona erer.
+- **Bildirim şartı:** Oturulması ve kullanılması yasaklanan binaların vergileri, **mükellefin durumu vergi dairesine bildirmesi** veya vergi dairesince re'sen tespiti üzerine, bu hâl devam ettiği sürece alınmaz. **Bildirim yapılmazsa tahakkuk devam eder** — yıkılmış bir bina için vergi ödemeye devam eden çok sayıda kişi vardır.
+- **Yeniden inşa muafiyeti:** Afet nedeniyle binası yıkılan veya kullanılmaz hâle gelenlerin, afetin vuku bulduğu tarihten itibaren **en geç 5 yıl içinde** afet yerinde veya kamu kuruluşlarınca gösterilen yerlerde inşa ettikleri binalar için muafiyet öngörülmüştür.
+
+### 10.4.1 Bina yıkıldıktan sonra mülkiyet ne oluyor? ⚠️
+
+**KMK m.47:** Ana yapı tamamen yıkılır veya harap olursa **kat mülkiyeti sona erer**; geriye yalnızca **arsa payı oranında paylı mülkiyet** kalır. Bina yıkılıp arsa çıplak kaldığında, kurulmuş kat irtifakı veya kat mülkiyeti ilgili tapu müdürlüğünce **tarafların rızası aranmaksızın** terkin edilir ve taşınmaz, malikler adına payları oranında tescil edilir.
+
+**Bu neden kritik?** Yeniden inşada her malikin alacağı bağımsız bölümün sayısı, metrekaresi, cephesi ve katı **arsa payına göre** belirlenir. Arsa payı yanlışsa, kullanıcı yeni binada hak kaybına uğrar.
+
+**Arsa payının düzeltilmesi davası** (KMK m.3 ve m.44 ⚠️): Arsa payları, bağımsız bölümlerin değerleriyle orantılı dağıtılmamışsa, **her kat maliki veya intifa hakkı sahibi** arsa paylarının yeniden belirlenmesi için dava açabilir. Değerlendirme, kat mülkiyeti/kat irtifakı **kurulduğu tarihteki** değerlere göre yapılır.
+
+> **Ürün notu:** Bu, yeniden inşa sürecine giren her depremzedenin ilk kontrol etmesi gereken konudur ve neredeyse hiç konuşulmaz. Kentsel dönüşüm karar süreçlerinde (Bölüm 5, 7471 ile salt çoğunluk) arsa payı aynı zamanda **oy ağırlığını** belirler.
 
 ### 10.5 🔴 Ölüm hâlinde sigorta ve sosyal güvenlik hakları
 
@@ -576,7 +614,28 @@ Aynı uyarı **AFAD kira/taşınma yardımı tutarları** ve **öğrenci destekl
 - KYK yurtlarında **öncelik**, ek şart aranmaksızın
 - Psikososyal destek programları
 
-Askerlik erteleme, sınav hakkı ve kamu personeli mazeret nakli konularında ayrı araştırma gerekiyor (bkz. `DOGRULAMA.md` § F).
+### 10.10 Esnaf ve işletme destekleri (2023 uygulaması) ⚠️
+
+İş yeri hasarı, konut hasarından ayrı bir hak kümesi doğurur ve bu alan hemen hiç anlatılmaz. 2023'te KOSGEB eliyle uygulananlar:
+
+| Destek | İçerik |
+|---|---|
+| Borç silme | Deprem bölgesindeki KOBİ'lerin 2023 yılı KOSGEB borçları ve hayatını kaybeden işletme sahiplerinin tüm borçları silindi |
+| Acil Destek Kredisi | İşletme büyüklüğüne göre **1,5 milyon TL'ye kadar** hızlı finansman |
+| Yaşam Alanı Desteği | KOBİ ve esnafa **300.000 TL'ye kadar geri ödemesiz konteyner desteği** |
+| Onarım/personel desteği | İş yeri hasarı gören işletmelere **75.000 TL** |
+| Girişimcilik desteği | İş yeri ağır hasarlı/yıkık olanlara, daha önce destek alıp almadığına bakılmaksızın **130.000 TL'ye kadar geri ödemesiz** |
+
+> Aynı uyarı: Bunlar **2023'e özgü program kararlarıdır**, kalıcı mevzuat değildir. "Geçmiş uygulama örneği" olarak sunulmalıdır (Bölüm 10.8).
+
+Ayrıca iş yeri sahipleri için **SGK prim ertelemesi** ve **vergi mücbir sebep** hükümleri (Bölüm 10.4) doğrudan uygulanır.
+
+### 10.11 Askerlik ve kamu personeli ⚠️
+
+- **Askerlik sevki:** OHAL ilan edilen illerde kayıtlı yükümlülerin Mart ve Nisan 2023 celpleri Mayıs'a ertelenmiştir. Genel çerçeve **Sevk Tehiri İşlemleri Yönetmeliği** ve MSB'nin "sevke ilişkin mazeret hâllerinde erteleme" işlemleridir.
+- **Kamu personeli:** Deprem bölgesindeki memurlar için izin, geçici görevlendirme ve naklen atama kolaylıkları gündeme gelmiş; Adalet Bakanlığı gibi kurumlar naklen atama/geçici görevlendirme çalışması yürütmüştür. İdari izin konusunda Cumhurbaşkanlığı genelgesi çıkarılmıştır.
+
+> ⚠️ Bu başlıklarda **kalıcı mevzuat ile geçici idari kararı ayırmak** özellikle zordur; her ikisi de doğrulanmadan yayına alınmamalıdır.
 
 ---
 
@@ -859,7 +918,8 @@ Bir binanın "ağır hasarlı" kaydı, lojistik tarafında **çadır ve battaniy
 - Dilekçe modülü V0'a girmeli mi, yoksa hukuki yapı netleşene kadar bekletilmeli mi?
 - Chatbot kütüphane dışı sorulara ne kadar "yardımcı olmaya çalışmalı"? Katı ret kullanıcıyı iter, esneklik hukuki risk yaratır.
 - TBB'nin mevcut rehberi ile ilişki: dijitalleştirme izni alınabilir mi, ortak çalışma mümkün mü?
-- 2023'te açılan davaların sonuçları ne oldu? **Gerçek içtihat verisi**, platformun "ne olur" sorusuna dürüst cevap vermesini sağlar.
+- ~~2023'te açılan davaların sonuçları ne oldu?~~ → **İlk veri toplandı, bkz. Bölüm 9.5.** Kalan soru: bu kararlar kesinleşti mi, Yargıtay ne diyor? Karar metinlerine erişim gerekiyor.
+- Kesinleşmiş karar metinlerine nasıl erişilecek? (UYAP, Yargıtay Karar Arama, `yargi-mcp`) — platformun "ne olur" sorusuna dürüst cevap vermesi buna bağlı.
 
 ---
 
@@ -946,6 +1006,18 @@ Bu doküman aşağıdaki kaynaklardan derlenmiştir. Resmî mevzuat siteleri ağ
 - [Yapı Kayıt Belgesinin Sağladığı Yasallık — Av. İlker Hasan Duman](https://www.ilkerduman.av.tr/?d=1567) · [Sırf Yapı Kayıt Belgesine Sahip Olmak Ceza Sorumluluğunu Gündeme Getirir mi? — Ersan Şen](https://sen.av.tr/tr/makale/s%C4%B1rf-yapi-kayit-belgesine-sahip-olmak-ceza-sorumlulugunu-gundeme-getirir-mi)
 - [Sigortacılıkta Tahkime İlişkin Yönetmelik'te Değişiklik — Gün + Partners](https://gun.av.tr/tr/goruslerimiz/guncel-yazilar/sigortacilikta-tahkime-iliskin-yonetmelik-te-degisiklik-yapilmasina-dair-yonetmelik-yayimlandi)
 - [Depremzede öğrencilere burs ve yurt önceliği — Memurlar.net](https://www.memurlar.net/haber/1066240/depremzede-ogrencilere-yurtlarda-oncelik.html)
+- [1319 sayılı Emlak Vergisi Kanunu — mevzuat.gov.tr](https://www.mevzuat.gov.tr/mevzuatmetin/1.5.1319.pdf) · [Deprem sebebiyle hasarlı binalardan emlak vergisi — ÇŞB](https://webdosya.csb.gov.tr/db/yerelyonetimler/icerikler/deprem-sebeb-yle-hasarli-b-nalardan-20220210100100.pdf)
+- [1975 Deprem Yönetmeliği (ABYYHY) — ÇŞB arşivi](https://webdosya.csb.gov.tr/db/destek/icerikler/1_1_1975_deprem_yonetmel-g--20191127140243.pdf) · [Türkiye'de Kullanılan Deprem Yönetmeliklerinin Özellikleri — DergiPark](https://dergipark.org.tr/tr/download/article-file/1807315)
+- [Arsa Payının Önemi ve Arsa Payının Düzeltilmesi Davası — Lexpera Blog](https://blog.lexpera.com.tr/arsa-payinin-onemi-ile-arsa-payinin-duzeltilmesi-davasi-hakkinda-degerlendirme/)
+- [KOSGEB — Depremzede KOBİ'lere Acil Destek Kredisi](https://www.kosgeb.gov.tr/site/tr/genel/detay/8728/depremzede-kobilere-acil-destek-kredisi) · [Deprem Bölgesindeki KOBİ'lere 75 Bin TL Destek](https://www.kosgeb.gov.tr/site/tr/genel/detay/8791/deprem-bolgesindeki-kobilere-75-bin-tl-destek) · [Deprem Bölgesine Özel Girişimcilik Desteği](https://www.kosgeb.gov.tr/site/tr/genel/detay/8800/deprem-bolgesine-ozel-girisimcilik-destegi)
+- [MSB — Sevke İlişkin Mazeret Hâllerinde Erteleme İşlemleri](https://www.msb.gov.tr/Askeralma/icerik/sevke-iliskin-mazeret-hallerinde-erteleme-islemleri) · [Sevk Tehiri İşlemleri Yönetmeliği — Resmî Gazete](https://www.resmigazete.gov.tr/eskiler/2009/10/20091017-9.htm) · [MSB deprem bölgesi sevk açıklaması — AA](https://www.aa.com.tr/tr/gundem/msbden-deprem-bolgesindeki-asker-yukumlulerin-sevkine-iliskin-aciklama/2816382)
+- [Adalet Bakanlığı — Deprem Bölgesi İçin Naklen Atama veya Geçici Görevlendirme](https://pgm.adalet.gov.tr/Home/SayfaDetay/deprem-bolgesi-icin-naklen-atama-veya-gecici-gorevlendirme-calismasi15032023085402)
+
+**Deprem davalarının sonuçları (Bölüm 9.5 — haber kaynaklı, doğrulanmalı)**
+- [Deprem yargılamaları ne durumda? — bianet](https://bianet.org/haber/deprem-yargilamalari-ne-durumda-304179)
+- [6 Şubat'ın üzerinden 34 ay geçti: deprem davalarında savunmalar ve cezalar — BirGün](https://www.birgun.net/haber/6-subat-in-uzerinden-34-ay-gecti-deprem-davalarinda-dikkat-ceken-savunmalar-ve-cezalar-678131) · [6 Şubat depremleri davaları: 2 yıldır gelmeyen adalet — BirGün](https://www.birgun.net/haber/6-subat-depremleri-davalari-2-yildir-gelmeyen-adalet-596340)
+- [Ebrar Sitesi davasında müteahhide 17 yıl 4 ay hapis](https://www.haberler.com/guncel/ebrar-sitesi-davasinda-muteahhide-17-yil-4-ay-hapis-20016433-haberi/)
+- [6 Şubat'ın üçüncü yılı: kayıplar, sorular ve süren tartışmalar — Euronews](https://tr.euronews.com/2026/02/05/6-subatin-ucuncu-yili-kayiplar-sorular-ve-suren-tartismalar)
 
 ---
 

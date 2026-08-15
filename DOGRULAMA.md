@@ -95,7 +95,12 @@ Kaynak: [github.com/saidsurucu/mevzuat-mcp](https://github.com/saidsurucu/mevzua
 | 🔴 Kritik — yayın öncesi **zorunlu** | 12 |
 | 🟠 Önemli — V1 öncesi | 14 |
 | 🟡 İkincil — V2'ye kadar | 8 |
-| **Toplam** | **34** |
+| 📐 Parametrik değer kümesi (§ D) | 6 |
+| 📚 Ek yönetmelik (§ E) | 20 |
+| **Toplam** | **60** |
+
+**Resmî kaynaktan doğrulanan:** 0 — ağ engeli nedeniyle bu ortamda hiçbiri yapılamadı.
+**Çoklu bağımsız kaynaktan teyit edilen:** ~20 kalem (aşağıdaki "Çoklu kaynak" sütunu).
 
 ---
 
@@ -240,8 +245,12 @@ Aynı tebliğden doğrulanmalı. ☐
 | **6306 Sayılı Kanunun Uygulama Yönetmeliği** | Kira yardımı, itiraz usulü, tahliye | ☐ |
 | **Afet Sebebiyle Hak Sahibi Olanların Tespiti Hakkında Yönetmelik** (`MevzuatNo=4905, Tur=7`) | Hak sahipliği usulünün tamamı | ☐ |
 | **Türkiye Bina Deprem Yönetmeliği (TBDY)** — RG 18.03.2018/30364 Mükerrer, yürürlük 01.01.2019 ✅ | "Binam hangi yönetmeliğe göre yapıldı?" testinin temeli | ✅ doğrulandı (çoklu kaynak) |
-| **Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY 2007)** | Aynı test — RG tarihi gerekli | ☐ |
-| **Afet Bölgelerinde Yapılacak Yapılar Hakkında Yönetmelik (ABYYHY 1975 / 1998)** | Aynı test — RG tarihleri gerekli | ☐ |
+| **Deprem Bölgelerinde Yapılacak Binalar Hakkında Yönetmelik (DBYBHY 2007)** — RG 06.03.2007/26454 ⚠️ | Aynı test | ⚠️ tek kaynak |
+| **ABYYHY 1998** — RG 02.09.1997/23098 ⚠️ | Aynı test. **Dikkat:** yayım 1997, yaygın adlandırma "1998" — hangisinin esas alınacağı netleşmeli | ⚠️ tek kaynak |
+| **ABYYHY 1975** | Aynı test — RG tarihi hâlâ bulunamadı | ☐ |
+| **1319 sayılı Emlak Vergisi Kanunu** | Mükellefiyetin sona ermesi, bildirim şartı, 5 yıllık muafiyet | ☐ |
+| **KMK m.3, m.44, m.47** | Arsa payı, düzeltme davası, ana yapının harap olması | ☐ |
+| **Sevk Tehiri İşlemleri Yönetmeliği** (RG 17.10.2009) | Askerlik erteleme çerçevesi | ☐ |
 | **Yapı Denetimi Uygulama Yönetmeliği** | 4708'in uygulaması, denetçi sorumluluğu | ☐ |
 | **Sigortacılıkta Tahkime İlişkin Yönetmelik** (`MevzuatNo=11514, Tur=7`) | Başvuru ücreti, itiraz usulü, süreler | ☐ |
 | **Sigorta Eksperleri Yönetmeliği** | Eksper raporuna itiraz, ikinci eksper talebi | ☐ |
@@ -258,19 +267,39 @@ Aynı tebliğden doğrulanmalı. ☐
 
 `PROJE-LEGAL.md`'de henüz yer almayan, kullanıcı için yüksek değerli başlıklar:
 
-- [ ] **Hayat sigortası / ferdi kaza** — DASK ölümü karşılamaz; bu poliçeler karşılar. **Kritik uyarı:** ferdi kaza sigortalarında *aksi kararlaştırılmadıkça deprem teminat dışıdır* ⚠️
-- [ ] **SGK ölüm (dul-yetim) aylığı** — 4/a kapsamında 5 yıl sigortalılık + 900 prim günü koşulu ⚠️; iş yerinde ölüm hâlinde **iş kazası** sayılıp sayılmayacağı tartışması
-- [ ] **Ağır hasarlı binadan eşya alma** — "yıkık" ve "acil yıktırılacak" yapılara giriş **kesinlikle yasak**; ağır hasarlıda uzman tahliye raporu gerekir ✅
-- [ ] **Yıkım kararına karşı iptal davası** — hasar derecesi tespitinden ayrı bir işlem
-- [ ] **BES / bireysel emeklilik** birikimlerine erişim
-- [ ] **Öğrenci hakları** — KYK kredisinin bursa dönüşmesi, yurt önceliği (2023 uygulaması) ⚠️
-- [ ] **Askerlik erteleme** — depremzedeler için özel düzenleme var mı?
-- [ ] **Kamu personeli hakları** — izin, tayin, mazeret nakli
-- [ ] **Emlak vergisi** — yıkılan/ağır hasarlı binada mükellefiyetin sona ermesi (1319 s.K.)
-- [ ] **Tapu ve kadastro** — hisseli mülkiyette yeniden inşa, arsa payı düzeltilmesi davası
-- [ ] **Esnaf ve işletme** — iş yeri hasarı, kredi, vergi, SGK prim ertelemesi
+**İkinci araştırma turunda `PROJE-LEGAL.md`'ye eklendi** — artık doğrulama sırası bekliyor:
+
+- [x] **Hayat sigortası / ferdi kaza** → Bölüm 10.5. **Kritik:** ferdi kaza sigortalarında *aksi kararlaştırılmadıkça deprem teminat dışıdır* ⚠️
+- [x] **SGK ölüm (dul-yetim) aylığı** → Bölüm 10.5. 4/a'da 5 yıl sigortalılık + 900 prim günü ⚠️; iş kazası tartışması açık
+- [x] **Ağır hasarlı binadan eşya alma** → Bölüm 10.6. "Yıkık" ve "acil yıktırılacak" yapılara giriş yasak ✅ · **eşya alma ile 30 günlük itiraz hakkı çatışması** tespit edildi
+- [x] **Yıkım kararına karşı iptal davası** → Bölüm 10.6, hasar derecesi tespitinden ayrı işlem ⚠️
+- [x] **Öğrenci hakları** → Bölüm 10.9 (2023 uygulaması) ⚠️
+- [x] **Askerlik erteleme** → Bölüm 10.11. Sevk Tehiri İşlemleri Yönetmeliği + 2023 celp ertelemesi ⚠️
+- [x] **Kamu personeli hakları** → Bölüm 10.11. İzin, geçici görevlendirme, naklen atama ⚠️
+- [x] **Emlak vergisi** → Bölüm 10.4. Mükellefiyetin sona ermesi, **bildirim şartı**, 5 yıllık yeniden inşa muafiyeti (1319 s.K.) ⚠️
+- [x] **Tapu / arsa payı** → Bölüm 10.4.1. KMK m.47 (kat mülkiyetinin sona ermesi), arsa payı düzeltilmesi davası (KMK m.3, m.44) ⚠️
+- [x] **Esnaf ve işletme** → Bölüm 10.10. KOSGEB destekleri (2023 uygulaması) ⚠️
+- [x] **2023 sonrası içtihat** → **Bölüm 9.5.** Müteahhitlere 17–21+ yıl hapis; uygulama **bilinçli taksir** üzerinden ilerliyor; belediye görevlileri de mahkûm oluyor ⚠️
+
+**Hâlâ araştırılmayı bekleyen:**
+
+- [ ] **BES / bireysel emeklilik** birikimlerine erişim ve intikal usulü
 - [ ] **Enkaz altında kalan değerli eşya / kasa** — mülkiyet ve ispat sorunu
-- [ ] **2023 sonrası içtihat** — açılan davaların sonuçları; platformun "ne olur" sorusuna dürüst cevap verebilmesi için gerekli
+- [ ] **Deprem davalarının kesinleşme durumu** — Bölüm 9.5'teki kararlar Yargıtay'dan geçti mi? Karar metinlerine erişim gerekiyor (UYAP / Yargıtay Karar Arama / `yargi-mcp`)
+- [ ] **Sigorta eksperi raporuna itiraz** — ikinci eksper talep edilebilir mi, usulü nedir?
+- [ ] **Kooperatif ve yapı kooperatifi** üyelerinin durumu
+- [ ] **Yabancı uyruklular / geçici koruma altındakiler** — deprem bölgesinin gerçek nüfus profili göz önüne alındığında zorunlu başlık
+
+### F.1 🔴 Bölüm 9.5 için özel doğrulama rejimi
+
+Dava sonuçları **haber kaynaklıdır** ve platformda en yüksek riski taşıyan içeriktir. Yayın öncesi:
+
+1. Her karar için **mahkeme adı, esas/karar no, tarih** tespit edilecek
+2. **Kesinleşip kesinleşmediği** kontrol edilecek; kesinleşmemişse bu ibare zorunlu
+3. İstinaf/Yargıtay aşamasındaki değişiklikler izlenecek
+4. Ceza miktarları haber başlıklarından değil **karar metninden** alınacak
+
+> Kesinleşmemiş bir kararı kesinmiş gibi sunmak, hem hukuken yanlış hem de kullanıcı beklentisini çarpıtır.
 
 ---
 
