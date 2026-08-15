@@ -3,7 +3,14 @@
   "ad": "Katkı ve iletişim",
   "sira": 5,
   "baslik": "Katkı ve iletişim",
-  "ozet": "Proje açık kaynaktır. Hata bildirimi, mevzuat doğrulaması ve içerik katkısı en çok ihtiyaç duyulan üç alandır."
+  "ozet": "Proje açık kaynaktır. Hata bildirimi, mevzuat doğrulaması ve içerik katkısı en çok ihtiyaç duyulan üç alandır.",
+  "anahtar": [
+    "katkı",
+    "iletişim",
+    "hata bildirimi",
+    "açık kaynak",
+    "gönüllü"
+  ]
 }
 ---
 ## En çok neye ihtiyaç var?

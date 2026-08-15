@@ -1,8 +1,10 @@
 {
   "id": "sureler",
   "ad": "Süre takvimi",
-  "etiket": "Araç 1",
+  "grup": "Süre ve hak",
+  "etiket": "Süre ve hak",
   "sira": 1,
+  "anahtar": ["süre", "gün", "takvim", "son tarih", "hak düşürücü", "itiraz süresi", "geri sayım"],
   "baslik": "Süre takvimi",
   "giris": "Bildiğiniz tarihleri girin. Bilmediklerinizi boş bırakabilirsiniz — sonradan ekleyebilirsiniz. Girdiğiniz bilgiler yalnızca bu cihazda kalır.",
   "ozet": "Tarihleri girin; hangi hakkınızın kaç günü kaldığını, hangisinin dolduğunu aciliyet sırasına dizilmiş bir takvim olarak görün.",
@@ -153,7 +155,18 @@ function ciz(veri) {
       durum === "bilinmiyor" ? "—" :
       durum === "gecti" ? "doldu" : String(kalan);
 
+    /* Durum yalnızca renkle anlatılamaz: kırmızı/amber ayrımını
+       göremeyen kullanıcı da "doldu" ile "yaklaşıyor"u ayırt edebilmeli
+       (WCAG 1.4.1). Bu yüzden yazılı bir durum etiketi de basılır. */
+    const durumAdi = {
+      gecti: "Süre doldu",
+      yakin: "Süre yaklaşıyor",
+      acik: "Süre işliyor",
+      bilinmiyor: "Tarih girilmedi",
+    }[durum];
+
     const govde = el("div", { class: "sure-govde" },
+      el("span", { class: "sure-durum" }, durumAdi),
       el("b", {}, s.ad),
       el("small", {},
         durum === "bilinmiyor"

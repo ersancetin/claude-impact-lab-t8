@@ -3,7 +3,14 @@
   "ad": "Hakkımızda",
   "sira": 1,
   "baslik": "Hakkımızda",
-  "ozet": "Deprem Haklarım, afetten sonra vatandaşın sahip olduğu hakları kanuni dayanağıyla ve süresi geçmeden anlatan, kâr amacı gütmeyen bağımsız bir bilgi platformudur."
+  "ozet": "Deprem Haklarım, afetten sonra vatandaşın sahip olduğu hakları kanuni dayanağıyla ve süresi geçmeden anlatan, kâr amacı gütmeyen bağımsız bir bilgi platformudur.",
+  "anahtar": [
+    "hakkımızda",
+    "kimsiniz",
+    "platform",
+    "kâr amacı gütmeyen",
+    "bağımsız"
+  ]
 }
 ---
 ## Neden bu platform var?

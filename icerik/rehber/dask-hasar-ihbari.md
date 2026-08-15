@@ -10,24 +10,61 @@
   "dogrulama": "coklu",
   "guncelleme": "2026-08-15",
   "dayanaklar": [
-    {"ad": "ZDS Genel Şartları B.1", "aciklama": "Rizikonun gerçekleştiğinin öğrenildiği tarihten itibaren onbeş gün içinde ihbar yükümlülüğü."},
-    {"ad": "ZDS Genel Şartları", "aciklama": "Sigorta bedelinin %2'si oranında tenzili muafiyet uygulanır; muafiyeti aşan kısım ödenir."},
-    {"ad": "TTK m.1420", "aciklama": "Sigorta tazminatı alacakları iki yıllık zamanaşımına tabidir."}
+    {
+      "ad": "ZDS Genel Şartları B.1",
+      "aciklama": "Rizikonun gerçekleştiğinin öğrenildiği tarihten itibaren onbeş gün içinde ihbar yükümlülüğü."
+    },
+    {
+      "ad": "ZDS Genel Şartları",
+      "aciklama": "Sigorta bedelinin %2'si oranında tenzili muafiyet uygulanır; muafiyeti aşan kısım ödenir."
+    },
+    {
+      "ad": "TTK m.1420",
+      "aciklama": "Sigorta tazminatı alacakları iki yıllık zamanaşımına tabidir."
+    }
   ],
   "sss": [
-    {"soru": "15 günlük süreyi kaçırırsam tazminat alamaz mıyım?",
-     "cevap": "İhbarın geç yapılması, kural olarak tazminat hakkını kendiliğinden ortadan kaldırmaz; ancak gecikme zararın belirlenmesini güçleştirdiyse sigortacı bu ölçüde indirim yapabilir. Geciktiyseniz de derhal ihbar edin ve gecikme nedenini yazılı olarak belirtin."},
-    {"soru": "72 saat kuralı ne anlama geliyor?",
-     "cevap": "Birbirini izleyen depremler, belirli bir zaman aralığı içinde meydana gelmişse tek bir hasar olayı sayılır ve muafiyet bir kez uygulanır. Bu, artçı sarsıntılarda ayrı ayrı muafiyet kesilmesini önler."},
-    {"soru": "Muafiyet ödemeden nasıl düşülür?",
-     "cevap": "Sigorta bedelinin %2'sine karşılık gelen tutar hasar tutarından indirilir, kalan kısım ödenir. Hasar bu tutarın altındaysa ödeme yapılmaz."},
-    {"soru": "İhbarı kim yapabilir?",
-     "cevap": "Sigorta ettiren veya sigortalı; uygulamada malik ya da yetkilendirdiği kişi. Kiracı, poliçenin tarafı olmadığı için kendi adına tazminat talep edemez."}
+    {
+      "soru": "15 günlük süreyi kaçırırsam tazminat alamaz mıyım?",
+      "cevap": "İhbarın geç yapılması, kural olarak tazminat hakkını kendiliğinden ortadan kaldırmaz; ancak gecikme zararın belirlenmesini güçleştirdiyse sigortacı bu ölçüde indirim yapabilir. Geciktiyseniz de derhal ihbar edin ve gecikme nedenini yazılı olarak belirtin."
+    },
+    {
+      "soru": "72 saat kuralı ne anlama geliyor?",
+      "cevap": "Birbirini izleyen depremler, belirli bir zaman aralığı içinde meydana gelmişse tek bir hasar olayı sayılır ve muafiyet bir kez uygulanır. Bu, artçı sarsıntılarda ayrı ayrı muafiyet kesilmesini önler."
+    },
+    {
+      "soru": "Muafiyet ödemeden nasıl düşülür?",
+      "cevap": "Sigorta bedelinin %2'sine karşılık gelen tutar hasar tutarından indirilir, kalan kısım ödenir. Hasar bu tutarın altındaysa ödeme yapılmaz."
+    },
+    {
+      "soru": "İhbarı kim yapabilir?",
+      "cevap": "Sigorta ettiren veya sigortalı; uygulamada malik ya da yetkilendirdiği kişi. Kiracı, poliçenin tarafı olmadığı için kendi adına tazminat talep edemez."
+    }
   ],
   "arac": [
-    {"id": "sureler", "ad": "Süre takvimi", "ozet": "Deprem tarihini girin, 15 günlük ihbar süresinin ne zaman dolduğunu görün."}
+    {
+      "id": "sureler",
+      "ad": "Süre takvimi",
+      "ozet": "Deprem tarihini girin, 15 günlük ihbar süresinin ne zaman dolduğunu görün."
+    }
   ],
-  "ilgili": ["dask-neyi-karsilar", "eksper-raporuna-itiraz", "sigortaciya-yazili-basvuru"]
+  "ilgili": [
+    "dask-neyi-karsilar",
+    "eksper-raporuna-itiraz",
+    "sigortaciya-yazili-basvuru"
+  ],
+  "anahtar": [
+    "dask",
+    "hasar ihbarı",
+    "ihbar",
+    "15 gün",
+    "muafiyet",
+    "72 saat",
+    "alo 125",
+    "e-devlet",
+    "eksper",
+    "tazminat"
+  ]
 }
 ---
 DASK sürecinde ilk ve en kısa süre hasar ihbarıdır. Süre, deprem tarihinden değil,
