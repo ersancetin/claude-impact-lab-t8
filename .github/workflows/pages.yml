@@ -3,8 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - main                                          # varsayilan dal
-      - claude/extract-zip-review-project-xmatz1      # guncel calisma dali
+      - main            # yalnizca varsayilan dal; bkz. asagidaki dal politikasi notu
     paths: ['docs/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 
@@ -24,9 +23,12 @@ jobs:
       url: ${{ steps.dagit.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      # Pages acik ve Source: GitHub Actions secili olmalidir.
+      # Pages bu depoda acildi (Settings > Pages > Source: GitHub Actions).
+      # enablement kaldirildi: Actions token'i Pages sitesini OLUSTURAMIYOR
+      # ("Resource not accessible by integration"), yalnizca mevcut siteye
+      # dagitim yapabiliyor. Site zaten acik oldugu icin bayraga gerek yok.
       #
       # DIKKAT - iki ayri engel var, ikisi de sessizce sonuc verir:
       #  1) Tetikleyici dal listesi: burada olmayan bir dala push edilirse
@@ -37,8 +39,6 @@ jobs:
       #     hatasiyla duser. Cozum: Settings > Environments > github-pages >
       #     Deployment branches listesine ilgili dal eklenmelidir.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
