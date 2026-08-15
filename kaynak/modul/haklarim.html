@@ -19,8 +19,14 @@
 }
 ---
 
-<form id="form" novalidate>
-    <fieldset>
+<!-- Adım göstergesi: üç soru tek yığın hâlinde soruluyordu; hangisinde
+     olduğunuz ve kaç tane kaldığı görünmüyordu. -->
+  <div class="adimlar" id="adimlar" aria-hidden="true">
+    <span class="adim aktif"></span><span class="adim"></span><span class="adim"></span>
+  </div>
+
+  <form id="form" novalidate>
+    <fieldset data-adim="1">
       <legend>1. Konutla ilişkiniz neydi?</legend>
       <label class="secenek">
         <input type="radio" name="profil" value="malik" checked>
@@ -32,7 +38,7 @@
       </label>
     </fieldset>
 
-    <fieldset>
+    <fieldset data-adim="2" hidden>
       <legend>2. Binanın durumu ne?</legend>
       <label class="secenek">
         <input type="radio" name="hasar" value="agir" checked>
@@ -48,7 +54,7 @@
       </label>
     </fieldset>
 
-    <fieldset>
+    <fieldset data-adim="3" hidden>
       <legend>3. Depremde yakınınızı kaybettiniz mi?</legend>
       <span class="ipucu" style="display:block;margin-bottom:.75rem">
         Bu soruyu yanıtlamak zorunda değilsiniz; yalnızca ilgili hakları
@@ -65,17 +71,40 @@
     </fieldset>
 
     <div class="dugme-sira">
-      <button class="dugme" type="submit">Haklarımı listele</button>
+      <button class="dugme ikincil" type="button" id="geri" hidden>← Geri</button>
+      <button class="dugme" type="button" id="ileri">İleri →</button>
+      <button class="dugme" type="submit" id="bitir" hidden>Haklarımı listele</button>
     </div>
   </form>
 
   <section id="sonuc" class="gizli" aria-live="polite"></section>
 
 <script type="module">
-import {el, kaydet, oku } from "../assets/app.js";
-import { HAKLAR } from "../assets/veri.js";
+import {el, kaydet, oku, dogrulamaRozeti } from "../assets/app.js";
+import { HAKLAR, PARAM } from "../assets/veri.js";
 const form    = document.getElementById("form");
 const sonucEl = document.getElementById("sonuc");
+
+/* --- Adım adım ilerleme ---------------------------------- */
+const adimlar   = [...form.querySelectorAll("fieldset[data-adim]")];
+const gostergec = [...document.querySelectorAll("#adimlar .adim")];
+const ileriDug  = document.getElementById("ileri");
+const geriDug   = document.getElementById("geri");
+const bitirDug  = document.getElementById("bitir");
+let adim = 0;
+
+function adimCiz() {
+  adimlar.forEach((f, i) => { f.hidden = i !== adim; });
+  gostergec.forEach((g, i) => {
+    g.className = "adim" + (i < adim ? " bitti" : i === adim ? " aktif" : "");
+  });
+  geriDug.hidden  = adim === 0;
+  ileriDug.hidden = adim === adimlar.length - 1;
+  bitirDug.hidden = adim !== adimlar.length - 1;
+}
+ileriDug.addEventListener("click", () => { adim = Math.min(adim + 1, adimlar.length - 1); adimCiz(); });
+geriDug.addEventListener("click", () => { adim = Math.max(adim - 1, 0); adimCiz(); });
+adimCiz();
 
 const k = oku("profil", {});
 for (const ad of ["profil", "hasar", "kayip"])
@@ -127,6 +156,35 @@ function ciz(v) {
         el("h3", { class: "mt0", style: "margin-top:.5rem" }, h.baslik),
         el("p", {}, h.metin),
         el("div", { class: "dayanak" }, h.dayanak))
+    );
+  }
+
+  /* Geçmiş uygulama — "hak" DEĞİL. parametreler.json'daki $KRITIK_UYARI
+     gereği emsal rozetiyle ve ayrı bir blokta sunulur; hak kartlarının
+     arasına karıştırılmaz. */
+  const e = PARAM.emsal;
+  if (e) {
+    const tutar = v.profil === "kiraci" ? e.kiraYardimiKiraci : e.kiraYardimiEvSahibi;
+    const kimlik = v.profil === "kiraci" ? "kiracılara" : "ev sahiplerine";
+    parcalar.push(
+      el("h3", { style: "margin-top:2.5rem" }, "Geçmiş afette uygulananlar"),
+      el("div", { class: "kart uyarili" },
+        el("span", { class: "nitelik emsal" }, "geçmiş uygulama"),
+        el("p", { style: "margin:.75rem 0" },
+          el("strong", {}, "Bunlar kalıcı bir hak değildir. "),
+          "Aşağıdakiler 2023 depremine özgü idari kararlardır. Yeni bir afette " +
+          "aynı tutarların ödeneceğinin güvencesi yoktur; tutarlar ve süreler " +
+          "her afette yeniden belirlenir."),
+        el("ul", { class: "deger-liste" },
+          el("li", {},
+            el("span", {}, `Kira yardımı (${kimlik})`),
+            el("b", {}, `${tutar.toLocaleString("tr-TR")} TL / ay` +
+              (e.kiraYardimiAy ? ` · ${e.kiraYardimiAy} aya kadar` : ""))),
+          el("li", {},
+            el("span", {}, "Taşınma yardımı (bir defaya mahsus)"),
+            el("b", {}, `${e.tasinmaYardimi.toLocaleString("tr-TR")} TL`))),
+        el("div", { class: "dayanak" }, "2023 depremi idari kararları · doğrulama: ",
+           dogrulamaRozeti(e.dogrulama)))
     );
   }
 
