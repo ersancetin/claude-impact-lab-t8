@@ -20,9 +20,11 @@ Kaynak içerik `icerik/` ve `kaynak/` altındadır; yayına giden statik site
 ```bash
 python3 scripts/site-uret.py       # docs/ klasörünü üretir
 python3 scripts/bag-kontrol.py     # iç bağlantıları denetler
-python3 scripts/kontrast.py        # renk kontrastlarını ölçer (52 çift)
+python3 scripts/veri-uret.py       # parametreler.json -> veri-parametre.js
+python3 scripts/kontrast.py        # renk kontrastlarını ölçer
 python3 scripts/veri-kontrol.py    # parametreler.json ↔ veri.js tutarlılığı
 node scripts/danisma-kontrol.mjs   # danışmanın arama isabeti (24 soru)
+node scripts/hesap-kontrol.mjs     # tazminat hesabı (33 altın örnek)
 node scripts/sure-kontrol.mjs      # takvim süresi aritmetiği (12 örnek)
 python3 scripts/markdown-kontrol.py  # markdown işleyici sınamaları
 

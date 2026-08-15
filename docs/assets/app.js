@@ -3,43 +3,6 @@
    Bağımlılık yok. Hiçbir veri sunucuya gönderilmez.
    ============================================================ */
 
-/* --- Tema ------------------------------------------------- */
-const TEMA_ANAHTAR = "dh-tema";
-
-export function temaBaslat() {
-  const kayitli = localStorage.getItem(TEMA_ANAHTAR);
-  if (kayitli) document.documentElement.dataset.tema = kayitli;
-}
-
-export function temaDegistir() {
-  const kok = document.documentElement;
-  const su = kok.dataset.tema ||
-    (matchMedia("(prefers-color-scheme: dark)").matches ? "koyu" : "acik");
-  const yeni = su === "koyu" ? "acik" : "koyu";
-  kok.dataset.tema = yeni;
-  localStorage.setItem(TEMA_ANAHTAR, yeni);
-  temaEtiketiYenile();
-}
-
-function temaEtiketiYenile() {
-  const d = document.querySelector(".tema-dugme");
-  if (!d) return;
-  const koyuMu = document.documentElement.dataset.tema === "koyu" ||
-    (!document.documentElement.dataset.tema &&
-      matchMedia("(prefers-color-scheme: dark)").matches);
-  d.textContent = koyuMu ? "Açık tema" : "Koyu tema";
-}
-
-/* --- Tema düğmesi bağlama --------------------------------- */
-/* Başlık ve alt bilgi artık statik HTML olarak üretiliyor
-   (scripts/site-uret.py). Burada yalnızca tema düğmesi bağlanır. */
-export function temaBagla() {
-  const d = document.querySelector(".tema-dugme");
-  if (!d) return;
-  d.addEventListener("click", temaDegistir);
-  temaEtiketiYenile();
-}
-
 /* --- Tarih ------------------------------------------------ */
 const GUN_MS = 86400000;
 

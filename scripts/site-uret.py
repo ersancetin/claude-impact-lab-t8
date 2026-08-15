@@ -61,6 +61,18 @@ def kacir(m):
     return html.escape(str(m), quote=True)
 
 
+# ---------------------------------------------------------------- marka
+# Marka işareti: kalkan (sigorta/teminat) + içinde ev (konut). Sitenin
+# konusunu iki şekille anlatır. İkon sözlüğünden ayrı tutuluyor çünkü
+# 42 pikselde dolu alan gerekiyor, çizgi ikonlar bu boyutta cılız kalır.
+MARKA_ISARET = (
+    '<svg viewBox="0 0 32 32" class="marka-svg" aria-hidden="true" focusable="false">'
+    '<path d="M16 2.6 5 6.4v9.4c0 6.4 4.5 11.7 11 13.6 6.5-1.9 11-7.2 11-13.6V6.4z"/>'
+    '<path class="oyuk" d="M16 9.8 9.4 15.4h1.9v6.9h9.4v-6.9h1.9z"/>'
+    "</svg>"
+)
+
+
 # ---------------------------------------------------------------- ikon
 # Tek kaynak: data/ikon.json. Buradan hem menüye satır içi SVG basılır
 # hem de docs/assets/ikon.js üretilir. İkonu iki yerde tutmak, birinin
@@ -432,15 +444,13 @@ class Site:
   <div class="kap-genis">
     <b>{kacir(self.y["kurumAdi"])}</b>
     <span>{kacir(self.y["slogan"])}</span>
-    <span class="bosluk"></span>
-    <button class="tema-dugme" type="button">Koyu tema</button>
   </div>
 </div>
 <header class="ust">
   <div class="ust-ic">
     <a class="marka" href="{p}index.html">
-      <span class="marka-isaret" aria-hidden="true">{kacir(self.y["kisaAd"])}</span>
-      <span class="marka-ad"><b>{kacir(self.y["ad"])}</b><span>Hak · Süre · Dilekçe</span></span>
+      <span class="marka-isaret" aria-hidden="true">{MARKA_ISARET}</span>
+      <span class="marka-ad"><b>{kacir(self.y["ad"])}</b></span>
     </a>
     <nav class="gezinme" aria-label="Ana gezinme">{self.gezinme_html(derinlik, aktif)}</nav>
     <span class="bosluk"></span>
@@ -530,7 +540,7 @@ class Site:
 <title>{kacir(tam_baslik)}</title>
 <meta name="description" content="{kacir(aciklama)}">
 {robots_etiket}<link rel="canonical" href="{kanonik}">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{kacir(self.y["ad"])}">
 <meta property="og:title" content="{kacir(tam_baslik)}">
@@ -549,10 +559,9 @@ class Site:
 {govde}
 {self.alt_html(derinlik)}
 <script type="module">
-  import {{ temaBaslat, temaBagla }} from "{p_mod}assets/app.js";
   import {{ danismaBaslat }} from "{p_mod}assets/danisma.js";
   import {{ sahneBaslat }} from "{p_mod}assets/sahne3b.js";
-  temaBaslat(); temaBagla(); danismaBaslat(); sahneBaslat();
+  danismaBaslat(); sahneBaslat();
 </script>
 </body>
 </html>
@@ -1011,7 +1020,6 @@ def ana_sayfa(site):
   <div class="kap-genis">
    <div class="kahraman-ic">
     <div>
-      <span class="etiket">Bağımsız bilgi platformu · Kayıt yok · Reklam yok</span>
       <h1>DASK dört duvarı öder. Geri kalan sizde kalır.</h1>
       <p class="giris">Türkiye'de konutların yaklaşık yarısında zorunlu deprem sigortası bile
       yok; eşyayı ve barınmayı kapsayan konut poliçesi çok daha az. Bu platform hangi
@@ -1032,8 +1040,11 @@ def ana_sayfa(site):
       <figure class="sahne-sar" data-sahne3b hidden>
         <div class="sahne-3b"></div>
         <figcaption>
-          <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>Saydam kabuk: DASK'ın karşıladığı bina</span>
-          <span class="kesit-anahtar"><i class="kutucuk acikta"></i>İçerideki bloklar: karşılanmayan ev eşyası</span>
+          <!-- Canlı alt yazı: sahne evre değiştirdikçe JS burayı günceller.
+               Görsel tek başına anlatmaz; farkı yazı tamamlar. -->
+          <p class="sahne-yazi" data-sahne-yazi aria-live="polite"></p>
+          <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>DASK öder: bina kabuğu</span>
+          <span class="kesit-anahtar"><i class="kutucuk police"></i>Konut poliçesi öder: eşya ve konaklama</span>
         </figcaption>
       </figure>
     </div>

@@ -1,11 +1,23 @@
 # Tasarım Sistemi
 
 **Ürün:** Deprem Haklarım · **Kod:** [`docs/assets/tasarim.css`](./docs/assets/tasarim.css)
-**Sürüm:** 3 — kırmızı kurumsal kimlik, katmanlı gezinme, danışma penceresi · **Son güncelleme:** 2026-08-15
+**Sürüm:** 4 — tek palet, marka işareti, iki evreli 3B kapsam sahnesi · **Son güncelleme:** 2026-08-15
 
 ---
 
-## 1. Sürüm 3 neyi değiştirdi?
+## 1. Sürüm 4 neyi değiştirdi?
+
+| Sürüm 3 | Sürüm 4 |
+|---|---|
+| Açık + koyu tema, tema düğmesi | **Tek palet.** İki palet bakımı ikiye katlıyor, her yeni bileşende ikinci kontrast ölçümü gerektiriyordu |
+| Marka: kare içinde "DH" harfleri | **Kalkan + ev işareti** — sitenin konusunu iki şekille anlatır; favicon aynı şekil |
+| Marka altında "Hak · Süre · Dilekçe" | Kaldırıldı — başlık zaten aynı şeyi söylüyordu |
+| Hero'da 3B: dönen ev | **İki evreli sahne:** önce DASK kapsamı, sonra konut poliçesi eklendiğinde; alt yazı evreyle birlikte değişir |
+| Hesap sonunda yalnızca açık | Sonunda **teklif talebi metni** üretilir; kullanıcı kendi seçtiği şirkete gönderir |
+
+---
+
+## 1b. Sürüm 3 neyi değiştirdi?
 
 Sürüm 2 kurumsal ama **düz**dü: üç başlıklı ince bir menü, altında mobilde yirmi
 bağlantılık düz bir liste. Kullanıcı neyin nerede olduğunu ancak tıklayarak
@@ -206,7 +218,7 @@ Bölüm 1) — sabit şablon + alan yerleştirme.
 
 ## 9. Erişilebilirlik
 
-- **Kontrast:** 52 çift, iki temada da ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
+- **Kontrast:** 29 çift, tek palette ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
 - **Klavye:** her etkileşimli öge erişilebilir, `:focus-visible` 3px belirgin
 - **"İçeriğe atla"** bağlantısı her sayfada
 - **Sonuç bölgeleri** `aria-live="polite"`
@@ -214,7 +226,7 @@ Bölüm 1) — sabit şablon + alan yerleştirme.
 - Mobil menü, mega menü ve SSS **JavaScript olmadan** çalışır
 - **Renk tek başına bilgi taşımaz** (WCAG 1.4.1): süre durumları yazıyla da işaretlenir
 - Danışma penceresi `Esc` ile kapanır, `role="log"` + `aria-live` ile okunur
-- `prefers-reduced-motion` ve `prefers-color-scheme` desteklenir
+- `prefers-reduced-motion` mutlak saygı görür: 3B sahne yüklenmez bile
 - Semantik HTML: `fieldset`/`legend`, gerçek `label`, gerçek `button`
 - **Yazdırma stili**: gezinme, künye, içindekiler ve düğmeler gizlenir
 

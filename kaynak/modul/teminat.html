@@ -142,7 +142,7 @@
 
 <script type="module">
 import { el, paraYaz, kaydet, oku, sil, tarihYaz, tarihOku,
-         dogrulamaRozeti } from "../assets/app.js";
+         dogrulamaRozeti, panoyaKopyala, metniIndir } from "../assets/app.js";
 import { PARAM } from "../assets/veri.js";
 import { hesapla } from "../assets/hesap.js";
 
@@ -260,6 +260,80 @@ function kalemSatiri(k) {
     el("small", {}, k.aciklama));
 }
 
+/* --- Teklif talebi metni ----------------------------------
+   Site hiçbir şirkete yönlendirme yapmıyor; bunun yerine kullanıcının
+   KENDİ seçtiği acenteye/şirkete gönderebileceği, kendi rakamlarıyla
+   doldurulmuş bir talep metni üretiyor. Böylece "teklif alma" adımı
+   somutlaşıyor ama aracılık yapılmıyor.
+
+   Metin cihazda oluşur, hiçbir yere gönderilmez. */
+function teklifMetni(v, s) {
+  const satir = [];
+  satir.push("KONUT SİGORTASI TEKLİF TALEBİ", "");
+  satir.push(v.profil === "kiraci"
+    ? "Kiracıyım; bina teminatına ihtiyacım yok, eşya ve alternatif konaklama teminatı istiyorum."
+    : "Ev sahibiyim; DASK üstü bina teminatı, eşya ve alternatif konaklama teminatı istiyorum.");
+  satir.push("");
+
+  if (v.profil !== "kiraci") {
+    satir.push("BİNA");
+    if (v.m2) satir.push(`- Brüt yüzölçümü: ${v.m2} m²`);
+    satir.push(`- Yapı tarzı: ${v.yapiTarzi === "diger" ? "Diğer (yığma, ahşap vb.)" : "Çelik / betonarme karkas"}`);
+    if (v.binaDeger) satir.push(`- Yeniden yapım maliyeti: ${paraYaz(v.binaDeger)}`);
+    if (s.bedelBilgi) satir.push(`- Hesaplanan DASK sigorta bedeli: ${paraYaz(s.bedelBilgi.bedel)}`);
+    satir.push("");
+  }
+
+  satir.push("İSTENEN TEMİNATLAR VE GEREKÇESİ");
+  for (const k of s.kalemler) {
+    if (k.acik > 0) satir.push(`- ${k.ad}: ${paraYaz(k.acik)} açıkta kalıyor`);
+  }
+  satir.push("");
+  satir.push(`Hesaplanan toplam teminat açığı: ${paraYaz(s.toplam.acik)}`);
+  satir.push("");
+
+  satir.push("TEKLİFTE AÇIKÇA GÖRMEK İSTEDİĞİM SATIRLAR");
+  satir.push("1. Poliçedeki bina bedeli (yeniden yapım maliyetiyle karşılaştırılabilsin)");
+  satir.push("2. Ev eşyası teminat limiti");
+  satir.push("3. Alternatif konaklama (ALE): aylık tutar ve kaç ay");
+  satir.push("4. Enkaz kaldırma teminatı var mı, limiti ne");
+  satir.push("5. Muafiyet oranı");
+  satir.push("6. Deprem teminatının seçili olduğu (ferdi kazada ayrıca seçilmelidir)");
+  satir.push("");
+  satir.push("Not: Bu talep, kendi hesabıma göre hazırlanmıştır. Teklifi karşılaştırabilmek");
+  satir.push("için yukarıdaki altı satırın tutarlarıyla birlikte yazılmasını rica ederim.");
+  return satir.join("\n");
+}
+
+function teklifKarti(v, s) {
+  const metin = teklifMetni(v, s);
+  const kutu = el("pre", { class: "cikti" }, metin);
+  const kopyalaDugme = el("button", { class: "dugme", type: "button" }, "Metni kopyala");
+  kopyalaDugme.addEventListener("click", async () => {
+    const ok = await panoyaKopyala(metin);
+    kopyalaDugme.textContent = ok ? "Kopyalandı ✓" : "Kopyalanamadı — elle seçin";
+    setTimeout(() => { kopyalaDugme.textContent = "Metni kopyala"; }, 2500);
+  });
+
+  return el("div", { class: "kart vurgulu" },
+    el("span", { class: "etiket" }, "Sıradaki adım"),
+    el("h3", { class: "mt0" }, "Bu açığı kapatmak için teklif isteyin"),
+    el("p", {},
+      "Aşağıdaki metin sizin rakamlarınızla dolduruldu. Kopyalayıp ",
+      el("strong", {}, "kendi seçtiğiniz"),
+      " sigorta acentesine, şirketine veya bankanıza gönderebilirsiniz. ",
+      "Bu platform hiçbir şirkete yönlendirme yapmaz ve hiçbir ödeme almaz — ",
+      el("a", { href: "../police/model.html" }, "neden böyle olduğunu buradan okuyun"), "."),
+    kutu,
+    el("div", { class: "dugme-sira" },
+      kopyalaDugme,
+      el("button", { class: "dugme ikincil", type: "button",
+        onclick: () => metniIndir("konut-sigortasi-teklif-talebi.txt", metin) },
+        "Dosya olarak indir"),
+      el("a", { class: "dugme ikincil", href: "../police/karsilastirma.html" },
+        "Hangi teminata bakmalı?")));
+}
+
 /* --- Çizim ------------------------------------------------ */
 function ciz(v) {
   const s = hesapla(v, PARAM);
@@ -332,6 +406,9 @@ function ciz(v) {
 
   p.push(el("h2", {}, "Kalem kalem"));
   p.push(el("div", { class: "kalem-liste" }, ...s.kalemler.map(kalemSatiri)));
+
+  /* Teklif talebi: açığı gördükten hemen sonra ne yapacağını söyle */
+  if (s.toplam.acik > 0) p.push(teklifKarti(v, s));
 
   p.push(el("div", { class: "kart bilgili" },
     el("span", { class: "etiket" }, "Tutarı hesaplanamayan kalemler"),
