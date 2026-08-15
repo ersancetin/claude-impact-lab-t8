@@ -75,30 +75,96 @@
    <div class="kahraman-ic">
     <div>
       <span class="etiket">Bağımsız bilgi platformu · Kayıt yok · Reklam yok</span>
-      <h1>Depremden sonra hakkınız var; ama çoğunun süresi işliyor.</h1>
-      <p class="giris">Hangi hakka sahip olduğunuzu, kaç gününüzün kaldığını, hangi dilekçeyi
-      nereye göndereceğinizi ve bunların hangi kanun maddesine dayandığını tek yerde toplar.
-      DASK ve konutla sınırlı değil: vergi, SGK primi, kredi borcu, iş sözleşmesi, kira,
-      miras ve devlet destekleri de burada.</p>
+      <h1>DASK dört duvarı öder. Geri kalan sizde kalır.</h1>
+      <p class="giris">Türkiye'de konutların yaklaşık yarısında zorunlu deprem sigortası bile
+      yok; eşyayı ve barınmayı kapsayan konut poliçesi çok daha az. Bu platform hangi
+      teminatın neyi karşıladığını, açığınızın kaç lira olduğunu ve haklarınızın kaç gününün
+      kaldığını gösterir. Hiçbir şirkete yönlendirme yapmaz, hiçbir ödeme almaz.</p>
       <div class="kahraman-alt">
-        <a class="dugme" href="arac/sureler.html">Sürelerimi hesapla</a>
-        <a class="dugme ikincil" href="bilgi/index.html">Bilgi Merkezi'ne git</a>
+        <a class="dugme" href="arac/teminat.html">Teminat açığımı hesapla</a>
+        <a class="dugme ikincil" href="police/index.html">Neden poliçe gerekli?</a>
       </div>
     </div>
-    <aside class="sure-panel" aria-label="Öne çıkan süreler">
-      <div class="sure-panel-bas">
-        <b>Süresi en kısa üç hak</b>
-        <span>Süreler olayı öğrendiğiniz ya da sonucun ilan edildiği tarihten işler.</span>
-      </div>
-      <ul>
-        <li><b>15 gün</b><div>DASK hasar ihbarı<span>Depremi öğrendiğiniz tarihten</span></div></li>
-        <li><b>30 gün</b><div>Hasar tespitine itiraz<span>Sonucun mahallî ilan tarihinden</span></div></li>
-        <li><b>2 ay</b><div>Hak sahipliği başvurusu<span>Hak sahipliği ilan tarihinden</span></div></li>
-      </ul>
-      <div class="sure-panel-alt">
-        <a class="dugme ikincil" href="arac/sureler.html" style="width:100%">Kendi takvimimi çıkar</a>
-      </div>
-    </aside>
+    <div class="kahraman-gorsel">
+      <!-- Taban katman: SVG afiş. 3B yüklenirse gizlenir, yüklenmezse
+           kullanıcı eksik bir şey görmez. -->
+      <div data-afis-2b><figure class="kesit-afis">
+<svg viewBox="0 0 640 420" class="kesit" role="img" aria-labelledby="kesit-b kesit-d">
+  <title id="kesit-b">Deprem sigortası kapsam kesiti</title>
+  <desc id="kesit-d">Bir evin kesiti. Bina kabuğu — çatı, duvarlar, döşeme ve temel —
+  DASK tarafından karşılanır. İçindeki ev eşyası, dışarıdaki geçici barınma ve enkaz
+  kaldırma karşılanmaz. Aynı bilgi aşağıdaki kapsam tablosunda yazılı olarak da yer alır.</desc>
+
+  <line class="kesit-zemin" x1="16" y1="352" x2="624" y2="352"/>
+
+  <!-- KAPSANAN: bina kabuğu (çatı, duvar, döşeme, temel) -->
+  <g class="kesit-yapi">
+    <path d="M60 168 224 62l164 106"/>
+    <path d="M92 168v184h264V168"/>
+    <path d="M92 256h264"/>
+    <rect x="86" y="340" width="276" height="14"/>
+  </g>
+
+  <!-- AÇIKTA: ev eşyası — kanepe, buzdolabı, yatak, dolap -->
+  <g class="kesit-acik">
+    <!-- kanepe: oturma + sırtlık + kolçak -->
+    <path d="M112 316h72v22h-72z"/>
+    <path d="M112 316v-26h72v26"/>
+    <path d="M112 300h10v16h-10zM174 300h10v16h-10z"/>
+    <!-- buzdolabı: gövde + kapak çizgisi -->
+    <path d="M300 274h44v64h-44z"/>
+    <path d="M300 300h44"/>
+    <!-- yatak: şilte + yastık -->
+    <path d="M112 222h84v22h-84z"/>
+    <path d="M116 208h26v14h-26z"/>
+    <!-- dolap -->
+    <path d="M296 196h48v48h-48z"/>
+    <path d="M320 196v48"/>
+  </g>
+
+  <!-- AÇIKTA: enkaz yığını -->
+  <g class="kesit-acik">
+    <path d="M404 352 430 310l26 42z"/>
+    <path d="M452 352l20-30 20 30z"/>
+  </g>
+
+  <!-- AÇIKTA: geçici barınma — çadır (kapak açık, ev değil) -->
+  <g class="kesit-acik">
+    <path d="M508 352 556 268l48 84z"/>
+    <path d="M556 268v84"/>
+    <path d="M540 352c0-18 7-30 16-30v30z"/>
+  </g>
+
+  <!-- Etiketler: afiş süs değil, bilgi taşır -->
+  <g class="kesit-etiket">
+    <path class="kesit-cizgi" d="M224 108h-96"/>
+    <text x="124" y="104" text-anchor="end">BİNA KABUĞU</text>
+    <text x="124" y="122" text-anchor="end" class="kucuk">DASK öder</text>
+
+    <path class="kesit-cizgi" d="M256 232h84"/>
+    <text x="396" y="212" text-anchor="middle">EV EŞYASI</text>
+    <text x="396" y="230" text-anchor="middle" class="kucuk">açıkta</text>
+
+    <text x="430" y="392" text-anchor="middle">ENKAZ</text>
+    <text x="556" y="392" text-anchor="middle">GEÇİCİ BARINMA</text>
+  </g>
+</svg>
+<figcaption>
+  <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>DASK'ın karşıladığı: bina kabuğu</span>
+  <span class="kesit-anahtar"><i class="kutucuk acikta"></i>Açıkta kalan: eşya, barınma, enkaz kaldırma</span>
+</figcaption>
+</figure></div>
+      <!-- Üste binen katman: WebGL + hareket izni + hızlı bağlantı varsa.
+           Lejant burada da var: 3B, yerini aldığı afişten az bilgi
+           taşımamalı. -->
+      <figure class="sahne-sar" data-sahne3b hidden>
+        <div class="sahne-3b"></div>
+        <figcaption>
+          <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>Saydam kabuk: DASK'ın karşıladığı bina</span>
+          <span class="kesit-anahtar"><i class="kutucuk acikta"></i>İçerideki bloklar: karşılanmayan ev eşyası</span>
+        </figcaption>
+      </figure>
+    </div>
    </div>
     <div class="olcut-serit">
       <div class="olcut"><b>4</b><span>etkileşimli araç</span></div>
@@ -112,6 +178,20 @@
 <section class="bolum-ince zemin-alt">
   <div class="kap-genis">
     <div class="hizli"><a class="hizli-kart" href="arac/sureler.html"><span class="no">Süre ve hak</span><b>Süre takvimi</b><span>Tarihleri girin; hangi hakkınızın kaç günü kaldığını, hangisinin dolduğunu aciliyet…</span><span class="git">Süreleri hesapla →</span></a><a class="hizli-kart" href="arac/haklarim.html"><span class="no">Süre ve hak</span><b>Hak tarama</b><span>Üç soruya cevap verin; kiracı mı malik mi olduğunuza göre size uyan hakları…</span><span class="git">Haklarımı listele →</span></a><a class="hizli-kart" href="arac/dilekce.html"><span class="no">Dilekçe ve başvuru</span><b>Dilekçe üretici</b><span>Sabit şablonu doldurun, çıktıyı alın, nereye ve hangi kanaldan göndereceğinizi…</span><span class="git">Dilekçe hazırla →</span></a><a class="hizli-kart" href="arac/teminat.html"><span class="no">Sigorta ve teminat</span><b>Teminat açığı ve tazminat hesabı</b><span>DASK sigorta bedelini, %2 tenzili muafiyeti ve açıkta kalan tutarı hesaplayın…</span><span class="git">Hesapla →</span></a></div>
+    <aside class="sure-panel sure-panel-genis" aria-label="Öne çıkan süreler">
+      <div class="sure-panel-bas">
+        <b>Süresi en kısa üç hak</b>
+        <span>Süreler olayı öğrendiğiniz ya da sonucun ilan edildiği tarihten işler.</span>
+      </div>
+      <ul>
+        <li><b>15 gün</b><div>DASK hasar ihbarı<span>Depremi öğrendiğiniz tarihten</span></div></li>
+        <li><b>30 gün</b><div>Hasar tespitine itiraz<span>Sonucun mahallî ilan tarihinden</span></div></li>
+        <li><b>2 ay</b><div>Hak sahipliği başvurusu<span>Hak sahipliği ilan tarihinden</span></div></li>
+      </ul>
+      <div class="sure-panel-alt">
+        <a class="dugme ikincil" href="arac/sureler.html">Kendi takvimimi çıkar</a>
+      </div>
+    </aside>
   </div>
 </section>
 
@@ -269,7 +349,8 @@
 <script type="module">
   import { temaBaslat, temaBagla } from "./assets/app.js";
   import { danismaBaslat } from "./assets/danisma.js";
-  temaBaslat(); temaBagla(); danismaBaslat();
+  import { sahneBaslat } from "./assets/sahne3b.js";
+  temaBaslat(); temaBagla(); danismaBaslat(); sahneBaslat();
 </script>
 </body>
 </html>

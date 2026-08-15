@@ -551,7 +551,8 @@ class Site:
 <script type="module">
   import {{ temaBaslat, temaBagla }} from "{p_mod}assets/app.js";
   import {{ danismaBaslat }} from "{p_mod}assets/danisma.js";
-  temaBaslat(); temaBagla(); danismaBaslat();
+  import {{ sahneBaslat }} from "{p_mod}assets/sahne3b.js";
+  temaBaslat(); temaBagla(); danismaBaslat(); sahneBaslat();
 </script>
 </body>
 </html>
@@ -1011,30 +1012,31 @@ def ana_sayfa(site):
    <div class="kahraman-ic">
     <div>
       <span class="etiket">Bağımsız bilgi platformu · Kayıt yok · Reklam yok</span>
-      <h1>Depremden sonra hakkınız var; ama çoğunun süresi işliyor.</h1>
-      <p class="giris">Hangi hakka sahip olduğunuzu, kaç gününüzün kaldığını, hangi dilekçeyi
-      nereye göndereceğinizi ve bunların hangi kanun maddesine dayandığını tek yerde toplar.
-      DASK ve konutla sınırlı değil: vergi, SGK primi, kredi borcu, iş sözleşmesi, kira,
-      miras ve devlet destekleri de burada.</p>
+      <h1>DASK dört duvarı öder. Geri kalan sizde kalır.</h1>
+      <p class="giris">Türkiye'de konutların yaklaşık yarısında zorunlu deprem sigortası bile
+      yok; eşyayı ve barınmayı kapsayan konut poliçesi çok daha az. Bu platform hangi
+      teminatın neyi karşıladığını, açığınızın kaç lira olduğunu ve haklarınızın kaç gününün
+      kaldığını gösterir. Hiçbir şirkete yönlendirme yapmaz, hiçbir ödeme almaz.</p>
       <div class="kahraman-alt">
-        <a class="dugme" href="arac/sureler.html">Sürelerimi hesapla</a>
-        <a class="dugme ikincil" href="bilgi/index.html">Bilgi Merkezi'ne git</a>
+        <a class="dugme" href="arac/teminat.html">Teminat açığımı hesapla</a>
+        <a class="dugme ikincil" href="police/index.html">Neden poliçe gerekli?</a>
       </div>
     </div>
-    <aside class="sure-panel" aria-label="Öne çıkan süreler">
-      <div class="sure-panel-bas">
-        <b>Süresi en kısa üç hak</b>
-        <span>Süreler olayı öğrendiğiniz ya da sonucun ilan edildiği tarihten işler.</span>
-      </div>
-      <ul>
-        <li><b>15 gün</b><div>DASK hasar ihbarı<span>Depremi öğrendiğiniz tarihten</span></div></li>
-        <li><b>30 gün</b><div>Hasar tespitine itiraz<span>Sonucun mahallî ilan tarihinden</span></div></li>
-        <li><b>2 ay</b><div>Hak sahipliği başvurusu<span>Hak sahipliği ilan tarihinden</span></div></li>
-      </ul>
-      <div class="sure-panel-alt">
-        <a class="dugme ikincil" href="arac/sureler.html" style="width:100%">Kendi takvimimi çıkar</a>
-      </div>
-    </aside>
+    <div class="kahraman-gorsel">
+      <!-- Taban katman: SVG afiş. 3B yüklenirse gizlenir, yüklenmezse
+           kullanıcı eksik bir şey görmez. -->
+      <div data-afis-2b>{afis_kesit()}</div>
+      <!-- Üste binen katman: WebGL + hareket izni + hızlı bağlantı varsa.
+           Lejant burada da var: 3B, yerini aldığı afişten az bilgi
+           taşımamalı. -->
+      <figure class="sahne-sar" data-sahne3b hidden>
+        <div class="sahne-3b"></div>
+        <figcaption>
+          <span class="kesit-anahtar"><i class="kutucuk kapsanan"></i>Saydam kabuk: DASK'ın karşıladığı bina</span>
+          <span class="kesit-anahtar"><i class="kutucuk acikta"></i>İçerideki bloklar: karşılanmayan ev eşyası</span>
+        </figcaption>
+      </figure>
+    </div>
    </div>
     <div class="olcut-serit">
       <div class="olcut"><b>{len(MODULLER)}</b><span>etkileşimli araç</span></div>
@@ -1048,6 +1050,20 @@ def ana_sayfa(site):
 <section class="bolum-ince zemin-alt">
   <div class="kap-genis">
     <div class="hizli">{hizli_kartlar}</div>
+    <aside class="sure-panel sure-panel-genis" aria-label="Öne çıkan süreler">
+      <div class="sure-panel-bas">
+        <b>Süresi en kısa üç hak</b>
+        <span>Süreler olayı öğrendiğiniz ya da sonucun ilan edildiği tarihten işler.</span>
+      </div>
+      <ul>
+        <li><b>15 gün</b><div>DASK hasar ihbarı<span>Depremi öğrendiğiniz tarihten</span></div></li>
+        <li><b>30 gün</b><div>Hasar tespitine itiraz<span>Sonucun mahallî ilan tarihinden</span></div></li>
+        <li><b>2 ay</b><div>Hak sahipliği başvurusu<span>Hak sahipliği ilan tarihinden</span></div></li>
+      </ul>
+      <div class="sure-panel-alt">
+        <a class="dugme ikincil" href="arac/sureler.html">Kendi takvimimi çıkar</a>
+      </div>
+    </aside>
   </div>
 </section>
 

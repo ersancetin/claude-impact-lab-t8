@@ -433,6 +433,32 @@ a:hover { color: var(--vurgu-koyu); }
 .kahraman .giris { max-width: 58ch; font-size: 1.14rem; }
 .kahraman > .kap-genis > .kahraman-ic .etiket { color: var(--marka); }
 
+/* Hero görseli: SVG afiş taban katman, 3B sahne üste biner.
+   İkisi aynı kutuyu paylaşır ki 3B açıldığında yerleşim zıplamasın. */
+.kahraman-gorsel { min-width: 0; }
+.kahraman-gorsel .kesit-afis { margin-bottom: 0; }
+.sahne-3b {
+  border: var(--sinir); background: var(--yuzey);
+  min-height: 260px; overflow: hidden;
+}
+.sahne-sar { margin: 0; }
+.sahne-sar[hidden] { display: none; }
+.sahne-sar figcaption {
+  display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*5);
+  margin-top: calc(var(--olcek)*3); font-size: .88rem; color: var(--murekkep-2);
+}
+.sahne-3b canvas { display: block; width: 100%; height: auto; }
+
+/* Süre paneli hero'dan indi; artık hızlı erişim şeridinin altında
+   tam genişlikte, üç sütunlu duruyor. */
+.sure-panel-genis { margin-top: calc(var(--olcek)*4); }
+@media (min-width: 62rem) {
+  .sure-panel-genis ul { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .sure-panel-genis li { border-right: var(--sinir); }
+  .sure-panel-genis li:last-child { border-right: 0; }
+  .sure-panel-genis .sure-panel-alt { display: flex; justify-content: flex-end; }
+}
+
 /* Süre paneli: en kritik üç süre. Tehlike çubuğu + versal etiket. */
 .sure-panel { border: var(--sinir); border-top: 5px solid var(--tehlike); background: var(--yuzey); }
 .sure-panel-bas { padding: calc(var(--olcek)*4); border-bottom: var(--sinir); }
