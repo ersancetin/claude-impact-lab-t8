@@ -33,6 +33,22 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gorseller                                    # noqa: E402  (SVG şemaları)
 from sekiller import SEKILLER                       # noqa: E402
 
+
+def _ana_site():
+    """Ana site üretecini (scripts/site-uret.py) yükler.
+
+    Başlık, gezinme ve alt bilgi tek yerden gelsin diye rehber sayfaları da
+    aynı `Site` sınıfını kullanır; aksi hâlde blog bölümü sitenin geri
+    kalanından farklı görünürdü. Dosya adında tire olduğu için normal
+    `import` çalışmaz."""
+    yol = Path(__file__).resolve().parent / "site-uret.py"
+    ayar = importlib.util.spec_from_file_location("site_uret", yol)
+    modul = importlib.util.module_from_spec(ayar)
+    ayar.loader.exec_module(modul)
+    return modul.Site(json.loads(
+        (Path(__file__).resolve().parent.parent / "icerik" / "site.json")
+        .read_text(encoding="utf-8")))
+
 KOK = Path(__file__).resolve().parent.parent
 DOCS = KOK / "docs"
 BLOG = DOCS / "blog"
@@ -42,6 +58,8 @@ KUNYE_DOSYA = Path(__file__).resolve().parent / "foto-kunye.json"
 # Fotoğraf künyeleri `scripts/foto-indir.py` tarafından üretilir.
 FOTOGRAFLAR = (json.loads(KUNYE_DOSYA.read_text(encoding="utf-8"))
                if KUNYE_DOSYA.exists() else {})
+
+ANA = _ana_site()          # ortak başlık/gezinme/alt bilgi kaynağı
 
 # --- Site sabitleri ---------------------------------------------------------
 SITE = "https://saidsurucu.github.io/claude-impact-lab-1-t8-hasar-tespiti/"
@@ -387,6 +405,8 @@ def yazi_uret(y: dict, hepsi: dict[str, dict]) -> str:
              gorsel_boy=foto["yukseklik"] if foto else 630,
              jsonld={"@context": "https://schema.org", "@graph": graf}),
          '<body>',
+         '<a class="atla" href="#ana">İçeriğe atla</a>',
+         ANA.ust_html(1, None),
          '<main id="ana" class="kap">',
          kirinti_html([(SITE_ADI, "../index.html"),
                        (BLOG_ADI, "./index.html"),
@@ -438,7 +458,7 @@ def yazi_uret(y: dict, hepsi: dict[str, dict]) -> str:
               f'<figcaption>{k(sekil["altyazi"])}</figcaption>',
               '</figure>']
 
-    p.append(y["govde"].strip())
+    p.append(yollari_guncelle(y["govde"].strip()))
 
     p += ['<h2 id="sik-sorulan-sorular">Sık sorulan sorular</h2>',
           '<div class="sss">']
@@ -467,8 +487,8 @@ def yazi_uret(y: dict, hepsi: dict[str, dict]) -> str:
               '<span class="etiket">Bu sayfadan devam edin</span>',
               '<ul style="margin:0">']
         for href, ad, aciklama in y["araclar"]:
-            p.append(f'<li><a href="{k(href)}"><strong>{k(ad)}</strong></a> — '
-                     f'{k(aciklama)}</li>')
+            p.append(f'<li><a href="{k(yollari_guncelle(href))}">'
+                     f'<strong>{k(ad)}</strong></a> — {k(aciklama)}</li>')
         p += ['</ul>', '</div>']
 
     p += ['<footer class="yazi-alt">',
@@ -485,10 +505,10 @@ def yazi_uret(y: dict, hepsi: dict[str, dict]) -> str:
           '</footer>',
           '</article>',
           '</main>',
+          ANA.alt_html(1),
           '<script type="module">',
-          '  import { iskelet, temaBaslat } from "../assets/app.js";',
-          '  temaBaslat();',
-          '  iskelet({ kok: "../" });',
+          '  import { temaBaslat, temaBagla } from "../assets/app.js";',
+          '  temaBaslat(); temaBagla();',
           '</script>',
           '</body>',
           '</html>', '']
@@ -558,6 +578,8 @@ def dizin_uret(yazilar: list[dict]) -> str:
                       "DASK", "kiracı hakları", "hak sahipliği"],
              jsonld={"@context": "https://schema.org", "@graph": graf}),
          '<body>',
+         '<a class="atla" href="#ana">İçeriğe atla</a>',
+         ANA.ust_html(1, None),
          '<main id="ana" class="kap">',
          kirinti_html([(SITE_ADI, "../index.html"), (BLOG_ADI, None)]),
          '<p class="etiket">Rehber</p>',
@@ -598,15 +620,15 @@ def dizin_uret(yazilar: list[dict]) -> str:
 
     p += ['<h2 id="araclar">Hesaplayan araçlar</h2>',
           '<p>Yazılar bilgiyi anlatır; araçlar sizin durumunuza uygular.</p>',
-          '<a class="secim" href="../sureler.html"><b>Süre takvimi</b>'
+          '<a class="secim" href="../arac/sureler.html"><b>Süre takvimi</b>'
           '<span>Tarihlerinizi girin, hangi hakkınızın kaç günü kaldığını '
           'görün.</span></a>',
-          '<a class="secim" href="../haklarim.html"><b>Haklarım</b>'
+          '<a class="secim" href="../arac/haklarim.html"><b>Haklarım</b>'
           '<span>Üç soru cevaplayın, durumunuza uyan hakları listeleyelim.'
           '</span></a>',
-          '<a class="secim" href="../teminat.html"><b>Sigorta açığı hesabı</b>'
+          '<a class="secim" href="../arac/teminat.html"><b>Sigorta açığı hesabı</b>'
           '<span>DASK ne kadarını karşılıyor, ne kadarı size kalıyor?</span></a>',
-          '<a class="secim" href="../dilekce.html"><b>Dilekçe hazırla</b>'
+          '<a class="secim" href="../arac/dilekce.html"><b>Dilekçe hazırla</b>'
           '<span>Hazır şablonu doldurun, nereye göndereceğinizi öğrenin.'
           '</span></a>',
           '<p class="etiketler"><a href="./feed.xml">RSS akışı</a> · '
@@ -618,10 +640,10 @@ def dizin_uret(yazilar: list[dict]) -> str:
           'vardır) · Şemalar: Deprem Haklarım. Görseller siteye indirilmiştir; '
           'sayfa hiçbir dış istek yapmaz.</p>',
           '</main>',
+          ANA.alt_html(1),
           '<script type="module">',
-          '  import { iskelet, temaBaslat } from "../assets/app.js";',
-          '  temaBaslat();',
-          '  iskelet({ kok: "../" });',
+          '  import { temaBaslat, temaBagla } from "../assets/app.js";',
+          '  temaBaslat(); temaBagla();',
           '</script>',
           '</body>',
           '</html>', '']
@@ -672,6 +694,20 @@ def rss_uret(yazilar: list[dict]) -> str:
 
 
 # --- Ana akış ---------------------------------------------------------------
+ARAC_TASINDI = {           # ana dal araçları docs/arac/ altına taşıdı
+    "../sureler.html": "../arac/sureler.html",
+    "../haklarim.html": "../arac/haklarim.html",
+    "../teminat.html": "../arac/teminat.html",
+    "../dilekce.html": "../arac/dilekce.html",
+}
+
+
+def yollari_guncelle(metin: str) -> str:
+    for eski, yeni in ARAC_TASINDI.items():
+        metin = metin.replace(eski, yeni)
+    return metin
+
+
 def main() -> int:
     kontrol = "--kontrol" in sys.argv
     yazilar = yazilari_yukle()

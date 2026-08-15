@@ -2,7 +2,9 @@ name: GitHub Pages
 
 on:
   push:
-    branches: [claude/earthquake-logistics-system-68e5sz]
+    branches:
+      - claude/stk-platform-corporate-design-aa1wlm   # guncel calisma dali
+      - claude/earthquake-logistics-system-68e5sz     # varsayilan dal
     paths: ['docs/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 
@@ -24,9 +26,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # NOT: enablement yalnizca Pages daha once acildiysa calisir. Ilk kez
-      # acmak icin depo Settings > Pages > Source: GitHub Actions secilmeli;
-      # Actions token'i Pages sitesini olusturma yetkisine sahip degil.
+      # Pages acik ve Source: GitHub Actions secili.
+      #
+      # DIKKAT - iki ayri engel var, ikisi de sessizce sonuc verir:
+      #  1) Tetikleyici dal listesi: burada olmayan bir dala push edilirse
+      #     is akisi hic calismaz.
+      #  2) github-pages ortaminin dagitim dali politikasi: varsayilan olarak
+      #     yalnizca varsayilan dal dagitim yapabilir. Baska bir daldan
+      #     calistirilirsa is birkac saniyede "environment protection rules"
+      #     hatasiyla duser. Cozum: Settings > Environments > github-pages >
+      #     Deployment branches listesine ilgili dal eklenmelidir.
       - uses: actions/configure-pages@v5
         with:
           enablement: true

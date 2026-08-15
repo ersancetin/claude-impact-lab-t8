@@ -1,21 +1,22 @@
-<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dilekçe hazırla · Deprem Haklarım</title>
-<meta name="description" content="Hazır dilekçe şablonunu doldurun, nereye ve nasıl göndereceğinizi öğrenin. Bilgileriniz tarayıcınızdan çıkmaz.">
-<meta name="color-scheme" content="light dark">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/tasarim.css">
-</head>
-<body>
-<main id="ana" class="kap">
+{
+  "id": "dilekce",
+  "ad": "Dilekçe üretici",
+  "etiket": "Araç 3",
+  "sira": 3,
+  "baslik": "Dilekçe hazırlayın",
+  "giris": "Şablonu seçin, alanları doldurun; metin cihazınızda oluşur. Nereye ve nasıl göndereceğiniz de yazar.",
+  "ozet": "Sabit şablonu doldurun, çıktıyı alın, nereye ve hangi kanaldan göndereceğinizi öğrenin.",
+  "aciklama": "Hasar tespitine itiraz, sigortaya yazılı başvuru, eksper raporuna itiraz ve hak sahipliği dilekçesi şablonları. Metin cihazınızda üretilir.",
+  "eylem": "Dilekçe hazırla",
+  "ilgili": [
+    "sigortaciya-yazili-basvuru",
+    "hasar-tespitine-itiraz",
+    "eksper-raporuna-itiraz"
+  ]
+}
+---
 
-  <p class="etiket">Modül 2</p>
-  <h1>Dilekçe hazırla</h1>
-
-  <div class="serit">
+<div class="serit">
     <strong>Bu dilekçeler hazır şablonlardır, size özel hukuki metin değildir.</strong>
     Yapay zekâ tarafından yazılmazlar; yalnızca girdiğiniz bilgiler boşluklara
     yerleştirilir. İmzalayıp göndermeden önce bir avukata danışmanız önerilir.
@@ -65,16 +66,10 @@
     <div id="gonderim"></div>
   </section>
 
-</main>
-
 <script type="module">
-import { iskelet, temaBaslat, el, metniIndir, panoyaKopyala,
-         kaydet, oku } from "./assets/app.js";
-import { SABLONLAR } from "./assets/veri.js";
-
-temaBaslat();
-iskelet({ aktif: "Dilekçe hazırla" });
-
+import {el, metniIndir, panoyaKopyala,
+         kaydet, oku } from "../assets/app.js";
+import { SABLONLAR } from "../assets/veri.js";
 const secimBolum = document.getElementById("secimBolum");
 const formBolum  = document.getElementById("formBolum");
 const ciktiBolum = document.getElementById("ciktiBolum");
@@ -221,5 +216,3 @@ document.getElementById("geri").addEventListener("click", () => {
 const istenen = new URLSearchParams(location.search).get("sablon");
 if (istenen && SABLONLAR.some(s => s.id === istenen)) sablonAc(istenen);
 </script>
-</body>
-</html>

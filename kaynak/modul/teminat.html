@@ -1,25 +1,22 @@
-<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sigorta açığı · Deprem Haklarım</title>
-<meta name="description" content="DASK'ınız ne kadarını karşılıyor, ne kadarı size kalıyor? Muafiyet ve teminat açığını hesaplayın.">
-<meta name="color-scheme" content="light dark">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/tasarim.css">
-</head>
-<body>
-<main id="ana" class="kap">
+{
+  "id": "teminat",
+  "ad": "Teminat açığı hesabı",
+  "etiket": "Araç 4",
+  "sira": 4,
+  "baslik": "Sigortanız neyi karşılamıyor?",
+  "giris": "Binanızın bilgilerini girin; DASK'ın karşıladığı tutarı, muafiyeti ve açıkta kalan kısmı hesaplayalım.",
+  "ozet": "DASK sigorta bedelini, %2 muafiyeti ve açıkta kalan tutarı hesaplayın; eksik sigorta tuzağını görün.",
+  "aciklama": "DASK azami teminatı, metrekare birim bedeli, %2 tenzili muafiyet ve teminat açığı hesabı. Kiracı ve malik için ayrı akış.",
+  "eylem": "Açığımı hesapla",
+  "ilgili": [
+    "dask-neyi-karsilar",
+    "konut-sigortasi-ve-eksik-sigorta",
+    "dask-hasar-ihbari"
+  ]
+}
+---
 
-  <p class="etiket">Modül 3</p>
-  <h1>Sigortam yeterli mi?</h1>
-  <p class="giris">
-    DASK yalnızca <strong>binayı</strong> sigortalar ve bir üst sınırı vardır.
-    Bu hesap, ne kadarının karşılandığını ve ne kadarının size kaldığını gösterir.
-  </p>
-
-  <form id="form" novalidate>
+<form id="form" novalidate>
     <fieldset>
       <legend>Durumunuz</legend>
 
@@ -87,15 +84,9 @@
 
   <section id="sonuc" class="gizli" aria-live="polite"></section>
 
-</main>
-
 <script type="module">
-import { iskelet, temaBaslat, el, paraYaz, kaydet, oku } from "./assets/app.js";
-import { PARAM } from "./assets/veri.js";
-
-temaBaslat();
-iskelet({ aktif: "Sigorta açığı" });
-
+import {el, paraYaz, kaydet, oku } from "../assets/app.js";
+import { PARAM } from "../assets/veri.js";
 const form     = document.getElementById("form");
 const sonucEl  = document.getElementById("sonuc");
 const malikAlan = document.getElementById("malikAlan");
@@ -269,5 +260,3 @@ function ciz(v) {
   sonucEl.classList.remove("gizli");
 }
 </script>
-</body>
-</html>

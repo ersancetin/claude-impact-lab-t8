@@ -1,25 +1,22 @@
-<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Süre takvimi · Deprem Haklarım</title>
-<meta name="description" content="Deprem sonrası haklarınızın sürelerini hesaplayın. Hangi hakkınızın kaç günü kaldı, hangisi doldu?">
-<meta name="color-scheme" content="light dark">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/tasarim.css">
-</head>
-<body>
-<main id="ana" class="kap">
+{
+  "id": "sureler",
+  "ad": "Süre takvimi",
+  "etiket": "Araç 1",
+  "sira": 1,
+  "baslik": "Süre takvimi",
+  "giris": "Bildiğiniz tarihleri girin. Bilmediklerinizi boş bırakabilirsiniz — sonradan ekleyebilirsiniz. Girdiğiniz bilgiler yalnızca bu cihazda kalır.",
+  "ozet": "Tarihleri girin; hangi hakkınızın kaç günü kaldığını, hangisinin dolduğunu aciliyet sırasına dizilmiş bir takvim olarak görün.",
+  "aciklama": "Deprem sonrası hak düşürücü sürelerinizi hesaplayın: DASK ihbarı 15 gün, hasar tespitine itiraz 30 gün, hak sahipliği 2 ay. Kayıt gerektirmez.",
+  "eylem": "Süreleri hesapla",
+  "ilgili": [
+    "hasar-tespitine-itiraz",
+    "dask-hasar-ihbari",
+    "idari-basvuru-ve-dava-sureleri"
+  ]
+}
+---
 
-  <p class="etiket">Modül 1</p>
-  <h1>Süre takvimi</h1>
-  <p class="giris">
-    Bildiğiniz tarihleri girin. Bilmediklerinizi boş bırakabilirsiniz — sonradan
-    ekleyebilirsiniz. Girdiğiniz bilgiler yalnızca bu telefonda/bilgisayarda kalır.
-  </p>
-
-  <form id="form" novalidate>
+<form id="form" novalidate>
     <fieldset>
       <legend>Tarihler</legend>
       <div id="alanlar"></div>
@@ -47,16 +44,10 @@
     </div>
   </section>
 
-</main>
-
 <script type="module">
-import { iskelet, temaBaslat, el, tarihOku, gunEkle, gunFarki, bugun,
-         tarihYaz, kaydet, oku, sil, dogrulamaRozeti } from "./assets/app.js";
-import { PARAM } from "./assets/veri.js";
-
-temaBaslat();
-iskelet({ aktif: "Süre takvimi" });
-
+import {el, tarihOku, gunEkle, gunFarki, bugun,
+         tarihYaz, kaydet, oku, sil, dogrulamaRozeti } from "../assets/app.js";
+import { PARAM } from "../assets/veri.js";
 /* Tekil başlangıç anahtarları — her biri bir soru olur */
 const SORULAR = [
   { anahtar: "deprem",       etiket: "Deprem tarihi", zorunlu: true,
@@ -201,5 +192,3 @@ function ciz(veri) {
 
 if (kayit.deprem) ciz(kayit);
 </script>
-</body>
-</html>

@@ -378,3 +378,19 @@ Ardından A bölümündeki 12 kritik maddeden başlanır. Her doğrulama sonras�
 | K9 | DASK ödeme kapasitesi ve cat bond verileri (46 milyar TL / 400 milyon USD) | DASK faaliyet raporları | ⚠️ tek kaynak | ☐ | |
 | K10 | DASK poliçelerinin yetkili şirket ve acenteler eliyle DASK adına düzenlenmesi | 6305 + DASK Çalışma Esasları Yönetmeliği | ⚠️ tek kaynak | ☐ | |
 | K11 | Türkiye Deprem Tehlike Haritası'nın aktüeryal kullanıma elverişliliği (PGA/SS/S1 aşılma olasılıkları) | AFAD | ☐ | ☐ | |
+
+---
+
+## Ortam notu — 2026-08-15
+
+Mevzuat MCP sunucusu bu oturumda **çalışır hâle getirildi**: sunucu, kurulu olmayan bir
+Playwright `headless_shell` sürümünü arıyordu (`chromium_headless_shell-1187`); ortamdaki
+1194 sürümüne bağ verilerek tarayıcı başlatma hatası giderildi.
+
+Buna rağmen doğrulama **yapılamadı**: ağ geçidi `www.mevzuat.gov.tr:443` isteklerini
+politika gereği 403 ile reddediyor (`net::ERR_TUNNEL_CONNECTION_FAILED`). Aynı engel
+`resmigazete.gov.tr`, `dask.gov.tr`, `afad.gov.tr` ve `turkreasurans.com.tr` için de
+geçerlidir; WebFetch de aynı nedenle `EGRESS_BLOCKED` döndürür.
+
+**Sonuç:** doğrulama, bu adreslere erişimi olan bir ortamda yapılmalıdır. Aşağıdaki liste
+o ortamda doğrudan çalıştırılabilir durumdadır.

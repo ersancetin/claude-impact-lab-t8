@@ -1,22 +1,22 @@
-<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Haklarım · Deprem Haklarım</title>
-<meta name="description" content="Birkaç soru cevaplayın, durumunuza uyan hakları dayanağıyla birlikte listeleyelim.">
-<meta name="color-scheme" content="light dark">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/tasarim.css">
-</head>
-<body>
-<main id="ana" class="kap">
+{
+  "id": "haklarim",
+  "ad": "Hak tarama",
+  "etiket": "Araç 2",
+  "sira": 2,
+  "baslik": "Hangi haklarım var?",
+  "giris": "Üç soru. Cevaplarınız cihazınızdan çıkmaz.",
+  "ozet": "Üç soruya cevap verin; kiracı mı malik mi olduğunuza göre size uyan hakları dayanağıyla listeleyelim.",
+  "aciklama": "Kiracı mısınız, malik mi? Üç soruyla durumunuza uyan deprem haklarını kanuni dayanağıyla listeleyin.",
+  "eylem": "Haklarımı listele",
+  "ilgili": [
+    "kiracinin-haklari",
+    "hak-sahipligi-ve-afet-konutu",
+    "dask-neyi-karsilar"
+  ]
+}
+---
 
-  <p class="etiket">Modül 4</p>
-  <h1>Hangi haklarım var?</h1>
-  <p class="giris">Üç soru. Cevaplarınız telefonunuzdan çıkmaz.</p>
-
-  <form id="form" novalidate>
+<form id="form" novalidate>
     <fieldset>
       <legend>1. Konutla ilişkiniz neydi?</legend>
       <label class="secenek">
@@ -68,15 +68,9 @@
 
   <section id="sonuc" class="gizli" aria-live="polite"></section>
 
-</main>
-
 <script type="module">
-import { iskelet, temaBaslat, el, kaydet, oku } from "./assets/app.js";
-import { HAKLAR } from "./assets/veri.js";
-
-temaBaslat();
-iskelet({ aktif: "Haklarım" });
-
+import {el, kaydet, oku } from "../assets/app.js";
+import { HAKLAR } from "../assets/veri.js";
 const form    = document.getElementById("form");
 const sonucEl = document.getElementById("sonuc");
 
@@ -150,5 +144,3 @@ function ciz(v) {
   sonucEl.classList.remove("gizli");
 }
 </script>
-</body>
-</html>
