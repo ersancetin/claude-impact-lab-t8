@@ -70,8 +70,8 @@ export const BILGI = {
   {
    "tur": "arac",
    "turAd": "Araç",
-   "baslik": "Teminat açığı hesabı",
-   "ozet": "DASK sigorta bedelini, %2 muafiyeti ve açıkta kalan tutarı hesaplayın; eksik sigorta tuzağını görün.",
+   "baslik": "Teminat açığı ve tazminat hesabı",
+   "ozet": "DASK sigorta bedelini, %2 tenzili muafiyeti ve açıkta kalan tutarı hesaplayın; hasar tutarı girerseniz kalem kalem kimin ne ödeyeceğini görün.",
    "url": "arac/teminat.html",
    "dogrulama": "coklu",
    "anahtar": [
@@ -81,9 +81,12 @@ export const BILGI = {
     "sigorta bedeli",
     "eksik sigorta",
     "eşya",
-    "açık"
+    "açık",
+    "tazminat",
+    "ne kadar öder",
+    "hasar"
    ],
-   "metin": "DASK azami teminatı, metrekare birim bedeli, %2 tenzili muafiyet ve teminat açığı hesabı. Kiracı ve malik için ayrı akış."
+   "metin": "DASK azami teminatı, metrekare birim bedeli, tenzili muafiyet, eksik sigorta (TTK m.1462) ve teminat açığı hesabı. Kiracı ve malik için ayrı akış."
   },
   {
    "tur": "police",
