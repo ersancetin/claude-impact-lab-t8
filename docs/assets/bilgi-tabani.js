@@ -86,6 +86,57 @@ export const BILGI = {
    "metin": "DASK azami teminatı, metrekare birim bedeli, %2 tenzili muafiyet ve teminat açığı hesabı. Kiracı ve malik için ayrı akış."
   },
   {
+   "tur": "police",
+   "turAd": "Neden poliçe?",
+   "baslik": "Neden poliçe?",
+   "ozet": "Zorunlu deprem sigortası yalnızca binanın kendisini, o da bir tavana kadar sigortalar. Eşyanız, barınmanız, enkaz kaldırma ve bedeni zararlar teminat dışıdır.",
+   "url": "police/index.html",
+   "dogrulama": "coklu",
+   "anahtar": [
+    "neden poliçe",
+    "dask yeterli mi",
+    "konut sigortası gerekli mi",
+    "dört duvar",
+    "teminat dışı"
+   ],
+   "metin": "{{KESIT}} DASK'ı yaptırmak yeterli değil — ama yaptırmamak çok daha kötü İki ayrı yanılgı var ve ikisi de pahalıya mal oluyor. Birincisi: \"DASK'ım var, evim güvende.\" Değil. DASK binayı sigortalar; içindekileri değil. Eviniz tamamen yıkılsa bile mobilyanız, beyaz eşyanız, kıyafetiniz, bilgisayarınız için tek kuruş ödenmez. Enkazın kaldırılması, siz otelde kalırken ödediğiniz para, işinize gidememekten doğan kaybınız da öyle. İkincisi: \"Nasılsa yetmiyor, boş ver.\" Bu daha kötü. DASK, binanın yeniden yapım maliyetinin çok büyük bir kısmını karşılar ve primi ihtiyari poliçelere göre çok düşüktür. Ayrıca DASK'sız bir konut için devlet yardımlarında da sorun yaşanır. :::bilgi Doğru kurgu şudur DASK tabandır , tavan değil. Üstüne ihtiyari konut sigortası (bina fazlası + eşya + alternatif konaklama) eklendiğinde tablo tamamlanır. İkisi rakip değil, üst üste binen iki katmandır. ::: Kiracıysanız tablo tamamen farklı DASK binaya ve malike bağlıdır. Kiracı DASK yaptıramaz, bina tazminatı ev sahibine ödenir. Yani yukarıdaki bina teminatı sizin için hiç devrede değildir. Ama şunu çok az kişi biliyor: kendi eşyanız için sigorta yaptırabilirsiniz. Eşya ve alternatif konaklama teminatı, kiracının poliçesinde de bulunur ve primi düşüktür. Yurt dışında kiracı poliçesi (renters insurance) standart bir üründür; Türkiye'de neredeyse hiç konuşulmaz. Sonra ne yapmalı? Önce kendi açığınızı görün, sonra neye bakacağınızı öğrenin. Bu sayfa size bir şirket önermez — hangi teminatı sormanız gerektiğini"
+  },
+  {
+   "tur": "police",
+   "turAd": "Neden poliçe?",
+   "baslik": "Hangi teminat neyi karşılar?",
+   "ozet": "Teminat bazında karşılaştırma: DASK, ihtiyari konut, eşya, alternatif konaklama ve ferdi kaza. Marka değil, kapsam karşılaştırılır.",
+   "url": "police/karsilastirma.html",
+   "dogrulama": "coklu",
+   "anahtar": [
+    "teminat karşılaştırma",
+    "hangi sigorta",
+    "poliçe seçimi",
+    "eşya teminatı",
+    "alternatif konaklama",
+    "ale",
+    "ferdi kaza"
+   ],
+   "metin": "Bu sayfa marka karşılaştırması yapmaz. Şirket seçmek sizin kararınız; burada öğreneceğiniz şey, poliçe teklifini okurken hangi satırlara bakacağınız. {{TABLO}} Teklif alırken sorulacak altı soru 1. Bina bedeli kaç TL yazıyor? Yeniden yapım maliyetinin altındaysa, tam hasarda bile eksik ödeme alırsınız (eksik sigorta). Piyasa değeri değil, yeniden yapım maliyeti esas alınmalıdır. 2. Eşya teminatı var mı, limiti ne? \"Var\" yeterli değil; limitin eşyanızın gerçek değerini karşılaması gerekir. 3. Alternatif konaklama (ALE) var mı? Ev oturulamaz hâle gelirse otel ve geçici kira giderinizi karşılayan teminat budur. Ayda kaç TL, kaç ay? 4. Enkaz kaldırma dâhil mi? DASK karşılamaz; ihtiyari poliçede ek teminat olarak bulunabilir. 5. Muafiyet oranı kaç? Her ödemeden düşülen paydır. Düşük prim, yüksek muafiyet demek olabilir. 6. Deprem teminatı seçili mi? Özellikle ferdi kaza poliçelerinde deprem, aksi kararlaştırılmadıkça teminat dışıdır. Bu satırı özellikle sorun. :::uyari Eksik sigorta tuzağı Poliçedeki sigorta bedeli gerçek değerin altındaysa, tazminat oranlı ödenir. 2.000.000 TL değerindeki bir bina 1.000.000 TL üzerinden sigortalanmışsa, 400.000 TL'lik hasarda 400.000 TL değil, yaklaşık 200.000 TL ödenir. Prim düşük diye bedeli düşük tutmak, hasar anında yarı yarıya kayıp demektir. Dayanak: TTK m.1462. ::: Örnek poliçe profilleri {{SIRKETLER}} Peki biz ne yapıyoruz? Bu platform hiçbir sigorta şirketine yönlendirme yapmaz ve hiçbir şirketten ödeme almaz. Nedenini ve hedeflediğimiz "
+  },
+  {
+   "tur": "police",
+   "turAd": "Neden poliçe?",
+   "baslik": "Şeffaflık ve gelir modeli",
+   "ozet": "Bugün hiç kimseden hiçbir ödeme alınmıyor. Hedeflenen model, aracılığı lisanslı bir tarafın yaptığı ve gelirin tamamının bağışlandığı bir yapıdır — ama bu model henüz kurulmadı.",
+   "url": "police/model.html",
+   "dogrulama": "coklu",
+   "anahtar": [
+    "gelir modeli",
+    "bağış",
+    "komisyon",
+    "şeffaflık",
+    "kimden para alıyorsunuz",
+    "aracılık"
+   ],
+   "metin": "Kısa cevap: hiç kimseden, hiçbir ödeme almıyoruz. Reklam yok, sponsor yok, sigorta şirketiyle anlaşma yok, kullanıcıdan ücret yok. :::guvence Bugünkü durum Bu sayfadaki hiçbir şirket adı gerçek değildir. Sitede hiçbir sigorta şirketine giden bağlantı, form veya yönlendirme yoktur. Poliçe almak isteyen kullanıcı, şirketini kendisi seçer ve bizimle hiçbir teması olmaz. ::: Hedeflediğimiz model Amacımız DASK ve konut poliçesi sahipliğini artırmak. Bunu yaparken platformun ayakta kalması için bir kaynağa ihtiyacı var. Kurmak istediğimiz yapı şu: Poliçe aracılığını lisanslı bir sigorta brokeri veya acentesi yapar — biz değil. Bu yönlendirmeden doğan komisyonun tamamı , afet alanında çalışan kurumlara bağışlanır. Girişimin kasasına hiçbir tutar girmez. Bağış tutarları ve alıcıları düzenli olarak bu sayfada yayımlanır. Yani hedef, \"kâr etmeyen aracı\" değil; aracı hiç olmayan, geliri baştan bağışa bağlanmış bir yapı. Neden henüz kurulmadı — dürüst cevap Bu modeli bugün uygulamıyoruz, çünkü uygulanamaz. Nedeni önemli ve gizlemiyoruz: Sigorta sözleşmesine aracılık etmek ruhsata tabidir. 5684 sayılı Sigortacılık Kanunu ve ilgili yönetmelikler uyarınca acentelik ve brokerlik izne bağlıdır. Dahası, dernek ve vakıf gibi kuruluşların bu faaliyeti yürütebilmesi için ayrı bir tüzel kişi acente kurmaları gerekir; bünyelerindeki iktisadi işletme dahi yeterli sayılmaz. Ve en kritik nokta: \"kâr almıyoruz, bağışlıyoruz\" demek bir istisna oluşturmaz. Ruhsat yükümlülüğü faaliyetin niteliğine bağlıdı"
+  },
+  {
    "tur": "konu",
    "turAd": "Konu başlığı",
    "baslik": "Konut ve sigorta",

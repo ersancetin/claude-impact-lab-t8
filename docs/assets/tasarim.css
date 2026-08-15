@@ -679,6 +679,83 @@ main.kap-genis > section.genis { max-width: none; }
 .gezinme-mobil-panel a { display: flex; align-items: center; gap: calc(var(--olcek)*3); }
 .gezinme-mobil-panel a .ikon { color: var(--marka); }
 
+/* ---- Kapsam kesiti afişi ----------------------------------
+   "DASK dört duvarı öder" sezgisini tek bakışta anlatır. Renk tek
+   başına bilgi taşımaz: aynı içerik altındaki kapsam tablosunda da
+   yazılıdır (PROJE-AKIS.md §11 zorunlu şartı). */
+.kesit-afis { margin: 0 0 calc(var(--olcek)*6); }
+.kesit {
+  width: 100%; height: auto; display: block;
+  background: var(--yuzey); border: var(--sinir);
+}
+.kesit-zemin { stroke: var(--cizgi-koyu); stroke-width: 2; }
+/* Kapsanan: bina kabuğu */
+.kesit-yapi {
+  stroke: var(--turkuaz); stroke-width: 3;
+  fill: var(--turkuaz-zemin);
+  stroke-linejoin: round; stroke-linecap: round;
+}
+/* Açıkta kalan: eşya, barınma, enkaz */
+.kesit-acik {
+  stroke: var(--tehlike); stroke-width: 3;
+  fill: var(--tehlike-zemin);
+  stroke-linejoin: round; stroke-linecap: round;
+}
+/* Afiş etiketleri — görsel süs değil, taşıdığı bilgi bunlar */
+.kesit-etiket text {
+  font-family: var(--f-mono); font-size: 15px; font-weight: 700;
+  letter-spacing: .08em; fill: var(--murekkep); stroke: none;
+}
+.kesit-etiket text.kucuk {
+  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  fill: var(--murekkep-2);
+}
+.kesit-cizgi { stroke: var(--cizgi-koyu); stroke-width: 1.5; fill: none; }
+
+.kesit-afis figcaption {
+  display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*5);
+  margin-top: calc(var(--olcek)*3); font-size: .88rem; color: var(--murekkep-2);
+}
+.kesit-anahtar { display: flex; align-items: center; gap: calc(var(--olcek)*2); }
+
+/* Kapsam tablosu — afişin metinsel karşılığı */
+.kapsam-tablo td small { display: block; color: var(--murekkep-2); margin-top: 2px; }
+.kapsam-tablo td:last-child { white-space: nowrap; }
+
+/* ---- Temsilî poliçe profili kartı -------------------------
+   Adlar uydurmadır; kart üstündeki "Temsilî" rozeti dipnota değil
+   kartın kendisine konur ki bağlamdan koparıldığında da görünsün. */
+.profil {
+  background: var(--yuzey); border: var(--sinir);
+  border-top: 4px solid var(--vurgu);
+  padding: calc(var(--olcek)*5);
+  display: flex; flex-direction: column;
+}
+.profil > .rozet { align-self: flex-start; margin-bottom: calc(var(--olcek)*3); }
+.profil b { font-size: 1.1rem; font-weight: 700; letter-spacing: -.02em; }
+.profil .tip {
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  display: block; margin-top: calc(var(--olcek)*1);
+}
+.profil p { font-size: .92rem; color: var(--murekkep-2); margin: 0; }
+.profil-teminat {
+  list-style: none; margin: calc(var(--olcek)*4) 0; padding: 0;
+  border-top: var(--sinir); flex: 1;
+}
+.profil-teminat li {
+  display: flex; align-items: center; gap: calc(var(--olcek)*3);
+  padding: calc(var(--olcek)*2) 0; border-bottom: var(--sinir);
+  font-size: .92rem;
+}
+/* İşaret renkle değil, simgeyle de ayrışır (WCAG 1.4.1) */
+.profil-teminat li > span:first-child {
+  font-family: var(--f-mono); font-weight: 700; width: 1.1em; flex: none;
+}
+.profil-teminat li.var  > span:first-child { color: var(--turkuaz); }
+.profil-teminat li.yok  > span:first-child { color: var(--tehlike); }
+.profil-teminat li.yok  > span:last-child  { color: var(--murekkep-2); }
+
 /* --- 15. Adım göstergesi ---------------------------------- */
 .adimlar { display: flex; gap: calc(var(--olcek)*2); margin-bottom: calc(var(--olcek)*6); }
 .adim { flex: 1; height: 6px; background: var(--cizgi); }
@@ -1006,6 +1083,12 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   .ust, .kurum-serit, .alt, .dugme-sira, .serit, .atla, .tema-dugme,
   .gezinme-mobil, .icindekiler, .kunye,
   .danisma, .danisma-ac, .hizli { display: none !important; }
+  /* Afiş ve profil kartları kâğıtta da işe yarar; renk yerine çizgiyle
+     ayrışsınlar ve sayfa ortasından bölünmesinler. */
+  .kesit { border: 1px solid #999; break-inside: avoid; max-height: 9cm; }
+  .kesit-yapi, .kesit-acik { fill: none !important; stroke: #000 !important; }
+  .kesit-acik { stroke-dasharray: 5 3; }
+  .profil, .kapsam-tablo tr { break-inside: avoid; }
   body { background: #fff; color: #000; font-size: 12pt; display: block; }
   .cikti { border: none; padding: 0; max-height: none; overflow: visible; font-size: 11pt; }
   .kart { border: 1px solid #999; break-inside: avoid; }
