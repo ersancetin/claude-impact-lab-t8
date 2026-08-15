@@ -1,0 +1,71 @@
+{
+  "ad": "Deprem Haklarım",
+  "kisaAd": "DH",
+  "kurumAdi": "Deprem Haklarım Girişimi",
+  "slogan": "Bağımsız · Kâr amacı gütmeyen · Ücretsiz",
+  "aciklama": "Deprem öncesi ve sonrasında sahip olduğunuz hakları, kanuni dayanağıyla ve süresi geçmeden anlatan bağımsız bilgi platformu.",
+  "taban": "https://ersancetin.github.io/claude-impact-lab-t8",
+  "dil": "tr-TR",
+  "ekip": "T8 — Hasar Tespiti · Claude Impact Lab",
+  "gezinme": [
+    { "anahtar": "arac", "ad": "Araçlar", "url": "arac/index.html" },
+    { "anahtar": "bilgi", "ad": "Bilgi Merkezi", "url": "bilgi/index.html" },
+    { "anahtar": "kurumsal", "ad": "Kurumsal", "url": "kurumsal/hakkimizda.html" }
+  ],
+  "kategoriler": [
+    {
+      "id": "konut-sigorta",
+      "ad": "Konut ve sigorta",
+      "ozet": "Zorunlu deprem sigortası, konut sigortası, eksper süreci ve teminat açığı.",
+      "aciklama": "DASK neyi karşılar, neyi karşılamaz; eksik sigorta nedir; eksper raporuna nasıl itiraz edilir."
+    },
+    {
+      "id": "hasar-tespit",
+      "ad": "Hasar tespiti ve itiraz",
+      "ozet": "Hasar tespit dereceleri, 30 günlük itiraz, riskli yapı tespiti ve yıkım kararı.",
+      "aciklama": "Hasar derecesi yanlış belirlendiğinde hangi süre içinde, nereye, nasıl itiraz edilir."
+    },
+    {
+      "id": "devlet-destek",
+      "ad": "Devlet destekleri",
+      "ozet": "Hak sahipliği, afet konutu, kira ve taşınma yardımı, AFAD destekleri.",
+      "aciklama": "7269 sayılı Kanun kapsamındaki kalıcı haklar ile afete özgü geçici destekleri ayırarak anlatır."
+    },
+    {
+      "id": "mali-yukumluluk",
+      "ad": "Vergi, prim ve borçlar",
+      "ozet": "Mücbir sebep, vergi terkini, emlak vergisi, SGK prim ertelemesi, kredi ve kart borçları.",
+      "aciklama": "Afetten sonra hangi mali yükümlülük durur, hangisi ertelenir, hangisi silinebilir."
+    },
+    {
+      "id": "calisma-isyeri",
+      "ad": "Çalışma hayatı ve iş yeri",
+      "ozet": "İş sözleşmesi, yarım ücret, kısa çalışma ödeneği, esnaf ve KOBİ destekleri.",
+      "aciklama": "İşçi, işveren ve esnafın afet sonrası hak ve yükümlülükleri."
+    },
+    {
+      "id": "kira-mulkiyet",
+      "ad": "Kira ve mülkiyet",
+      "ozet": "Kira sözleşmesinin feshi, kira indirimi, kat mülkiyeti, arsa payı ve yeniden inşa.",
+      "aciklama": "Kiracının ve malikin bina yıkıldıktan sonraki hukuki durumu."
+    },
+    {
+      "id": "kayip-miras",
+      "ad": "Yakınını kaybedenler",
+      "ozet": "Ölüm karinesi, nüfusa tescil, miras, SGK ölüm aylığı, hayat sigortası ve BES.",
+      "aciklama": "Cenazesi bulunamayan yakınlar için nüfus, miras ve sigorta işlemlerinin nasıl yürütüleceği."
+    },
+    {
+      "id": "dava-uyusmazlik",
+      "ad": "Dava ve uyuşmazlık",
+      "ozet": "Sigorta Tahkim Komisyonu, müteahhit ve yapı denetim sorumluluğu, idareye karşı tam yargı davası.",
+      "aciklama": "Hangi uyuşmazlık hangi yola gider, hangi süre işler, hangi adım atlanırsa dosya usulden reddedilir."
+    },
+    {
+      "id": "ozel-durumlar",
+      "ad": "Özel durumlar",
+      "ozet": "Öğrenciler, askerlik yükümlüleri, kamu personeli ve yabancı uyruklular.",
+      "aciklama": "Genel akışın dışında kalan grupların afet sonrası hakları."
+    }
+  ]
+}
