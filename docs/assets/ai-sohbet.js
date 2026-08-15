@@ -91,6 +91,28 @@ function metinParagraflara(metin) {
   return metin.split(/\n{2,}/).map((p) => el("p", {}, p.trim()));
 }
 
+function botBalonYaz(metin, kaynaklar) {
+  const parcalar = metinParagraflara(metin);
+  const kBlogu = kaynaklarBlogu(kaynaklar || []);
+  if (kBlogu) parcalar.push(kBlogu);
+  return el("div", { class: "balon bot ai" }, ...parcalar);
+}
+
+/* --- Kalıcılık -----------------------------------------------
+   Sayfa gezintileri arasında sohbet kaybolmasın diye görüntülenen
+   soru/cevap çiftleri localStorage'a yazılır (yalnızca BAŞARILI
+   alışverişler — "yapılandırılmamış" veya hata balonları geçici
+   sayılır, kalıcı kaydedilmez). API'ye gönderilecek geçmiş de bu
+   diziden türetilir, ayrı bir kopya tutulmaz. */
+const GECMIS_ANAHTAR = "ai-sohbet-mesajlar";
+const GECMIS_SINIR = 20; // 10 soru-cevap çifti
+
+function apiGecmisi(goruntu) {
+  return goruntu
+    .map((g) => ({ role: g.tip === "kullanici" ? "user" : "assistant", content: g.metin }))
+    .slice(-8);
+}
+
 /* --- Pencere ----------------------------------------------- */
 export function aiSohbetBaslat() {
   const kok = document.body.dataset.kok || "";
@@ -109,7 +131,7 @@ export function aiSohbetBaslat() {
 
   const bas = el("div", { class: "ai-bas" },
     el("div", {},
-      el("b", {}, "AI Sohbet"),
+      el("b", {}, el("span", { class: "ai-simge", "aria-hidden": "true" }), " AI Sohbet"),
       el("small", {}, "Yapay zekâ ile sitede arar ve yönlendirir")),
     el("span", { class: "bosluk" }),
     kapat);
@@ -135,7 +157,7 @@ export function aiSohbetBaslat() {
   const acDugme = el("button", {
     class: "ai-ac", type: "button",
     "aria-expanded": "false", "aria-controls": "ai-sohbet",
-  }, el("span", { class: "nokta", "aria-hidden": "true" }), "AI Sohbet");
+  }, el("span", { class: "ai-simge", "aria-hidden": "true" }), "AI Sohbet");
 
   /* --- akış yardımcıları --- */
   function ekle(dugum) {
@@ -149,7 +171,19 @@ export function aiSohbetBaslat() {
       el("span", {}), el("span", {}), el("span", {})));
   }
 
-  const gecmis = [];
+  /* Önceki sayfalardan kalan sohbeti geri oynat. */
+  const goruntu = oku(GECMIS_ANAHTAR, []);
+  for (const g of goruntu) {
+    ekle(g.tip === "kullanici"
+      ? el("div", { class: "balon siz" }, g.metin)
+      : botBalonYaz(g.metin, g.kaynaklar));
+  }
+
+  function turKaydet(tip, metin, kaynaklar) {
+    goruntu.push({ tip, metin, kaynaklar });
+    if (goruntu.length > GECMIS_SINIR) goruntu.splice(0, goruntu.length - GECMIS_SINIR);
+    kaydet(GECMIS_ANAHTAR, goruntu);
+  }
 
   async function sor(metin) {
     const temiz = (metin || "").trim();
@@ -161,9 +195,7 @@ export function aiSohbetBaslat() {
     if (!yapilandirilmis) {
       ekle(el("div", { class: "balon bot ai" },
         el("p", {}, "AI Sohbet şu anda yapılandırılmamış (API anahtarı tanımlı değil). ",
-          "Bu bir demo/geliştirme ortamı olabilir."),
-        el("p", {}, "Bu arada doğrulanmış içerikte arama yapan ",
-          el("strong", {}, "Danışma"), " penceresini kullanabilirsiniz.")));
+          "Bu bir demo/geliştirme ortamı olabilir.")));
       return;
     }
 
@@ -177,25 +209,22 @@ export function aiSohbetBaslat() {
         ? `${SISTEM_ONEK}\n\nBağlam:\n${baglam}`
         : `${SISTEM_ONEK}\n\nBağlam: (bu soru için sitede eşleşen bir içerik bulunamadı — bunu kullanıcıya belirt.)`;
 
-      gecmis.push({ role: "user", content: temiz });
       const mesajlar = [
         { role: "system", content: sistemMesaji },
-        ...gecmis.slice(-8),
+        ...apiGecmisi(goruntu),
+        { role: "user", content: temiz },
       ];
 
       const cevap = await deepseekYanitla(mesajlar);
-      gecmis.push({ role: "assistant", content: cevap });
+      turKaydet("kullanici", temiz);
+      turKaydet("bot", cevap, kaynaklar);
 
       yaziyor.remove();
-      const parcalar = metinParagraflara(cevap);
-      const kBlogu = kaynaklarBlogu(kaynaklar);
-      if (kBlogu) parcalar.push(kBlogu);
-      ekle(el("div", { class: "balon bot ai" }, ...parcalar));
+      ekle(botBalonYaz(cevap, kaynaklar));
     } catch (hata) {
       yaziyor.remove();
       ekle(el("div", { class: "balon bot ai" },
-        el("p", {}, "Yanıt alınamadı. Bağlantınızı kontrol edip tekrar deneyebilirsiniz."),
-        el("p", {}, el("strong", {}, "Danışma"), " penceresi bu sırada da çalışmaya devam eder.")));
+        el("p", {}, "Yanıt alınamadı. Bağlantınızı kontrol edip tekrar deneyebilirsiniz.")));
       console.error("[ai-sohbet]", hata);
     } finally {
       girdi.disabled = false;
@@ -239,6 +268,11 @@ export function aiSohbetBaslat() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !pencere.hidden) kapa();
   });
+
+  /* Üst bardaki "AI Sohbet" düğmesi de aynı pencereyi açar */
+  for (const d of document.querySelectorAll("[data-ai-sohbet-ac]")) {
+    d.addEventListener("click", ac);
+  }
 
   document.body.append(acDugme, pencere);
 

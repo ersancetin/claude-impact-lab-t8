@@ -59,43 +59,37 @@ tutucular kullanılır, değer üretim anında `data/parametreler.json`'dan geli
 | **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı hesabı |
 | **Bilgi Merkezi** | 10 konu başlığı altında 33 kanuni dayanaklı rehber; her rehberde açılış fotoğrafı ve bir şema |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
-| **Danışma** | Her sayfada, sağ altta. Soruyu sitedeki doğrulanmış içerikle eşleştirir |
-| **AI Sohbet** *(deneysel)* | Her sayfada, sol altta. DeepSeek API ile siteyi tarar ve ilgili sayfaya yönlendirir |
+| **AI Sohbet** | Üst barda (masaüstü) ve her sayfada sağ altta. Sorunuzu yapay zekâ ile sitede arar, ilgili sayfaya yönlendirir |
 
-### Danışma penceresi
+### Danışma arama motoru (dahili)
 
-Sitede **hesap ve giriş yoktur**; bunun yerine her sayfada bir soru penceresi vardır.
-Bu pencere bir dil modeli değildir: soruyu `icerik/` ve `data/parametreler.json`'dan
-üretilen künye dizininde arar, ilgili rehbere/araca yönlendirir ve o kaydın
-**doğrulama rozetini** gösterir. Eşleşme bulamazsa uydurmaz, "bulamadım" der.
-
-Böyle olmasının nedeni mahremiyet taahhüdüdür: soruyu bir API'ye göndermek,
-kullanıcının hukuki durumunu üçüncü bir tarafa aktarmak olurdu. Ayrıntı:
-[`TASARIM.md`](./TASARIM.md) Bölüm 10.
+Sitenin altında, hiçbir dış isteğe çıkmayan bir yerel arama motoru vardır
+(`danisma.js` → `ara()`): soruyu `icerik/` ve `data/parametreler.json`'dan
+üretilen künye dizininde (`bilgi-tabani.js`) arar, ilgili rehbere/araca
+eşler ve o kaydın **doğrulama rozetini** taşır. Bu motorun kendi açma
+düğmesi artık arayüzde yok — tek görünür sohbet girişi AI Sohbet'tir — ama
+altyapı olarak AI Sohbet'in yönlendirme katmanını besler (aşağıya bakınız).
 
 Her rehber iki etiketle işaretlenir: **kalıcı mevzuat mı, geçmiş uygulama mı** ve
 bilginin **doğrulama düzeyi**. Bu ayrım, kullanıcıya olmayan bir hakkın vaat
 edilmemesi için vardır.
 
-**Mahremiyet:** sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok.
-Girilen hiçbir bilgi — danışmaya sorulan soru dâhil — cihazdan çıkmaz.
+### AI Sohbet penceresi
 
-### AI Sohbet penceresi *(deneysel, ayrı özellik)*
-
-Danışma'nın **yerine değil, yanına** eklenen ikinci ve ayrı bir sohbet düğmesi.
-Danışma'dan farkı: soru DeepSeek API'sine gönderilir — yani bu pencerede
-**mahremiyet taahhüdü geçerli değildir**, kullanıcıya panel içinde bunu açıkça
-söylenir. Yönlendirme yine de güvenilirdir: modele verilecek bağlam,
-danışmanın kullandığı aynı yerel arama (`danisma.js` → `ara()`) ile
-`bilgi-tabani.js` künye dizininden seçilir; kullanıcıya gösterilen
-"İlgili sayfalar" bağlantıları modelin ürettiği metne değil, doğrudan bu
-aramaya dayanır.
+Sitenin tek görünür sohbet girişi. Sorunuz bir yapay zekâ servisine
+(DeepSeek) gönderilir; bu yüzden **mahremiyet taahhüdü bu pencere için
+geçerli değildir** — kullanıcıya panel içinde bu açıkça belirtilir (sağlayıcı
+adı kullanıcıya gösterilmez, sadece "yapay zekâ servisi" denir). Yönlendirme
+yine de güvenilirdir: modele verilecek bağlam, yukarıdaki yerel arama
+(`danisma.js` → `ara()`) ile `bilgi-tabani.js` künye dizininden seçilir;
+kullanıcıya gösterilen "İlgili sayfalar" bağlantıları modelin ürettiği
+metne değil, doğrudan bu aramaya dayanır.
 
 `docs/assets/ai-yapilandirma.js` içindeki `apiAnahtar` alanı repoda **boş**
 tutulur ve commit edilmez; gerçek anahtar yalnızca yayın derlemesinde,
 `DEEPSEEK_API_KEY` adlı bir GitHub Actions secret'ından enjekte edilir (bkz.
 aşağıdaki "GitHub Pages'i açma" bölümü). Anahtar tanımlı değilse pencere
-çökmez, "yapılandırılmamış" mesajı gösterip Danışma'ya yönlendirir.
+çökmez, "yapılandırılmamış" mesajı gösterir.
 
 > ⚠️ **Statik site backend'siz olduğu için anahtar yine de yayınlanan
 > sayfanın kaynağında herkese açık olur.** Bu bilinçli bir demo/hackathon

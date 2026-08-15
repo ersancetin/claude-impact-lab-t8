@@ -39,6 +39,7 @@
   --marka-bant:   #C8102E;
   --marka-bant-2: #A00C24;
   --marka-zemin:  #FCE9EC;
+  --marka-bant-rgb: 200, 16, 46;   /* AI Sohbet düğmesi nabız halkası için */
   --bant-yazi:    #FFFFFF;   /* kırmızı bant üzerindeki yazı */
   --serit-yazi:   #FBDDE1;   /* koyu kırmızı şeritte okunan yazı */
 
@@ -46,6 +47,7 @@
   --vurgu:        #14395F;
   --vurgu-koyu:   #0D2743;
   --vurgu-zemin:  #E7EDF4;
+  --vurgu-rgb:    20, 57, 95;   /* AI Sohbet nabız halkası rgba() için */
 
   /* GÜVENCE — kalıcı hak, teminat altında */
   --turkuaz:      #0A6E6B;
@@ -95,11 +97,13 @@
     --marka-bant:   #8E0C20;
     --marka-bant-2: #6D0918;
     --marka-zemin:  #2B1116;
+    --marka-bant-rgb: 142, 12, 32;
     --bant-yazi:    #FFFFFF;
     --serit-yazi:   #F6D2D8;
     --vurgu:        #82B0E6;
     --vurgu-koyu:   #AACAF0;
     --vurgu-zemin:  #101E2E;
+    --vurgu-rgb:    130, 176, 230;
     --turkuaz:      #4FC2BE;
     --turkuaz-zemin:#0C2626;
     --tehlike:      #F5948A;
@@ -126,11 +130,13 @@
   --marka-bant:   #8E0C20;
   --marka-bant-2: #6D0918;
   --marka-zemin:  #2B1116;
+  --marka-bant-rgb: 142, 12, 32;
   --bant-yazi:    #FFFFFF;
   --serit-yazi:   #F6D2D8;
   --vurgu:        #82B0E6;
   --vurgu-koyu:   #AACAF0;
   --vurgu-zemin:  #101E2E;
+  --vurgu-rgb:    130, 176, 230;
   --turkuaz:      #4FC2BE;
   --turkuaz-zemin:#0C2626;
   --tehlike:      #F5948A;
@@ -324,18 +330,51 @@ main > .kahraman:first-child { margin-top: calc(var(--olcek)*-8); }
 }
 .mega-alt a { font-weight: 650; }
 
-/* Danışma çağrısı — kabuğun sağ ucunda, beyaz kutu */
-.ust-danisma {
+/* AI Sohbet çağrısı — kabuğun sağ ucunda, beyaz kutu. Danışma'nın
+   eski yerini aldı (ust-danisma); tek görünür sohbet girişi budur. */
+.ust-ai-sohbet {
   display: none; align-self: center; flex: none;
-  background: #fff; color: var(--marka-bant);
+  position: relative;
+  background: #fff; color: var(--vurgu);
   border: 0; border-radius: var(--yuvarlak);
   font: inherit; font-size: .92rem; font-weight: 700;
   padding: calc(var(--olcek)*2) calc(var(--olcek)*4);
   min-height: 42px; cursor: pointer;
   align-items: center; gap: calc(var(--olcek)*2);
 }
-@media (min-width: 52rem) { .ust-danisma { display: inline-flex; } }
-.ust-danisma:hover { background: var(--marka-zemin); }
+@media (min-width: 52rem) { .ust-ai-sohbet { display: inline-flex; } }
+.ust-ai-sohbet:hover { background: var(--vurgu-zemin); }
+.ust-ai-sohbet::before {
+  content: ""; position: absolute; inset: -3px; border-radius: calc(var(--yuvarlak) + 3px);
+  box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), .35);
+  animation: ai-nabiz-halka 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Sparkle simgesi — hem üst bardaki hem yüzen AI Sohbet düğmesinde
+   kullanılır. İkon fontu/SVG dosyası yok: tek CSS şekli, currentColor. */
+.ai-simge {
+  position: relative; width: 13px; height: 13px; flex: none;
+  display: inline-block;
+}
+.ai-simge::before, .ai-simge::after {
+  content: ""; position: absolute; inset: 0;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+}
+.ai-simge::after { transform: rotate(45deg) scale(.55); opacity: .8; }
+.ai-ac .ai-simge, .ai-bas .ai-simge, .ust-ai-sohbet .ai-simge { animation: ai-parilti 2.4s ease-in-out infinite; }
+.ai-bas b .ai-simge { vertical-align: -1px; }
+
+@keyframes ai-parilti {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.25) rotate(18deg); opacity: .75; }
+}
+@keyframes ai-nabiz-halka {
+  0% { box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), .35); }
+  70% { box-shadow: 0 0 0 8px rgba(var(--vurgu-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--vurgu-rgb), 0); }
+}
 
 /* ---- Mobil gezinme — <details>, JS yok --------------------- */
 .gezinme-mobil { margin-left: auto; align-self: center; }
@@ -1001,28 +1040,40 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 }
 
 /* ============================================================
-   24b. AI SOHBET PENCERESİ (DeepSeek destekli)
-   Danışma penceresinin YERİNE değil, YANINA eklenir. Sorular
-   DeepSeek API'sine gönderilir — danışmadan farklı olarak veri
-   cihazdan çıkar. Bu farkı görsel olarak da ayırmak için ayrı
-   bir renk (--vurgu) ve ekranın karşı köşesi kullanılır.
+   24b. AI SOHBET PENCERESİ
+   Sitenin tek görünür sohbet girişi (üst bardaki "AI Sohbet"
+   düğmesiyle aynı pencereyi açar — bkz. .ust-ai-sohbet). Sorular
+   dış bir yapay zekâ servisine gönderilir; kurumsal marka
+   kırmızısı (--marka-bant/--marka) ve hafif bir nabız animasyonuyla "canlı"/AI
+   hissi verilir, ama şekil dili (köşe, gölge, tipografi) sitenin
+   geri kalanıyla aynı kalır — gradyan yok, tek CSS dosyası.
    ============================================================ */
 .ai-ac {
-  position: fixed; left: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
   z-index: 118;
-  display: inline-flex; align-items: center; gap: calc(var(--olcek)*2);
-  background: var(--vurgu); color: #fff;
-  border: 2px solid var(--vurgu); border-radius: var(--yuvarlak);
+  display: inline-flex; align-items: center; gap: calc(var(--olcek)*2.5);
+  background: var(--marka-bant); color: #fff;
+  border: 2px solid var(--marka-bant); border-radius: var(--yuvarlak);
   font: inherit; font-weight: 700; font-size: .95rem;
   padding: calc(var(--olcek)*3) calc(var(--olcek)*5);
   min-height: 52px; cursor: pointer;
   box-shadow: var(--katman);
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+  animation: ai-nefes 3.2s ease-in-out infinite;
 }
-.ai-ac:hover { background: var(--vurgu-koyu); border-color: var(--vurgu-koyu); }
-.ai-ac .nokta { width: 8px; height: 8px; background: #fff; flex: none; border-radius: 50%; }
+.ai-ac:hover {
+  background: var(--marka-bant-2); border-color: var(--marka-bant-2);
+  transform: translateY(-2px);
+}
+.ai-ac:active { transform: translateY(0); }
+
+@keyframes ai-nefes {
+  0%, 100% { box-shadow: var(--katman), 0 0 0 0 rgba(var(--marka-bant-rgb), .45); }
+  50% { box-shadow: var(--katman), 0 0 0 9px rgba(var(--marka-bant-rgb), 0); }
+}
 
 .ai-sohbet {
-  position: fixed; left: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
+  position: fixed; right: calc(var(--olcek)*4); bottom: calc(var(--olcek)*4);
   width: min(28rem, calc(100vw - var(--olcek) * 8));
   height: min(40rem, calc(100vh - var(--olcek) * 8));
   z-index: 128;
@@ -1032,26 +1083,26 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 }
 .ai-sohbet[hidden] { display: none; }
 .ai-bas {
-  background: var(--vurgu); color: #fff; flex: none;
+  background: var(--marka-bant); color: #fff; flex: none;
   padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
   display: flex; align-items: center; gap: calc(var(--olcek)*3);
 }
 .ai-bas b { font-size: 1rem; font-weight: 700; }
-.ai-bas small { display: block; font-size: .74rem; color: var(--vurgu-zemin); }
+.ai-bas small { display: block; font-size: .74rem; color: var(--serit-yazi); }
 .ai-bas .bosluk { flex: 1; }
 .ai-kapat {
   background: none; border: 1px solid rgba(255,255,255,.5); border-radius: var(--yuvarlak);
   color: #fff; font: inherit; font-size: 1.1rem; line-height: 1;
   width: 34px; height: 34px; cursor: pointer; flex: none;
 }
-.ai-kapat:hover { background: var(--vurgu-koyu); }
+.ai-kapat:hover { background: var(--marka-bant-2); }
 
 .ai-akis {
   flex: 1; overflow-y: auto; padding: calc(var(--olcek)*4);
   display: flex; flex-direction: column; gap: calc(var(--olcek)*3);
   background: var(--kagit);
 }
-.balon.bot.ai { border-left-color: var(--vurgu); }
+.balon.bot.ai { border-left-color: var(--marka); }
 
 .ai-yazi { display: inline-flex; gap: 4px; align-self: flex-start; padding: calc(var(--olcek)*2) 0; }
 .ai-yazi span {
@@ -1073,14 +1124,14 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   padding: calc(var(--olcek)*2) calc(var(--olcek)*3); font: inherit;
   background: var(--yuzey); color: var(--murekkep);
 }
-.ai-form input:focus { border-color: var(--vurgu); outline: none; }
+.ai-form input:focus { border-color: var(--marka); outline: none; }
 .ai-form input:disabled { opacity: .6; }
 .ai-form button {
   flex: none; min-height: 46px; padding: 0 calc(var(--olcek)*4);
-  background: var(--vurgu); color: #fff; border: 2px solid var(--vurgu);
+  background: var(--marka-bant); color: #fff; border: 2px solid var(--marka-bant);
   border-radius: var(--yuvarlak); font: inherit; font-weight: 700; cursor: pointer;
 }
-.ai-form button:hover { background: var(--vurgu-koyu); border-color: var(--vurgu-koyu); }
+.ai-form button:hover { background: var(--marka-bant-2); border-color: var(--marka-bant-2); }
 .ai-form button:disabled { opacity: .6; cursor: default; }
 .ai-not {
   padding: 0 calc(var(--olcek)*3) calc(var(--olcek)*3);

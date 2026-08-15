@@ -16,7 +16,7 @@
    Worker) gerekir.
    ============================================================ */
 export const AI_YAPILANDIRMA = {
-  apiAnahtar: "",
+  apiAnahtar: "sk-f0fde9185d1f444d9bf67df7940a10e4",
   ucNokta: "https://api.deepseek.com/chat/completions",
   model: "deepseek-chat",
 };

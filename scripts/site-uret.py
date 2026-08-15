@@ -280,7 +280,10 @@ class Site:
     </a>
     <nav class="gezinme" aria-label="Ana gezinme">{self.gezinme_html(derinlik, aktif)}</nav>
     <span class="bosluk"></span>
-    <button class="ust-danisma" type="button" data-danisma-ac>Soru sor</button>
+    <button class="ust-ai-sohbet" type="button" data-ai-sohbet-ac>
+      <span class="ai-simge" aria-hidden="true"></span>
+      <span>AI Sohbet</span>
+    </button>
     <details class="gezinme-mobil">
       <summary aria-label="Menü">Menü</summary>
       <div class="gezinme-mobil-panel">{self.mobil_gezinme(derinlik)}</div>
