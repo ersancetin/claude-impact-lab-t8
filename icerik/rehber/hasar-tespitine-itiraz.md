@@ -70,7 +70,7 @@
     "ağır hasarlı itiraz",
     "orta hasarlı itiraz",
     "hasar tespit süresi 30 gün",
-    "hasar tespit sonucu öğrenme"
+    "hasar tespiti nasıl öğrenilir e-devlet"
   ]
 }
 ---

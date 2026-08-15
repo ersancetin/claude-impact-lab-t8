@@ -246,6 +246,11 @@ def denetle(yol: Path) -> list[str]:
         if not kaynak.startswith("http") and not yol_g.exists():
             h.append(f"görsel dosyası yok: {kaynak}")
     for sv in s.svgler:
+        # Süsleyici ikonlar aria-hidden="true" taşır; anlam yanındaki
+        # metinde olduğundan role/aria-labelledby gerekmez. Bilgi taşıyan
+        # şemalar (kesit, ikon değil) role="img" + aria-labelledby kullanır.
+        if sv.get("aria-hidden") == "true":
+            continue
         if sv.get("role") != "img":
             h.append("satır içi SVG'de role=\"img\" yok")
         if not sv.get("aria-labelledby"):

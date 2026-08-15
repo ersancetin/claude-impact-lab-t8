@@ -122,6 +122,26 @@ Bu maddelerdeki hata, kullanıcının **hak kaybına** yol açar.
 | A10 | **5684 m.30/14 — mahkemeye/THH'ye giden uyuşmazlık Tahkim'e gidemez** | aynı madde | ⚠️ tek kaynak | ☐ | |
 | A11 | **İYUK m.13 — tam yargı: 1 yıl / her hâlde 5 yıl, önce idareye başvuru** | `search_within_kanun(2577, "madde 13")` | ⚠️ tek kaynak | ☐ | |
 | A12 | **İmar planı askı 1 ay + itiraz + 60 gün dava** (3194 m.8/b) | `search_within_kanun(3194, "madde 8")` | ✅ çoklu | ☐ | |
+| A13 | 🔴 **Muafiyetin NİTELİĞİ: tenzili muafiyet her ödemeden mi düşülür, yoksa muafiyetin altındaki hasarlarda ödeme mi yapılmaz?** A3 yalnızca oranın %2 olduğunu doğruluyor, hesabın nasıl yapılacağını değil. İki okuma **farklı tutar üretir.** Site tenzili okumaya göre hesaplıyor (`docs/assets/hesap.js`) | Genel Şartlar — muafiyet maddesinin tam metni | ✅ çoklu | ☐ | |
+| A14 | **Muafiyetin matrahı:** sigorta bedelinin %2'si mi, hasar tutarının %2'si mi? Hesap sigorta bedeli üzerinden kuruluyor | Genel Şartlar — aynı madde | ⚠️ tek kaynak | ☐ | |
+
+---
+
+### A13 hakkında — neden kritik sayıldı
+
+`kaynak/modul/teminat.html`'in ilk sürümü muafiyeti **eşik** gibi anlatıyordu
+("bu tutarın altındaki hasarlarda ödeme yapılmaz"); `data/parametreler.json` ise
+tenzili muafiyet tanımı veriyordu ("DASK muafiyeti aşan kısımdan sorumludur").
+İkisi aynı hasarda farklı tutar üretir:
+
+| Okuma | 1.000.000 TL bedel · %2 muafiyet · 30.000 TL hasar |
+|---|---|
+| Eşik | 30.000 < 20.000 değil ⇒ **30.000 TL** ödenir |
+| Tenzili | 30.000 − 20.000 ⇒ **10.000 TL** ödenir |
+
+Site tenzili okumayı uyguluyor ve bunu `scripts/hesap-kontrol.mjs` sınıyor
+("muafiyet EŞİK değil"). Resmî metin erişilebilir olduğunda bu madde ilk sırada
+doğrulanmalıdır; ters çıkarsa hesap ve tüm anlatı düzeltilir.
 
 ---
 

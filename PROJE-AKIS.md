@@ -314,8 +314,26 @@ Ruhsat yükümlülüğü **faaliyetin niteliğine** bağlıdır, elde edilen bed
 
 | Yaklaşım | Değerlendirme |
 |---|---|
-| Three.js ile tam 3D ev modeli | ❌ Hackathon süresinin çoğunu yer, mobilde ağır, erişilebilirlik sorunlu |
-| **Katmanlı SVG kesit + etkileşim** | ✅ **Önerilen.** Hafif, mobilde çalışır, ekran okuyucuya uyumlu, hızlı yapılır |
+| Three.js ile tam 3D ev modeli | ⚠️ **Karar değişti — üste binen katman olarak uygulandı.** Aşağıya bakınız |
+| **Katmanlı SVG kesit + etkileşim** | ✅ **Taban katman.** Hafif, mobilde çalışır, ekran okuyucuya uyumlu |
+
+### Karar güncellemesi — three.js taban değil, üste binen katman
+
+Bu bölüm başlangıçta tam 3D'yi ❌ ile işaretlemişti. Proje sahibinin kararıyla
+hero'ya three.js sahnesi eklendi; ancak yukarıdaki gerekçeler (mobilde ağırlık,
+erişilebilirlik) geçerliliğini koruduğu için 3B **varsayılan değil**:
+
+- Sayfada duran şey SVG afiştir. 3B ancak şu üç şart birlikte sağlanırsa yüklenir:
+  WebGL2 var **ve** `prefers-reduced-motion: reduce` kapalı **ve** `Save-Data`
+  istenmiyor (bağlantı 2G/3G değil).
+- Şartlar sağlanmazsa SVG afiş yerinde kalır; kullanıcı eksik bir şey görmez.
+- three.js yerele gömülüdür (`docs/vendor/`), dış istek yoktur.
+- Sahnenin anlattığı fark (DASK bina · eşya ve konaklama açıkta) canlı alt yazıyla
+  **metin olarak da** verilir; aşağıdaki "hiç yüklenmese bile tablo" kuralı bozulmaz.
+
+Uygulama: `docs/assets/sahne3b.js`. Kamera mesafesi her karede modelin sınır
+köşelerinden çözülür (kadraj taşması olmaz), bina gerçek yapı elemanlarından
+kurulur ve iki evre arasında yaklaşıp geri çekilir.
 
 **Önerilen etkileşim:** Ev kesitinde kullanıcı DASK / +Konut sigortası / +Eşya / +ALE katmanlarını açıp kapatır; her katmanda **korunan alan yeşile döner, açıkta kalan kırmızı kalır.** Yanında canlı hesap:
 

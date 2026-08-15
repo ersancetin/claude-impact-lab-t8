@@ -76,13 +76,31 @@ function zamanSorusu(sorguKok) {
 
 function puanla(kayit, sorguKok, zamanli) {
   let puan = 0;
+  let kimlikte = false;   // kaydın KİMLİĞİNDE eşleşti mi
+
   for (const alan of ["anahtar", "baslik", "ozet", "metin"]) {
     const havuz = kayit["_" + alan];
     if (!havuz || !havuz.length) continue;
     for (const kok of sorguKok) {
-      if (esles(havuz, kok)) puan += AGIRLIK[alan];
+      if (!esles(havuz, kok)) continue;
+      puan += AGIRLIK[alan];
+      if (alan === "anahtar" || alan === "baslik") kimlikte = true;
     }
   }
+
+  /* GÜRÜLTÜ EŞİĞİ — "kaydın konusu olmak" ile "içinde geçmek" ayrı şeyler.
+     Özet ve gövde düz metindir; "bugün", "çok", "sayfa" gibi sıradan
+     kelimeler orada kaçınılmaz olarak bulunur. Nitekim "bugün hava nasıl"
+     bir özetteki "Bugün"e, "bu sayfa çok güzel" ise bir özetteki "çok"a
+     takılıp cevap üretiyordu.
+
+     Kural: cevap ancak kaydın KİMLİK alanlarında — elle işaretlenmiş
+     anahtar kelimeler ya da başlık — eşleşme varsa verilir. Özet ve gövde
+     yalnızca sıralamayı iyileştirir, cevabı hak etmez. Durak kelime listesi
+     büyütmek yerine bu yapısal kuralı seçtim: liste hep eksik kalır,
+     kural kalmaz. Bilmediğini söylemek, yaklaştırmaktan iyidir. */
+  if (!kimlikte) return 0;
+
   /* Süre kayıtlarının hepsi aynı araca bağlıdır; konu sorusunu
      gasp etmemeleri için zaman sorusu değilse geri çekilirler. */
   if (kayit.tur === "sure") puan *= zamanli ? 1.5 : 0.5;
@@ -280,7 +298,11 @@ export function danismaBaslat() {
     d.addEventListener("click", ac);
   }
 
-  document.body.append(acDugme, pencere);
+  /* acDugme artık hiçbir yere basılmıyor — AI Sohbet tek görünür
+     giriş noktası oldu (bkz. ai-sohbet.js). Değişkeni yine de
+     oluşturuyoruz çünkü ac()/kapa() ona referans veriyor; kolayca
+     geri getirilebilsin diye kaldırılmadı, sadece DOM'a eklenmiyor. */
+  document.body.append(pencere);
 
   /* Sayfalar arasında gezerken pencere açık kalsın */
   if (oku("danisma-acik", false)) ac();

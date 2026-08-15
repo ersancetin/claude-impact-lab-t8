@@ -1,11 +1,23 @@
 # Tasarım Sistemi
 
 **Ürün:** Deprem Haklarım · **Kod:** [`docs/assets/tasarim.css`](./docs/assets/tasarim.css)
-**Sürüm:** 3 — kırmızı kurumsal kimlik, katmanlı gezinme, danışma penceresi · **Son güncelleme:** 2026-08-15
+**Sürüm:** 4 — tek palet, marka işareti, iki evreli 3B kapsam sahnesi · **Son güncelleme:** 2026-08-15
 
 ---
 
-## 1. Sürüm 3 neyi değiştirdi?
+## 1. Sürüm 4 neyi değiştirdi?
+
+| Sürüm 3 | Sürüm 4 |
+|---|---|
+| Açık + koyu tema, tema düğmesi | **Tek palet.** İki palet bakımı ikiye katlıyor, her yeni bileşende ikinci kontrast ölçümü gerektiriyordu |
+| Marka: kare içinde "DH" harfleri | **Kalkan + ev işareti** — sitenin konusunu iki şekille anlatır; favicon aynı şekil |
+| Marka altında "Hak · Süre · Dilekçe" | Kaldırıldı — başlık zaten aynı şeyi söylüyordu |
+| Hero'da 3B: dönen ev | **İki evreli sahne:** önce DASK kapsamı, sonra konut poliçesi eklendiğinde; alt yazı evreyle birlikte değişir |
+| Hesap sonunda yalnızca açık | Sonunda **teklif talebi metni** üretilir; kullanıcı kendi seçtiği şirkete gönderir |
+
+---
+
+## 1b. Sürüm 3 neyi değiştirdi?
 
 Sürüm 2 kurumsal ama **düz**dü: üç başlıklı ince bir menü, altında mobilde yirmi
 bağlantılık düz bir liste. Kullanıcı neyin nerede olduğunu ancak tıklayarak
@@ -206,7 +218,7 @@ Bölüm 1) — sabit şablon + alan yerleştirme.
 
 ## 9. Erişilebilirlik
 
-- **Kontrast:** 52 çift, iki temada da ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
+- **Kontrast:** 29 çift, tek palette ≥ 4.5:1 (ölçüm: `scripts/kontrast.py`)
 - **Klavye:** her etkileşimli öge erişilebilir, `:focus-visible` 3px belirgin
 - **"İçeriğe atla"** bağlantısı her sayfada
 - **Sonuç bölgeleri** `aria-live="polite"`
@@ -214,7 +226,7 @@ Bölüm 1) — sabit şablon + alan yerleştirme.
 - Mobil menü, mega menü ve SSS **JavaScript olmadan** çalışır
 - **Renk tek başına bilgi taşımaz** (WCAG 1.4.1): süre durumları yazıyla da işaretlenir
 - Danışma penceresi `Esc` ile kapanır, `role="log"` + `aria-live` ile okunur
-- `prefers-reduced-motion` ve `prefers-color-scheme` desteklenir
+- `prefers-reduced-motion` mutlak saygı görür: 3B sahne yüklenmez bile
 - Semantik HTML: `fieldset`/`legend`, gerçek `label`, gerçek `button`
 - **Yazdırma stili**: gezinme, künye, içindekiler ve düğmeler gizlenir
 
@@ -237,7 +249,7 @@ anahtarı saklanamaz, herkese açık olurdu.
 |---|---|---|
 | Bilgi tabanı | `docs/assets/bilgi-tabani.js` | **Üretilir.** `icerik/`, `kaynak/modul/` ve `data/parametreler.json`'dan 38 kayıt |
 | Arama ve pencere | `docs/assets/danisma.js` | Normalleştirme, önek eşleşmesi, puanlama, arayüz |
-| Isabet sınaması | `scripts/danisma-kontrol.mjs` | 17 sorunun beklenen kaydı ilk sırada döndürmesi |
+| Isabet sınaması | `scripts/danisma-kontrol.mjs` | 24 sorunun beklenen kaydı ilk sırada döndürmesi (5 tanesi boş dönmeli) |
 
 **Uydurmama kuralı:** cevap metni tarayıcıda üretilmez; yalnızca bilgi tabanındaki
 künye metinleri gösterilir. Eşleşme yoksa "bulamadım" denir, yaklaştırma yapılmaz.
@@ -249,10 +261,46 @@ süre kayıtları öne çıkar; "nedir / nasıl" tipiyse konuyu anlatan rehber �
 
 ---
 
+## 10.5. Sürüm 4 bileşenleri
+
+| Bileşen | Sınıf | Ne zaman kullanılır |
+|---|---|---|
+| İkon seti | `data/ikon.json` → `.ikon` | Mega menü, araç kartları. 20×20, tek renk (`currentColor`), `stroke-width:1.5` |
+| Form ızgarası | `.form-izgara` (`.uc`, `> .tam`) | 46rem'den geniş ekranda iki sütun. Araç formlarında input yığınını kırar |
+| Alan kümesi | `.alan-grup` | Birbirine bağlı alanları tek çerçevede toplar |
+| Ölçüt şeridi | `.olcut-serit` / `.olcut` | Sonuç bölümünün başında 3–4 sayıyla özet |
+| Adım göstergesi | `.adimlar` / `.adim` (`.aktif`, `.bitti`) | Çok adımlı formlar (hak tarama) |
+| Etiket–değer listesi | `.deger-liste` | "ne → kaç" satırları. `.kalem-liste` bir kart ızgarasıdır, bunun yerine geçmez |
+| Nitelik rozeti | `.nitelik.kalici` / `.nitelik.emsal` | Kalıcı hak ↔ geçmiş afet uygulaması ayrımı. **Emsal asla "hak" diye sunulmaz** |
+| A4 kâğıt | `.dilekce-kagit` | Dilekçe çıktısı. 21 cm, 2 cm kenar boşluğu; yazdırmada çerçeve kalkar |
+| Dosya kodu | `.dosya-kod` | Elle yazılacak kod: iri, aralıklı, `user-select: all` |
+
+### Afiş ve 3B katman kuralı
+
+Hero görselinde **iki katman** vardır ve ikisi aynı kutuyu paylaşır ki 3B açıldığında
+yerleşim zıplamasın:
+
+1. **Taban:** etiketli SVG kesit afişi (`afis_kesit()`). Her zaman üretilir.
+2. **Üste binen:** three.js sahnesi (`sahne3b.js`). Yalnızca WebGL2 + hareket izni +
+   hızlı bağlantı varsa yüklenir; yüklenirse SVG gizlenir.
+
+Kural: **3B hiç yüklenmese bile aynı bilgi eksiksiz verilmelidir.** Bu yüzden lejant
+her iki katmanda da vardır ve sahnenin canlı alt yazısı farkı metinle anlatır.
+Renk tek başına bilgi taşımaz (WCAG 1.4.1).
+
+### Yazdırma
+
+Yazdırma bu projede tercih değil tasarım kuralıdır ("telefonun şarjı biter").
+`@media print` altında: gezinme, düğme sıraları, danışma penceresi ve adım göstergesi
+gizlenir; kesit, ölçüt, süre öğesi, değer listesi ve dilekçe kâğıdı sayfa ortasından
+bölünmez; renkli zeminler beyaza, kenarlıklar tek renge iner.
+
+---
+
 ## 11. Yapılacaklar
 
 - [ ] Kalan rehber metinleri (Bilgi Merkezi'nde 5 kategori henüz boş)
-- [ ] Katmanlı SVG teminat kesiti (şu an oransal çubuk var)
+- [x] Katmanlı SVG teminat kesiti — `afis_kesit()`, üstünde three.js sahnesi
 - [ ] Çevrimdışı çalışma için service worker
 - [ ] Danışma: eş anlamlı sözlüğü ("ev sahibi" ↔ "malik", "tazminat" ↔ "ödeme")
 - [ ] Çok dilli içerik (TR, AR, KU)
