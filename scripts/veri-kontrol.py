@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """data/parametreler.json ile docs/assets/veri.js arasindaki tutarliligi kontrol eder.
 
-Kanonik kaynak parametreler.json'dir. Site veri.js'ten okur (fetch gerektirmesin,
-cevrimdisi ve file:// ile de calissin diye). Bu betik ikisinin uyustugunu dogrular.
+Kanonik kaynak parametreler.json'dir. Site veri.js'ten okur; boylece calisma
+zamaninda fetch/JSON istegi gerekmez. Bu betik ikisinin uyustugunu dogrular.
 
 Kullanim:  python3 scripts/veri-kontrol.py
 """

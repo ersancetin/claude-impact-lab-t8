@@ -24,7 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # enablement: true → Pages kapalıysa iş akışı kendisi açar
+      # NOT: enablement yalnizca Pages daha once acildiysa calisir. Ilk kez
+      # acmak icin depo Settings > Pages > Source: GitHub Actions secilmeli;
+      # Actions token'i Pages sitesini olusturma yetkisine sahip degil.
       - uses: actions/configure-pages@v5
         with:
           enablement: true

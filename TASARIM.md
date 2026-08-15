@@ -29,11 +29,13 @@ Kullanıcı shadcn/ui benzeri bir çatı önerdi. Değerlendirdim ve **kullanmad
 
 | Yaklaşım | Sorun |
 |---|---|
-| shadcn/ui + React + Tailwind | Derleme adımı, ~100 kB+ JS, GitHub Pages için ek iş akışı, çevrimdışı çalışmaz |
+| shadcn/ui + React + Tailwind | Derleme adımı, ~100 kB+ JS, GitHub Pages için ek iş akışı |
 | CDN'den CSS çatısı | Dış bağımlılık; şebeke zayıfsa sayfa çıplak açılır |
-| **Vanilla HTML + tek CSS + ES modülü** | **Toplam ~30 kB. Derleme yok. İlk açılıştan sonra çevrimdışı çalışır.** |
+| **Vanilla HTML + tek CSS + ES modülü** | **Toplam ~30 kB. Derleme yok. Dış istek yok.** |
 
-Hedef kitle düşük bant genişliğinde ve eski telefonlarda. Burada framework bir kolaylık değil, **kullanıcıya yüklenen bir maliyet** olurdu. shadcn'in getirdiği düzen (jeton tabanlı tema, tutarlı bileşen sözlüğü) zaten benimsendi; getirdiği ağırlık benimsenmedi.
+Hedef kitle düşük bant genişliğinde ve eski telefonlarda. Burada framework bir kolaylık değil, **kullanıcıya yüklenen bir maliyet** olurdu. shadcn'in getirdiği düzen (jeton tabanlı tema, tutarlı bileşen sözlüğü) benimsendi; getirdiği ağırlık benimsenmedi.
+
+> **Dürüst not:** Sayfalar ES modülü kullandığı için `file://` ile doğrudan açılmaz, sunulmaları gerekir. Gerçek çevrimdışı çalışma **service worker** eklendiğinde gelecek (Bölüm 11). Şu anki kazanım ağırlıkta ve dış bağımlılığın sıfır olmasında.
 
 Ayrıca dilekçe modülü hukuki nedenlerle **deterministik** olmak zorunda (bkz. `PROJE-LEGAL.md` Bölüm 1) — sabit şablon + alan yerleştirme. Bu, ağır bir istemci çatısı gerektirmiyor.
 
