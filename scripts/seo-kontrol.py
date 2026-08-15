@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-SEO DENETİMİ — docs/blog/ altındaki rehber sayfalarını kurallara karşı sınar.
+SEO DENETİMİ — docs/ altındaki üretilmiş sayfaların tamamını sınar.
 
-Kapsam yalnızca rehber bölümüdür; sitenin elle yazılmış sayfalarına
-(index.html, sureler.html, ...) dokunulmaz ve onlar denetlenmez.
+Kapsam sitenin tümüdür: ana sayfa, araçlar, Bilgi Merkezi kategorileri,
+rehberler ve kurumsal sayfalar. Sayfalar `scripts/site-uret.py` tarafından
+üretildiği için bir kural ihlali tek tek sayfalarda değil, şablonda ya da
+içerik künyesinde düzeltilir.
 
 Denetlenen kurallar (arama motoru puanlamalarında ölçülen kalemler):
 
@@ -15,7 +17,7 @@ Denetlenen kurallar (arama motoru puanlamalarında ölçülen kalemler):
   Bağlantı    site içi bağlantı hedeflerinin var olması, boş href
   Erişim      img alt/genişlik/yükseklik, satır içi SVG'de role ve
               aria-labelledby, tablolarda caption, anlamlı bağlantı metni
-  Kapsam      blog/sitemap.xml ile sayfa kümesinin örtüşmesi, RSS ve
+  Kapsam      sitemap.xml ile sayfa kümesinin örtüşmesi, robots.txt ve
               paylaşım görselinin varlığı
 
 Kullanım:
@@ -36,7 +38,6 @@ from urllib.parse import urldefrag
 
 KOK = Path(__file__).resolve().parent.parent
 DOCS = KOK / "docs"
-BLOG = DOCS / "blog"
 SITE = "https://ersancetin.github.io/claude-impact-lab-t8/"
 
 BASLIK_AZAMI = 60
@@ -208,17 +209,21 @@ def denetle(yol: Path) -> list[str]:
         if "@context" not in veri:
             h.append("JSON-LD @context yok")
         dugumler = veri.get("@graph", [veri])
-        turler = {d.get("@type") for d in dugumler if isinstance(d, dict)}
-        if "Organization" not in turler:
-            h.append("JSON-LD Organization düğümü yok")
         for d in dugumler:
             if not isinstance(d, dict):
                 continue
             if d.get("@type") in ("Article", "BlogPosting"):
                 for alan in ("headline", "datePublished", "dateModified",
-                             "author", "publisher", "image", "inLanguage"):
+                             "author", "publisher", "inLanguage",
+                             "mainEntityOfPage"):
                     if alan not in d:
                         h.append(f"JSON-LD Article.{alan} yok")
+                # Yayıncı künyesi kurum olmalı: arama motoru "kim söylüyor"
+                # sorusunu buradan okur.
+                for alan in ("author", "publisher"):
+                    kisi = d.get(alan)
+                    if isinstance(kisi, dict) and kisi.get("@type") != "Organization":
+                        h.append(f"JSON-LD Article.{alan} Organization değil")
                 if len(d.get("headline", "")) > 110:
                     h.append("JSON-LD headline 110 karakteri aşıyor")
             if d.get("@type") == "FAQPage":
@@ -271,12 +276,12 @@ def denetle(yol: Path) -> list[str]:
 
 def main() -> int:
     sessiz = "--sessiz" in sys.argv
-    sayfalar = sorted(BLOG.rglob("*.html"))
+    sayfalar = sorted(DOCS.rglob("*.html"))
     toplam_hata = 0
     for yol in sayfalar:
         hatalar = denetle(yol)
         toplam_hata += len(hatalar)
-        ad = yol.relative_to(BLOG).as_posix()
+        ad = yol.relative_to(DOCS).as_posix()
         if hatalar:
             print(f"✗ {ad}")
             for x in hatalar:
@@ -286,15 +291,15 @@ def main() -> int:
 
     # --- Site geneli ---
     genel = []
-    harita = BLOG / "sitemap.xml"
+    harita = DOCS / "sitemap.xml"
     if not harita.exists():
-        genel.append("blog/sitemap.xml yok")
+        genel.append("sitemap.xml yok")
     else:
         icerik = harita.read_text(encoding="utf-8")
         urller = set(re.findall(r"<loc>([^<]+)</loc>", icerik))
         for yol in sayfalar:
             ad = yol.relative_to(DOCS).as_posix()
-            bekleniyor = SITE + "blog/" if ad == "blog/index.html" else SITE + ad
+            bekleniyor = SITE + ad.removesuffix("index.html")
             if bekleniyor not in urller:
                 genel.append(f"site haritasında yok: {ad}")
         for u in urller:
@@ -302,10 +307,8 @@ def main() -> int:
                 genel.append(f"site haritasında yabancı URL: {u}")
     if not (DOCS / "assets" / "og.png").exists():
         genel.append("assets/og.png yok (paylaşım görseli)")
-    if not (BLOG / "feed.xml").exists():
-        genel.append("blog/feed.xml yok")
-    if not (BLOG / "rehber.css").exists():
-        genel.append("blog/rehber.css yok")
+    if not (DOCS / "robots.txt").exists():
+        genel.append("robots.txt yok")
 
     if genel:
         print("✗ site geneli")
@@ -313,7 +316,7 @@ def main() -> int:
             print(f"    {x}")
     toplam_hata += len(genel)
 
-    print(f"\n{len(sayfalar)} rehber sayfası denetlendi · {toplam_hata} bulgu")
+    print(f"\n{len(sayfalar)} sayfa denetlendi · {toplam_hata} bulgu")
     return 1 if toplam_hata else 0
 
 

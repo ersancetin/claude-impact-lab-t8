@@ -5,11 +5,13 @@ Bağımlılık yok. Desteklenen sözdizimi:
   ## Başlık / ### Alt başlık   → h2 / h3 (kimlik verilir, içindekilere girer)
   - madde                       → ul
   1. madde                      → ol
-  | a | b |                     → tablo (ikinci satır ayraç)
+  | a | b |                     → tablo (ikinci satır ayraç; --: sağa yaslar)
+  :tablo Başlık                 → tablonun görünmez başlığı (<caption class="sr">)
   > alıntı                      → blockquote
   :::uyari Başlık               → durum kartı (uyari | tehlike | bilgi | guvence)
   ...
   :::
+  :dayanak 7269 s.K. m.29       → kanuni dayanak şeridi
   **kalın** *eğik* `kod` [bağ](adres)
 """
 import html
@@ -40,12 +42,27 @@ def isle(kaynak: str):
     satirlar = kaynak.replace("\r\n", "\n").split("\n")
     cikti, basliklar = [], []
     i, n = 0, len(satirlar)
+    tablo_basligi = None          # bir sonraki tabloya ait <caption>
 
     while i < n:
         s = satirlar[i]
         cip = s.strip()
 
         if not cip:
+            i += 1
+            continue
+
+        # Kanuni dayanak şeridi
+        d = re.match(r"^:dayanak\s+(.+)$", cip)
+        if d:
+            cikti.append(f'<div class="dayanak">{satir_ici(d.group(1).strip())}</div>')
+            i += 1
+            continue
+
+        # Tablo başlığı — ekranda görünmez, ekran okuyucu ve yazdırma için.
+        t = re.match(r"^:tablo\s+(.+)$", cip)
+        if t:
+            tablo_basligi = t.group(1).strip()
             i += 1
             continue
 
@@ -83,17 +100,29 @@ def isle(kaynak: str):
                 return [h.strip() for h in satir.strip().strip("|").split("|")]
 
             bas = hucreler(cip)
+            # Ayraç satırındaki `--:` sütunu sayı sütunudur: sağa yaslanır ve
+            # eşit genişlikli rakamla dizilir (.sayi sınıfı).
+            hiza = ["sayi" if h.endswith(":") and not h.startswith(":") else ""
+                    for h in hucreler(satirlar[i + 1])]
+
+            def sinif(sutun):
+                s = hiza[sutun] if sutun < len(hiza) else ""
+                return f' class="{s}"' if s else ""
+
             i += 2
             govde = []
             while i < n and satirlar[i].strip().startswith("|"):
                 govde.append(hucreler(satirlar[i]))
                 i += 1
-            th = "".join(f"<th>{satir_ici(h)}</th>" for h in bas)
+            th = "".join(f"<th{sinif(j)}>{satir_ici(h)}</th>" for j, h in enumerate(bas))
             tr = "".join(
-                "<tr>" + "".join(f"<td>{satir_ici(h)}</td>" for h in sat) + "</tr>"
+                "<tr>" + "".join(f"<td{sinif(j)}>{satir_ici(h)}</td>"
+                                 for j, h in enumerate(sat)) + "</tr>"
                 for sat in govde
             )
-            cikti.append(f'<div class="tablo-sar"><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>')
+            cap = f'<caption class="sr">{satir_ici(tablo_basligi)}</caption>' if tablo_basligi else ""
+            tablo_basligi = None
+            cikti.append(f'<div class="tablo-sar"><table>{cap}<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>')
             continue
 
         # Alıntı
@@ -122,7 +151,7 @@ def isle(kaynak: str):
         # Paragraf
         govde = []
         while i < n and satirlar[i].strip() and not re.match(
-                r"^(#{2,4}\s|[-*]\s|\d+\.\s|\||>|:::)", satirlar[i].strip()):
+                r"^(#{2,4}\s|[-*]\s|\d+\.\s|\||>|:)", satirlar[i].strip()):
             govde.append(satirlar[i].strip())
             i += 1
         cikti.append(f"<p>{satir_ici(' '.join(govde))}</p>")

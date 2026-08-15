@@ -19,6 +19,7 @@ Kaynak içerik `icerik/` ve `kaynak/` altındadır; yayına giden statik site
 
 ```bash
 python3 scripts/site-uret.py       # docs/ klasörünü üretir
+python3 scripts/seo-kontrol.py     # SEO + erişilebilirlik denetimi (55 sayfa)
 python3 scripts/bag-kontrol.py     # iç bağlantıları denetler
 python3 scripts/kontrast.py        # renk kontrastlarını ölçer (52 çift)
 python3 scripts/veri-kontrol.py    # parametreler.json ↔ veri.js tutarlılığı
@@ -30,12 +31,16 @@ cd docs && python3 -m http.server 8899   # http://localhost:8899
 ### Yapı
 
 ```
-icerik/site.json          kurum bilgisi, gezinme, 9 konu başlığı
+icerik/site.json          kurum bilgisi, gezinme, 10 konu başlığı
 icerik/rehber/*.md        Bilgi Merkezi rehberleri (JSON künye + markdown)
 icerik/kurumsal/*.md      kurumsal sayfalar
 kaynak/modul/*.html       etkileşimli araç sayfaları (JSON künye + HTML gövde)
 scripts/site-uret.py      üreteç: şablon, mega menü, SEO, JSON-LD, sitemap
+scripts/sekiller.py       rehber başına SVG şema tanımı (slug → şema)
+scripts/gorseller.py      şema çizen SVG kütüphanesi (5 tip)
+scripts/foto-indir.py     rehber açılış fotoğraflarını Pexels'ten indirir
 docs/                     üretilen site (yayına giden klasör)
+docs/assets/gorsel/       rehber fotoğrafları (indirilmiş; kucuk/ = kart görselleri)
 docs/assets/*.css,*.js    elle bakılan varlıklar — üreteç bunları silmez
 docs/assets/bilgi-tabani.js  ÜRETİLİR: danışmanın aradığı künye dizini
 ```
@@ -44,12 +49,15 @@ Yeni bir rehber eklemek için `icerik/rehber/` altına tek bir dosya yazmak yete
 gezinme, kategori sayfası, ilgili içerik bağları, site haritası ve yapılandırılmış veri
 yeniden üretimde kendiliğinden güncellenir.
 
+Parasal değerler metne yazılmaz: rehber gövdesinde `{{dask.azamiTeminat}}` gibi yer
+tutucular kullanılır, değer üretim anında `data/parametreler.json`'dan gelir.
+
 ### Bölümler
 
 | Bölüm | İş |
 |---|---|
 | **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı hesabı |
-| **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
+| **Bilgi Merkezi** | 10 konu başlığı altında 33 kanuni dayanaklı rehber; her rehberde açılış fotoğrafı ve bir şema |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
 | **Danışma** | Her sayfada, sağ altta. Soruyu sitedeki doğrulanmış içerikle eşleştirir |
 

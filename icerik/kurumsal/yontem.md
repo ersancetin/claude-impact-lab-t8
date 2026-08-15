@@ -24,6 +24,7 @@ aynen tekrarlanacağının hiçbir garantisi yoktur.
 Bir platformun yapabileceği en zararlı hata, olmayan bir hakkı varmış gibi anlatmaktır.
 Bu yüzden her rehber iki etiketten biriyle işaretlenir:
 
+:tablo Doğrulama etiketlerinin anlamı
 | Etiket | Anlamı |
 |---|---|
 | **Kalıcı mevzuat** | Kanun, yönetmelik veya genel şarttan doğar; afetten afete değişmez. |
@@ -33,6 +34,7 @@ Bu yüzden her rehber iki etiketten biriyle işaretlenir:
 
 İkinci etiket, bilginin **hangi güçte teyit edildiğini** gösterir:
 
+:tablo Kaynak doğrulama rozetlerinin anlamı
 | Rozet | Anlamı |
 |---|---|
 | `doğrulandı` | Metin, resmî kaynağın (Resmî Gazete, mevzuat.gov.tr, kurumun kendi yayını) doğrudan kontrolüyle teyit edildi. |

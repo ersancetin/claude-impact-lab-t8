@@ -108,7 +108,7 @@ SEKILLER = {
     },
 
     # --- DASK ve sigorta ----------------------------------------------------
-    "dask-neleri-karsilamaz": {
+    "dask-neyi-karsilar": {
         "tip": "karsilastirma",
         "baslik": "DASK neyi karşılar, neyi karşılamaz?",
         "aciklama": "DASK binayı sigortalar; ev eşyası, enkaz kaldırma, kira "
@@ -380,5 +380,213 @@ SEKILLER = {
         ],
         "altyazi": "2001 öncesi yapılar zorunlu yapı denetiminden geçmemiştir. "
                    "Eski dönemlerin Resmî Gazete tarihleri doğrulama bekliyor.",
+    },
+
+    # --- Çalışma hayatı ve iş yeri -----------------------------------------
+    "isci-ve-isyeri-haklari": {
+        "tip": "karsilastirma",
+        "baslik": "Zorlayıcı sebepte bir hafta eşiği",
+        "aciklama": "İlk bir hafta içinde işveren yarım ücret öder ve sözleşme "
+                    "sürer; bir haftadan sonra hem işçinin hem işverenin derhal "
+                    "fesih hakkı doğar, kısa çalışma ödeneği gündeme gelir.",
+        "sol": "İlk bir hafta",
+        "sag": "Bir haftadan sonra",
+        "sol_tur": "vurgu",
+        "sag_tur": "uyari",
+        "satirlar": [
+            {"sol": "İşveren yarım ücret öder", "sag": "Ücret yükümlülüğü kural olarak biter"},
+            {"sol": "Sözleşme sürer", "sag": "İşçi haklı nedenle feshedebilir (m.24/III)"},
+            {"sol": "Fesih hakkı doğmaz", "sag": "İşveren haklı nedenle feshedebilir (m.25/III)"},
+            {"sol": "—", "sag": "Kısa çalışma ödeneği gündeme gelir"},
+        ],
+        "altyazi": "Eşik, işin durduğu gün değil bir haftanın dolduğu gündür; "
+                   "bu yüzden işin ne zaman durduğunu belgelemek önemlidir.",
+    },
+
+    # --- Özel durumlar ------------------------------------------------------
+    "ogrenci-asker-memur-ve-yabanci-uyruklular": {
+        "tip": "karsilastirma",
+        "baslik": "Kalıcı hak ile geçmiş uygulama ayrımı",
+        "aciklama": "Kanundan doğan ve her afette geçerli olan haklar ile 2023'e "
+                    "özgü idari kararlarla uygulanmış destekler ayrı sütunlarda.",
+        "sol": "Kalıcı mevzuat",
+        "sag": "2023'e özgü uygulama",
+        "sol_tur": "vurgu",
+        "sag_tur": "uyari",
+        "satirlar": [
+            {"sol": "Tazminat davası (mülkiyet şartı yok)", "sag": "KYK kredisinin bursa çevrilmesi"},
+            {"sol": "İdari başvuru ve dava yolu", "sag": "Belirli celplerde sevk ertelemesi"},
+            {"sol": "Baro adli yardımı", "sag": "Kurum bazlı idari izin kararları"},
+            {"sol": "Mazerete bağlı sevk tehiri usulü", "sag": "Yurtlarda önceliklendirme"},
+        ],
+        "altyazi": "Sağ sütundakiler yeni bir afette aynen tekrarlanmayabilir; "
+                   "bu yüzden bu sayfada tutar ve kesin vaat yer almaz.",
+    },
+
+    # --- Devlet destekleri ---------------------------------------------------
+    "afet-konutu-ve-borclandirma": {
+        "tip": "akis",
+        "baslik": "Hak sahipliğinden konut teslimine",
+        "aciklama": "İlan, iki ay içinde başvuru, hak sahipliği tespiti, "
+                    "borçlandırma ve teslimden iki yıl sonra başlayan taksitler.",
+        "adimlar": [
+            {"ad": "Hak sahipliği ilanı", "not": "İki aylık başvuru süresi bu tarihte başlar"},
+            {"ad": "Yazılı talep ve taahhütname", "not": "Mahallin en büyük mülkî amirine",
+             "durum": "uyari"},
+            {"ad": "Hak sahipliği tespiti", "not": "Ret hâlinde tebliğden itibaren 15 gün içinde itiraz",
+             "durum": "uyari"},
+            {"ad": "Borçlandırma", "not": "En az 20, en çok 30 yıl · faizsiz · eşit taksit"},
+            {"ad": "Teslim ve ilk taksit", "not": "İlk taksit teslimden 2 yıl sonra"},
+        ],
+        "altyazi": "Konut karşılıksız değildir: tahsis, borçlandırma karşılığında yapılır.",
+    },
+
+    "kira-ve-tasinma-yardimi": {
+        "tip": "karsilastirma",
+        "baslik": "Kira yardımının iki kaynağı",
+        "aciklama": "Kentsel dönüşüm mevzuatındaki kalıcı kira yardımı ile "
+                    "afete özgü idari kararla verilen yardımın karşılaştırması.",
+        "sol": "Kentsel dönüşüm (6306)",
+        "sag": "Afete özgü karar",
+        "sol_tur": "vurgu",
+        "sag_tur": "uyari",
+        "satirlar": [
+            {"sol": "Kalıcı mevzuatta yazılı", "sag": "Her afette yeniden karar gerekir"},
+            {"sol": "Kiracı da taraftır", "sag": "Kapsam karar metninde belirlenir"},
+            {"sol": "Tutar yıllık güncellenir", "sag": "Tutar o afete özgüdür"},
+            {"sol": "Süre 18 aya kadar", "sag": "Süre kararla sınırlıdır"},
+        ],
+        "altyazi": "Sağ sütundakiler emsaldir; yeni bir afette aynen tekrarlanmayabilir.",
+    },
+
+    # --- Vergi, prim ve borçlar ---------------------------------------------
+    "mucbir-sebep-ve-sgk-primleri": {
+        "tip": "akis",
+        "baslik": "Mücbir sebep süreleri nasıl etkiler?",
+        "aciklama": "İlanla birlikte süreler durur, hâl sona erdiğinde kaldığı "
+                    "yerden işler ve ertelenen ödemeler için takvim açıklanır.",
+        "adimlar": [
+            {"ad": "Mücbir sebep ilan edilir", "not": "İl/ilçe bazlı; kapsamı ilan metni belirler"},
+            {"ad": "Süreler durur", "not": "Beyan, bildirim ve ödeme süreleri işlemez"},
+            {"ad": "Hâl sona erer", "not": "Süreler kaldığı yerden devam eder", "durum": "uyari"},
+            {"ad": "Ertelenen ödeme takvimi", "not": "Kaçırılırsa gecikme zammı işler",
+             "durum": "tehlike"},
+        ],
+        "altyazi": "Mücbir sebep borcu silmez, süreleri durdurur; asıl risk bitiş tarihindedir.",
+    },
+
+    "kredi-ve-kart-borclari": {
+        "tip": "karsilastirma",
+        "baslik": "Kalıcı hak ile dönemsel karar",
+        "aciklama": "Borçlunun her zaman kullanabileceği yollar ile 2023'e özgü "
+                    "düzenleyici kurum kararlarının karşılaştırması.",
+        "sol": "Her zaman geçerli",
+        "sag": "2023'e özgü karar",
+        "sol_tur": "vurgu",
+        "sag_tur": "uyari",
+        "satirlar": [
+            {"sol": "Bankaya yazılı başvuru", "sag": "En az 6 ay kredi ertelemesi"},
+            {"sol": "Yeni ödeme planı isteme", "sag": "Kartta ödemesiz dönem"},
+            {"sol": "Uyarlama davası (TBK m.138)", "sag": "Taksitin bir katına kadar uzatımı"},
+            {"sol": "İcra evrakına süresinde itiraz", "sag": "Kart ve POS ücreti alınmaması"},
+        ],
+        "altyazi": "Sağdakiler dönemsel kararlardır; soldakiler bugün de kullanılabilir.",
+    },
+
+    # --- Çalışma hayatı ve iş yeri ------------------------------------------
+    "isyeri-hasari-ve-esnaf": {
+        "tip": "kapsam",
+        "baslik": "İş yeri zararında teminatın kapsadığı alan",
+        "aciklama": "Zorunlu deprem sigortası yalnızca kapsamdaki binayı öder; "
+                    "emtia, iş durması ve kâr kaybı teminat dışındadır.",
+        "dilimler": [
+            {"ad": "Bina (kapsamdaysa)", "deger": 35, "tur": "kapsanan",
+             "yazi": "zorunlu deprem sigortası"},
+            {"ad": "Emtia, demirbaş, iş durması, kâr kaybı", "deger": 65,
+             "tur": "acikta", "yazi": "ancak ticari poliçeyle"},
+        ],
+        "altyazi": "Oranlar temsilîdir; amaç, açıkta kalan kalemlerin büyüklüğünü göstermektir.",
+    },
+
+    "isyerinde-olum-ve-is-kazasi": {
+        "tip": "akis",
+        "baslik": "İş yerinde ölüm hâlinde izlenecek sıra",
+        "aciklama": "Ölüm tescili, üç iş günü içinde SGK bildirimi, aylık "
+                    "başvurusu, poliçelerin taranması ve tazminat davası.",
+        "adimlar": [
+            {"ad": "Ölümün nüfusa tescili", "not": "Cenaze bulunamasa da mümkündür"},
+            {"ad": "İş kazası bildirimi", "not": "İşveren, üç iş günü içinde · yapılmazsa hak sahibi başvurur",
+             "durum": "uyari"},
+            {"ad": "SGK başvurusu", "not": "Ölüm aylığı / geliri"},
+            {"ad": "Poliçelerin taranması", "not": "Hayat, ferdi kaza, kredi hayat, grup poliçesi"},
+            {"ad": "Tazminat davası", "not": "Müteahhit, yapı denetim, idare ve koşulları varsa işveren",
+             "durum": "tehlike"},
+        ],
+        "altyazi": "SGK'dan bağlanan gelir, kusurlu taraflara açılacak davanın yerine geçmez.",
+    },
+
+    # --- Yakınını kaybedenler -----------------------------------------------
+    "olum-halinde-sigorta-ve-sgk": {
+        "tip": "karsilastirma",
+        "baslik": "Ölüm hâlinde hangi kaynak ne öder?",
+        "aciklama": "Zorunlu deprem sigortasının kapsamadığı bedeni zararların "
+                    "karşılığını taşıyan poliçe ve sosyal güvenlik kaynakları.",
+        "sol": "Ödeyen kaynaklar",
+        "sag": "Ödemeyen / şarta bağlı",
+        "sol_tur": "vurgu",
+        "sag_tur": "tehlike",
+        "satirlar": [
+            {"sol": "Hayat sigortası vefat teminatı", "sag": "DASK: bedeni zararlar teminat dışı"},
+            {"sol": "SGK ölüm aylığı (şartlarla)", "sag": "Ferdi kaza: deprem seçilmemişse ödemez"},
+            {"sol": "BES birikimi ve devlet katkısı", "sag": "Manevi tazminat: sigortada değil, davada"},
+        ],
+        "altyazi": "Ferdi kaza poliçesinde deprem teminatının seçili olup olmadığı bugün kontrol edilmelidir.",
+    },
+
+    "mirasin-reddi-ve-tereke": {
+        "tip": "sure",
+        "baslik": "Miras kararında işleyen süre",
+        "aciklama": "Mirasın reddi için üç aylık süre; karşılaştırma için diğer "
+                    "hak düşürücü süreler.",
+        "kalemler": [
+            {"ad": "DASK hasar ihbarı", "deger": 15, "durum": "acil"},
+            {"ad": "Hasar tespitine itiraz", "deger": 30, "durum": "acil"},
+            {"ad": "Hak sahipliği başvurusu", "deger": 60, "durum": "normal"},
+            {"ad": "Mirasın reddi", "deger": 90, "durum": "normal"},
+        ],
+        "altyazi": "Ret süresi ölümü ve mirasçı olduğunuzu öğrendiğiniz tarihten işler; "
+                   "geçerse miras kayıtsız şartsız kabul edilmiş sayılır.",
+    },
+
+    # --- Özel durumlar -------------------------------------------------------
+    "engelli-yasli-ve-refakatsiz-cocuklar": {
+        "tip": "akis",
+        "baslik": "Kendi başvurusunu yapamayanlar için sıra",
+        "aciklama": "Temsil talebinin açılması, süresi dolan başvuruların "
+                    "beklenmeden yapılması ve kayıtların toplanması.",
+        "adimlar": [
+            {"ad": "Temsil talebi açılır", "not": "Sulh hukuk mahkemesi: vasi veya kayyım"},
+            {"ad": "Süreler durmaz", "not": "İtiraz ve başvuruları beklemeden yapın",
+             "durum": "tehlike"},
+            {"ad": "Tereke korunur", "not": "Gerekiyorsa defter tutulması istenir", "durum": "uyari"},
+            {"ad": "Kayıtlar toplanır", "not": "Nüfus, tapu, poliçe, banka"},
+        ],
+        "altyazi": "Vasi atanmasını beklerken süre kaybetmemek için iki iş paralel yürütülür.",
+    },
+
+    "yurt-disinda-yasayanlar": {
+        "tip": "akis",
+        "baslik": "Yurt dışından süreç yönetimi",
+        "aciklama": "Konsolosluk vekâletnamesi, tebligat adresinin düzeltilmesi "
+                    "ve sürelerin uzaktan takibi.",
+        "adimlar": [
+            {"ad": "Konsolosluktan vekâletname", "not": "Yetkiler tek tek sayılmalı"},
+            {"ad": "Tebligat adresi güncellenir", "not": "Kayıtlı adrese yapılan tebligat geçerlidir",
+             "durum": "uyari"},
+            {"ad": "Süreler takvime işlenir", "not": "İlan tarihi, sizin haberiniz olmasa da başlatır",
+             "durum": "tehlike"},
+            {"ad": "Vekil başvuruyu yapar", "not": "Evrak kaydı alınır ve paylaşılır"},
+        ],
+        "altyazi": "Mesafe değil tebligat risk üretir: ilan ve tebliğ, Türkiye'de olmanızı beklemez.",
     },
 }

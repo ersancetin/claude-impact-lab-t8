@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-FOTOĞRAF İNDİRİCİ — rehber yazılarının açılış görsellerini Pexels'ten indirir.
+FOTOĞRAF İNDİRİCİ — Bilgi Merkezi rehberlerinin açılış görsellerini indirir.
+
+Slug'lar `icerik/rehber/<slug>.md` dosya adlarıyla aynıdır; aşağıdaki
+ARAMALAR sözlüğünde karşılığı bulunmayan rehber fotoğrafsız kalır ve
+kartında sade bir kapak gösterilir.
 
 Neden indiriyoruz, bağlamıyoruz?
   Sitenin mahremiyet mimarisi gereği sayfa **hiçbir dış istek yapmaz**.
@@ -16,8 +20,8 @@ Kullanım:
     python3 scripts/foto-indir.py --yenile <slug> [<slug> ...]
 
 Çıktı:
-    docs/blog/gorseller/<slug>.jpg       1200x627, yazı açılışı ve og:image
-    docs/blog/gorseller/kucuk/<slug>.jpg 360 piksel, rehber dizinindeki kartlar
+    docs/assets/gorsel/<slug>.jpg        1200x627, rehber açılışı ve og:image
+    docs/assets/gorsel/kucuk/<slug>.jpg  360 piksel, rehber kartlarındaki küçük görsel
     scripts/foto-kunye.json              fotoğrafçı/kaynak künyeleri (repoda)
 
 Bağımlılık: yok (standart kütüphane + macOS `sips`).
@@ -34,7 +38,7 @@ import urllib.request
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
-GORSEL_DIZIN = KOK / "docs" / "blog" / "gorseller"
+GORSEL_DIZIN = KOK / "docs" / "assets" / "gorsel"
 KUNYE_DOSYA = Path(__file__).resolve().parent / "foto-kunye.json"
 
 # Yazı başına arama sorgusu ve Türkçe alt metin (alt).
@@ -55,7 +59,7 @@ ARAMALAR = {
     "olum-karinesi-ve-miras": (
         "old documents archive folders",
         "Arşivde sıralanmış resmî belge klasörleri"),
-    "dask-neleri-karsilamaz": (
+    "dask-neyi-karsilar": (
         "living room furniture home interior",
         "Ev eşyalarıyla döşenmiş bir oturma odası"),
     "dask-yeterli-mi": (
@@ -100,6 +104,45 @@ ARAMALAR = {
     "bina-yasi-ve-deprem-yonetmelikleri": (
         "old apartment buildings street",
         "Sokakta sıralanmış eski apartmanlar"),
+    "isci-ve-isyeri-haklari": (
+        "closed shop shutter empty street",
+        "Kepenkleri kapalı bir iş yeri"),
+    "ogrenci-asker-memur-ve-yabanci-uyruklular": (
+        "people waiting queue office documents",
+        "Belgeleriyle sıra bekleyen insanlar"),
+    "konut-sigortasi-ve-eksik-sigorta": (
+        "insurance policy document signing desk",
+        "Masada imzalanmayı bekleyen sigorta poliçesi"),
+    "afet-konutu-ve-borclandirma": (
+        "new residential buildings construction housing",
+        "Yeni yapılmış konut blokları"),
+    "kira-ve-tasinma-yardimi": (
+        "empty apartment room window daylight",
+        "Boş bir konutun içi"),
+    "mucbir-sebep-ve-sgk-primleri": (
+        "wall calendar page close up",
+        "Duvara asılı bir takvim yaprağı"),
+    "kredi-ve-kart-borclari": (
+        "wallet bank cards table",
+        "Masada duran cüzdan ve banka kartları"),
+    "isyeri-hasari-ve-esnaf": (
+        "damaged shop storefront broken",
+        "Hasar görmüş bir dükkân cephesi"),
+    "isyerinde-olum-ve-is-kazasi": (
+        "safety helmet empty workplace",
+        "Boş bir iş yerinde duran baret"),
+    "olum-halinde-sigorta-ve-sgk": (
+        "insurance documents desk hands",
+        "Masada incelenen sigorta belgeleri"),
+    "mirasin-reddi-ve-tereke": (
+        "courthouse documents old keys",
+        "Belgeler ve eski bir ev anahtarı"),
+    "engelli-yasli-ve-refakatsiz-cocuklar": (
+        "elderly person hands support care",
+        "Yaşlı bir kişinin eline destek olan bir el"),
+    "yurt-disinda-yasayanlar": (
+        "passport documents airport departure",
+        "Pasaport ve yolculuk belgeleri"),
 }
 
 

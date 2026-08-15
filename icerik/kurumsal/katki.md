@@ -3,7 +3,7 @@
   "ad": "Katkı ve iletişim",
   "sira": 5,
   "baslik": "Katkı ve iletişim",
-  "ozet": "Proje açık kaynaktır. Hata bildirimi, mevzuat doğrulaması ve içerik katkısı en çok ihtiyaç duyulan üç alandır.",
+  "ozet": "Proje açık kaynaktır. Hata bildirimi, mevzuat doğrulaması ve içerik katkısı en çok ihtiyaç duyulan üç alandır; nasıl katkı verileceği adım adım anlatılır.",
   "anahtar": [
     "katkı",
     "iletişim",
