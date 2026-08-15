@@ -298,7 +298,8 @@ class Site:
 <script type="module">
   import {{ temaBaslat, temaBagla }} from "{p_mod}assets/app.js";
   import {{ danismaBaslat }} from "{p_mod}assets/danisma.js";
-  temaBaslat(); temaBagla(); danismaBaslat();
+  import {{ aiSohbetBaslat }} from "{p_mod}assets/ai-sohbet.js";
+  temaBaslat(); temaBagla(); danismaBaslat(); aiSohbetBaslat();
 </script>
 </body>
 </html>

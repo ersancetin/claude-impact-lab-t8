@@ -52,6 +52,7 @@ yeniden üretimde kendiliğinden güncellenir.
 | **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
 | **Danışma** | Her sayfada, sağ altta. Soruyu sitedeki doğrulanmış içerikle eşleştirir |
+| **AI Sohbet** *(deneysel)* | Her sayfada, sol altta. DeepSeek API ile siteyi tarar ve ilgili sayfaya yönlendirir |
 
 ### Danışma penceresi
 
@@ -70,6 +71,28 @@ edilmemesi için vardır.
 
 **Mahremiyet:** sunucu yok, hesap yok, analitik yok, çerez yok, dış istek yok.
 Girilen hiçbir bilgi — danışmaya sorulan soru dâhil — cihazdan çıkmaz.
+
+### AI Sohbet penceresi *(deneysel, ayrı özellik)*
+
+Danışma'nın **yerine değil, yanına** eklenen ikinci ve ayrı bir sohbet düğmesi.
+Danışma'dan farkı: soru DeepSeek API'sine gönderilir — yani bu pencerede
+**mahremiyet taahhüdü geçerli değildir**, kullanıcıya panel içinde bunu açıkça
+söylenir. Yönlendirme yine de güvenilirdir: modele verilecek bağlam,
+danışmanın kullandığı aynı yerel arama (`danisma.js` → `ara()`) ile
+`bilgi-tabani.js` künye dizininden seçilir; kullanıcıya gösterilen
+"İlgili sayfalar" bağlantıları modelin ürettiği metne değil, doğrudan bu
+aramaya dayanır.
+
+`docs/assets/ai-yapilandirma.js` içindeki `apiAnahtar` alanı repoda **boş**
+tutulur ve commit edilmez; gerçek anahtar yalnızca yayın derlemesinde,
+`DEEPSEEK_API_KEY` adlı bir GitHub Actions secret'ından enjekte edilir (bkz.
+aşağıdaki "GitHub Pages'i açma" bölümü). Anahtar tanımlı değilse pencere
+çökmez, "yapılandırılmamış" mesajı gösterip Danışma'ya yönlendirir.
+
+> ⚠️ **Statik site backend'siz olduğu için anahtar yine de yayınlanan
+> sayfanın kaynağında herkese açık olur.** Bu bilinçli bir demo/hackathon
+> kararıdır — düşük harcama limitli bir anahtar kullanın. Kalıcı/üretim
+> kullanımı için anahtarı gizleyen bir proxy (ör. Cloudflare Worker) şarttır.
 
 ---
 
@@ -172,3 +195,16 @@ listesine eklenmelidir.
 
 **Alternatif (iş akışı olmadan):** Settings → Pages → Source: *Deploy from a
 branch* → dal `main`, klasör `/docs`.
+
+### AI Sohbet için DeepSeek anahtarı (isteğe bağlı)
+
+AI Sohbet penceresinin çalışması için depoya bir secret eklenmelidir:
+
+1. Depo → **Settings → Secrets and variables → Actions → New repository secret**
+2. İsim: `DEEPSEEK_API_KEY`, değer: DeepSeek API anahtarınız
+3. Bir sonraki "GitHub Pages" iş akışı çalıştığında anahtar otomatik olarak
+   `docs/assets/ai-yapilandirma.js` içine gömülür (yalnızca yayın derlemesinde,
+   repoya geri commit edilmez — bkz. yukarıdaki "AI Sohbet penceresi" bölümü).
+
+Secret tanımlı değilse iş akışı yine sorunsuz çalışır; AI Sohbet o zaman
+"yapılandırılmamış" demo moduyla açılır.
