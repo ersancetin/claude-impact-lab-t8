@@ -287,9 +287,28 @@ def rehber_kart(r, onek, kategori_adi=None):
 
 
 # ---------------------------------------------------------------- sayfalar
+def bekleyen_baglari_sadelestir(govde_html, mevcut):
+    """Henüz yazılmamış rehberlere giden bağları düz metne çevirir.
+
+    İçerik kademeli yazıldığı için, bir rehberin metni henüz üretilmemiş
+    bir rehbere atıf yapabilir. Kırık bağlantı yerine bağsız metin bırakırız.
+    """
+    def degistir(m):
+        hedef, metin = m.group(1), m.group(2)
+        if hedef.startswith(("http", "../", "#")) or "/" in hedef:
+            return m.group(0)
+        if hedef.removesuffix(".html") in mevcut:
+            return m.group(0)
+        return f'<span class="bekleyen">{metin}</span>'
+
+    return re.sub(r'<a href="([^"]+)">([^<]*)</a>', degistir, govde_html)
+
+
 def rehber_sayfasi(site, r):
     kat = site.kategoriler[r["kategori"]]
     govde_html, basliklar = isle(r["govde"])
+    govde_html = bekleyen_baglari_sadelestir(
+        govde_html, {x["id"] for x in site.rehberler})
     ic = "".join(f'<li><a href="#{k}">{kacir(t)}</a></li>'
                  for s, k, t in basliklar if s == 2)
     icindekiler = (f'<aside class="icindekiler" aria-label="İçindekiler">'
@@ -410,6 +429,12 @@ def kategori_sayfasi(site, kat):
                 for i, r in enumerate(ler, start=1)],
         },
     }
+    bos = ("""<div class="kart uyarili"><h3 class="mt0">Bu başlığın rehberleri hazırlanıyor</h3>
+<p>Konu kapsam içindedir; metinleri kanuni dayanağıyla ve doğrulama etiketiyle yazılmayı
+bekliyor. Bu arada <a href="../arac/sureler.html">süre takvimi</a> ve
+<a href="../arac/haklarim.html">hak tarama</a> araçları bu konuyu da kapsar.</p>
+<p style="margin-bottom:0">Yayımlanmamış bir metni yayımlanmış gibi göstermemek,
+platformun temel kuralıdır.</p></div>""" if not ler else "")
     diger = "".join(
         f'<a class="rehber" href="{k["id"]}.html"><b>{kacir(k["ad"])}</b>'
         f'<span>{kacir(k["ozet"])}</span></a>'
@@ -419,7 +444,7 @@ def kategori_sayfasi(site, kat):
   <span class="etiket">Bilgi Merkezi</span>
   <h1>{kacir(kat["ad"])}</h1>
   <p class="giris">{kacir(kat["aciklama"])}</p>
-  <div class="izgara iki" style="margin-top:2rem">{liste or kartlar}</div>
+  {bos}<div class="izgara iki" style="margin-top:2rem">{liste}</div>
   <div class="bolum-baslik"><h2>Diğer konu başlıkları</h2>
   <p>Bilgi Merkezi dokuz konu başlığına ayrılmıştır.</p></div>
   <div class="izgara uc" style="margin-top:1.5rem">{diger}</div>
@@ -435,9 +460,11 @@ def bilgi_merkezi(site):
     bolumler = []
     for kat in site.y["kategoriler"]:
         ler = [r for r in site.rehberler if r["kategori"] == kat["id"]]
-        if not ler:
-            continue
-        kartlar = "".join(rehber_kart(r, "../") for r in ler)
+        if ler:
+            kartlar = "".join(rehber_kart(r, "../") for r in ler)
+        else:
+            kartlar = (f'<div class="kart uyarili"><span class="etiket">Hazırlanıyor</span>'
+                       f'<p style="margin-bottom:0">{kacir(kat["aciklama"])}</p></div>')
         bolumler.append(f"""<section>
   <div class="bolum-baslik">
     <h2><a href="{kat["id"]}.html">{kacir(kat["ad"])}</a></h2>
@@ -575,16 +602,34 @@ def ana_sayfa(site):
 
 <section class="kahraman">
   <div class="kap-genis">
-    <span class="etiket">Bağımsız bilgi platformu · Kayıt yok · Reklam yok</span>
-    <h1>Depremden sonra hakkınız var; ama çoğunun süresi işliyor.</h1>
-    <p class="giris">Hangi hakka sahip olduğunuzu, kaç gününüzün kaldığını, hangi dilekçeyi
-    nereye göndereceğinizi ve bunların hangi kanun maddesine dayandığını tek yerde toplar.
-    DASK ve konutla sınırlı değil: vergi, SGK primi, kredi borcu, iş sözleşmesi, kira,
-    miras ve devlet destekleri de burada.</p>
-    <div class="kahraman-alt">
-      <a class="dugme" href="arac/sureler.html">Sürelerimi hesapla</a>
-      <a class="dugme ikincil" href="bilgi/index.html">Bilgi Merkezi'ne git</a>
+   <div class="kahraman-ic">
+    <div>
+      <span class="etiket">Bağımsız bilgi platformu · Kayıt yok · Reklam yok</span>
+      <h1>Depremden sonra hakkınız var; ama çoğunun süresi işliyor.</h1>
+      <p class="giris">Hangi hakka sahip olduğunuzu, kaç gününüzün kaldığını, hangi dilekçeyi
+      nereye göndereceğinizi ve bunların hangi kanun maddesine dayandığını tek yerde toplar.
+      DASK ve konutla sınırlı değil: vergi, SGK primi, kredi borcu, iş sözleşmesi, kira,
+      miras ve devlet destekleri de burada.</p>
+      <div class="kahraman-alt">
+        <a class="dugme" href="arac/sureler.html">Sürelerimi hesapla</a>
+        <a class="dugme ikincil" href="bilgi/index.html">Bilgi Merkezi'ne git</a>
+      </div>
     </div>
+    <aside class="sure-panel" aria-label="Öne çıkan süreler">
+      <div class="sure-panel-bas">
+        <b>Süresi en kısa üç hak</b>
+        <span>Süreler olayı öğrendiğiniz ya da sonucun ilan edildiği tarihten işler.</span>
+      </div>
+      <ul>
+        <li><b>15 gün</b><div>DASK hasar ihbarı<span>Depremi öğrendiğiniz tarihten</span></div></li>
+        <li><b>30 gün</b><div>Hasar tespitine itiraz<span>Sonucun mahallî ilan tarihinden</span></div></li>
+        <li><b>2 ay</b><div>Hak sahipliği başvurusu<span>Hak sahipliği ilan tarihinden</span></div></li>
+      </ul>
+      <div class="sure-panel-alt">
+        <a class="dugme ikincil" href="arac/sureler.html" style="width:100%">Kendi takvimimi çıkar</a>
+      </div>
+    </aside>
+   </div>
     <div class="olcut-serit">
       <div class="olcut"><b>{len(MODULLER)}</b><span>etkileşimli araç</span></div>
       <div class="olcut"><b>{rehber_sayisi}</b><span>kanuni dayanaklı rehber</span></div>
@@ -656,7 +701,7 @@ def ana_sayfa(site):
         <h3 class="mt0">30 günlük itiraz süresini kaçırmak</h3>
         <p>Hasar tespit sonucuna itiraz süresi, mahallî ilan tarihinden itibaren 30 gündür.
         Süre geçtiğinde idari itiraz hakkı tamamen kaybedilir; geriye yalnızca yargı yolu kalır.</p>
-        <p style="margin-bottom:0"><a href="rehber/hasar-tespitine-itiraz.html">İtiraz rehberi →</a></p>
+        <p style="margin-bottom:0"><a href="bilgi/hasar-tespit.html">Hasar tespiti ve itiraz →</a></p>
       </div>
       <div class="kart tehlikeli">
         <span class="etiket">Hata 2</span>
@@ -687,7 +732,7 @@ def ana_sayfa(site):
           <strong>Ama tazminat davası açmak için tapu sahibi olmanız gerekmez.</strong></p>
           <p style="margin-bottom:0">Kiracı olarak müteahhide, yapı denetim kuruluşuna ve idareye
           karşı kendi zararınız için dava açabilirsiniz.
-          <a href="rehber/kiracinin-haklari.html">Kiracı rehberi →</a></p>
+          <a href="bilgi/kira-mulkiyet.html">Kira ve mülkiyet →</a></p>
         </div>
       </div>
       <div>

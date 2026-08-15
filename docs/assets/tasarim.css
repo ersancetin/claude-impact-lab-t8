@@ -294,6 +294,9 @@ p  { margin: 0 0 calc(var(--olcek)*4); }
 
 /* Bölüm başlığı — kurumsal ayraç */
 .bolum-baslik { border-top: 3px solid var(--vurgu); padding-top: calc(var(--olcek)*3); margin-top: calc(var(--olcek)*12); }
+.bolum > .kap-genis > .bolum-baslik:first-child,
+.kap-genis > div > .bolum-baslik:first-child,
+.bolum-baslik:first-child { margin-top: 0; }
 .bolum-baslik h2 { margin-top: 0; }
 .bolum-baslik p  { color: var(--murekkep-2); margin-bottom: 0; }
 
@@ -324,8 +327,28 @@ a:hover { color: var(--vurgu-koyu); }
   border-bottom: var(--sinir);
   padding: calc(var(--olcek)*12) 0 calc(var(--olcek)*10);
 }
-.kahraman h1 { max-width: 22ch; }
-.kahraman .giris { max-width: 60ch; font-size: 1.15rem; }
+.kahraman-ic { display: grid; gap: calc(var(--olcek)*8); align-items: start; }
+@media (min-width: 62rem) { .kahraman-ic { grid-template-columns: 1.5fr 1fr; gap: calc(var(--olcek)*12); } }
+.kahraman h1 { max-width: 20ch; }
+.kahraman .giris { max-width: 60ch; font-size: 1.12rem; }
+
+/* Kahraman yan paneli: en kritik üç süre, girişte görünür */
+.sure-panel { border: var(--sinir); border-top: 4px solid var(--tehlike); background: var(--yuzey); }
+.sure-panel-bas { padding: calc(var(--olcek)*4); border-bottom: var(--sinir); }
+.sure-panel-bas b { display: block; font-size: 1.02rem; }
+.sure-panel-bas span { font-size: .88rem; color: var(--murekkep-2); }
+.sure-panel ul { list-style: none; margin: 0; padding: 0; }
+.sure-panel li {
+  display: flex; align-items: baseline; gap: calc(var(--olcek)*3);
+  padding: calc(var(--olcek)*3) calc(var(--olcek)*4);
+  border-bottom: var(--sinir); font-size: .93rem;
+}
+.sure-panel li b {
+  font-family: var(--f-mono); font-size: 1.05rem; color: var(--tehlike);
+  min-width: 4.2rem; flex: none;
+}
+.sure-panel li span { color: var(--murekkep-2); display: block; font-size: .82rem; }
+.sure-panel-alt { padding: calc(var(--olcek)*4); }
 .kahraman-alt {
   display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3);
   margin-top: calc(var(--olcek)*6);
@@ -666,7 +689,7 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .zemin-alt { background: var(--yuzey-alt); }
-.bolum { padding: calc(var(--olcek)*12) 0; }
+.bolum { padding: calc(var(--olcek)*10) 0; }
 .bolum-ince { padding: calc(var(--olcek)*8) 0; }
 
 /* --- 24. Yazdırma ----------------------------------------- */
@@ -680,4 +703,10 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   a { color: #000; text-decoration: none; }
   .sss details { display: block; }
   .sss .cevap { display: block !important; }
+}
+
+/* Henüz yazılmamış rehbere yapılan atıf — bağ değil, işaret */
+.bekleyen {
+  border-bottom: 1px dotted var(--cizgi-koyu);
+  color: var(--murekkep-2);
 }

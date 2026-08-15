@@ -13,23 +13,45 @@ maddesiyle birlikte, **süresi geçmeden önce** anlatan ücretsiz bilgi platfor
 
 ## Site
 
-Kaynak: [`docs/`](./docs) — statik, bağımlılıksız, derleme adımı yok.
-GitHub Pages ile yayımlanır.
-
-Yerelde çalıştırmak için:
+Kaynak içerik `icerik/` ve `kaynak/` altındadır; yayına giden statik site
+[`docs/`](./docs) klasörüne **üretilir**. Derleme adımı yok, bağımlılık yok —
+üreteç yalnızca Python standart kütüphanesini kullanır.
 
 ```bash
-cd docs && python3 -m http.server 8899
-# http://localhost:8899
+python3 scripts/site-uret.py     # docs/ klasörünü üretir
+python3 scripts/bag-kontrol.py   # iç bağlantıları denetler
+python3 scripts/kontrast.py      # renk kontrastlarını ölçer
+python3 scripts/veri-kontrol.py  # parametreler.json ↔ veri.js tutarlılığı
+
+cd docs && python3 -m http.server 8899   # http://localhost:8899
 ```
 
-| Sayfa | İş |
+### Yapı
+
+```
+icerik/site.json        kurum bilgisi, gezinme, 9 konu başlığı
+icerik/rehber/*.md      Bilgi Merkezi rehberleri (JSON künye + markdown)
+icerik/kurumsal/*.md    kurumsal sayfalar
+kaynak/modul/*.html     etkileşimli araç sayfaları (JSON künye + HTML gövde)
+scripts/site-uret.py    üreteç: şablon, SEO etiketleri, JSON-LD, sitemap
+docs/                   üretilen site (yayına giden klasör)
+```
+
+Yeni bir rehber eklemek için `icerik/rehber/` altına tek bir dosya yazmak yeterlidir;
+gezinme, kategori sayfası, ilgili içerik bağları, site haritası ve yapılandırılmış veri
+yeniden üretimde kendiliğinden güncellenir.
+
+### Bölümler
+
+| Bölüm | İş |
 |---|---|
-| `index.html` | Dört giriş, en sık üç hata, kiracı uyarısı |
-| `sureler.html` | Tarihlerden kişisel süre takvimi — **en yüksek pratik değer** |
-| `haklarim.html` | Üç soru → profile göre hak listesi (kiracı / malik ayrımı) |
-| `dilekce.html` | Sabit şablon → form → çıktı → **nereye, nasıl göndereceği** |
-| `teminat.html` | DASK bedeli, muafiyet ve teminat açığı hesabı |
+| **Araçlar** | Süre takvimi · Hak tarama · Dilekçe üretici · Teminat açığı hesabı |
+| **Bilgi Merkezi** | 9 konu başlığı altında kanuni dayanaklı rehberler |
+| **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
+
+Her rehber iki etiketle işaretlenir: **kalıcı mevzuat mı, geçmiş uygulama mı** ve
+bilginin **doğrulama düzeyi**. Bu ayrım, kullanıcıya olmayan bir hakkın vaat
+edilmemesi için vardır.
 
 **Mahremiyet:** sunucu yok, analitik yok, çerez yok, dış istek yok. Girilen hiçbir
 bilgi cihazdan çıkmaz.
@@ -44,7 +66,7 @@ bilgi cihazdan çıkmaz.
 | [`PROJE-LEGAL.md`](./PROJE-LEGAL.md) | **Hukuki altyapı.** Deprem öncesi/sonrası haklar, DASK, uyuşmazlık yolları, sorumluluk davaları, mevzuat haritası |
 | [`PROJE-AKIS.md`](./PROJE-AKIS.md) | Kiracının korunması ve tek pencere (vaka dosyası) modeli; gelir modeli hukuki analizi |
 | [`PROJE-PARAMETRIK.md`](./PROJE-PARAMETRIK.md) | Kiracı için parametrik sigorta ürünü ve DASK protokol yaklaşımı |
-| [`TASARIM.md`](./TASARIM.md) | Tasarım sistemi ve kriz UX kararları |
+| [`TASARIM.md`](./TASARIM.md) | **Tasarım sistemi**: kurumsal palet, bileşen sözlüğü, erişilebilirlik |
 | [`DOGRULAMA.md`](./DOGRULAMA.md) | 🔴 **71 kalemlik mevzuat doğrulama görev listesi** |
 | [`VERI-KAYNAKLARI.md`](./VERI-KAYNAKLARI.md) | Veri kaynakları |
 
@@ -70,8 +92,10 @@ kiracının en güçlü ve en az bilinen hakkı budur.
 
 - 🔴 **Hiçbir hukuki bilgi resmî kaynaktan doğrulanmadı.** Geliştirme ortamının ağ
   politikası `mevzuat.gov.tr`, `resmigazete.gov.tr` ve `dask.gov.tr` erişimini
-  engelledi; Mevzuat MCP kurulu olmasına rağmen aynı nedenle çalışmadı. Bilgiler
-  çoklu bağımsız kaynak teyidiyle derlendi. Ayrıntı: [`DOGRULAMA.md`](./DOGRULAMA.md)
+  engelledi. Mevzuat MCP'nin tarayıcı bağımlılığı bu oturumda giderildi, ancak ağ
+  geçidi `mevzuat.gov.tr` isteklerini 403 ile reddettiği için sunucu yine sonuç
+  döndüremedi. Bilgiler çoklu bağımsız kaynak teyidiyle derlendi.
+  Ayrıntı: [`DOGRULAMA.md`](./DOGRULAMA.md)
 - 🔴 **Dilekçe şablonları avukat onayından geçmedi.**
 - **Parasal değerler eskir.** DASK azami teminatı 2026'da aylık güncelleniyor;
   bu yüzden tüm parametreler [`data/parametreler.json`](./data/parametreler.json)
@@ -123,4 +147,4 @@ Site şu adreste yayına girer:
 > public yapmanız ya da planı yükseltmeniz gerekir.
 
 **Alternatif (iş akışı olmadan):** Settings → Pages → Source: *Deploy from a
-branch* → dal `claude/earthquake-logistics-system-68e5sz`, klasör `/docs`.
+branch* → dal `claude/stk-platform-corporate-design-aa1wlm`, klasör `/docs`.
