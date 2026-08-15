@@ -30,15 +30,17 @@ function temaEtiketiYenile() {
   d.textContent = koyuMu ? "Açık tema" : "Koyu tema";
 }
 
-/* --- Sayfa iskeleti --------------------------------------- */
-export function iskelet({ aktif } = {}) {
+/* --- Sayfa iskeleti ---------------------------------------
+   kok: sayfanın site köküne göre yolu. Kök dizindeki sayfalar
+   için "./", docs/blog/ altındaki yazılar için "../".        */
+export function iskelet({ aktif, kok: yol = "./" } = {}) {
   const kok = document.body;
 
   const ust = document.createElement("header");
   ust.className = "ust";
   ust.innerHTML = `
     <div class="ust-ic">
-      <a class="marka" href="./index.html">Deprem Haklarım</a>
+      <a class="marka" href="${yol}index.html">Deprem Haklarım</a>
       <span class="bosluk"></span>
       <button class="tema-dugme" type="button">Koyu tema</button>
     </div>`;
@@ -55,11 +57,11 @@ export function iskelet({ aktif } = {}) {
   alt.innerHTML = `
     <div class="kap">
       <nav>
-        <a href="./index.html">Ana sayfa</a>
-        <a href="./haklarim.html">Haklarım</a>
-        <a href="./sureler.html">Süre takvimi</a>
-        <a href="./teminat.html">Sigorta açığı</a>
-        <a href="./dilekce.html">Dilekçe</a>
+        <a href="${yol}index.html">Ana sayfa</a>
+        <a href="${yol}haklarim.html">Haklarım</a>
+        <a href="${yol}sureler.html">Süre takvimi</a>
+        <a href="${yol}teminat.html">Sigorta açığı</a>
+        <a href="${yol}dilekce.html">Dilekçe</a>
       </nav>
       <p><strong>Bu site hukuki tavsiye vermez.</strong> Buradaki bilgiler genel
       bilgilendirme amaçlıdır ve avukatlık hizmetinin yerine geçmez. Somut
