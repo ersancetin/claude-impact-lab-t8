@@ -49,6 +49,10 @@ docs/                     üretilen site (yayına giden klasör)
 docs/assets/gorsel/       rehber fotoğrafları (indirilmiş; kucuk/ = kart görselleri)
 docs/assets/*.css,*.js    elle bakılan varlıklar — üreteç bunları silmez
 docs/assets/bilgi-tabani.js  ÜRETİLİR: danışmanın aradığı künye dizini
+docs/assets/veri-parametre.js ÜRETİLİR: parametreler.json'un JS karşılığı
+docs/assets/dosya-kod.js     dosya kodu çözücü/üretici (saf hesap)
+docs/assets/sahne3b.js       hero 3B sahnesi (üste binen katman)
+docs/vendor/three.module.min.js  yerele gömülü three.js — dış istek yok
 ```
 
 Yeni bir rehber eklemek için `icerik/rehber/` altına tek bir dosya yazmak yeterlidir;
@@ -63,7 +67,7 @@ tutucular kullanılır, değer üretim anında `data/parametreler.json`'dan geli
 | Bölüm | İş |
 |---|---|
 | **Neden poliçe?** | DASK'ın kapsamı, teminat bazında karşılaştırma, şeffaflık ve gelir modeli |
-| **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı hesabı |
+| **Araçlar** | *Süre ve hak:* Süre takvimi, Hak tarama, Dosya kodu · *Dilekçe ve başvuru:* Dilekçe üretici · *Sigorta ve teminat:* Teminat açığı ve tazminat hesabı |
 | **Bilgi Merkezi** | 10 konu başlığı altında 33 kanuni dayanaklı rehber; her rehberde açılış fotoğrafı ve bir şema |
 | **Kurumsal** | Hakkımızda · Yöntemimiz · Mahremiyet · Yasal uyarı · Katkı |
 | **AI Sohbet** | Üst barda (masaüstü) ve her sayfada sağ altta. Sorunuzu yapay zekâ ile sitede arar, ilgili sayfaya yönlendirir |
@@ -143,7 +147,14 @@ kiracının en güçlü ve en az bilinen hakkı budur.
   geçidi `mevzuat.gov.tr` isteklerini 403 ile reddettiği için sunucu yine sonuç
   döndüremedi. Bilgiler çoklu bağımsız kaynak teyidiyle derlendi.
   Ayrıntı: [`DOGRULAMA.md`](./DOGRULAMA.md)
-- 🔴 **Dilekçe şablonları avukat onayından geçmedi.**
+- 🔴 **Dilekçe şablonları avukat onayından geçmedi.** Resmî dilekçe iskeletine
+  (KONU · AÇIKLAMALAR · HUKUKİ SEBEPLER · DELİLLER · SONUÇ VE İSTEM · EKLER)
+  kavuşturuldu, ama biçim düzeltmek içeriği doğrulamaz.
+- 🔴 **Muafiyetin niteliği doğrulanmadı.** Hesap "tenzili muafiyet her ödemeden
+  düşülür" okumasına göre kurulu; ters çıkarsa tutarlar değişir.
+  Bkz. `DOGRULAMA.md` A13-A14.
+- **Dosya kodu kaybedilirse kurtarılamaz.** Kod verinin kendisini taşır; sunucuda
+  hiçbir kopya yoktur. Bu bir eksik değil, mahremiyet sözünün bedeli.
 - **Parasal değerler eskir.** DASK azami teminatı 2026'da aylık güncelleniyor;
   bu yüzden tüm parametreler [`data/parametreler.json`](./data/parametreler.json)
   dosyasında tarih damgalı tutulur, metne gömülmez.
@@ -155,8 +166,18 @@ kiracının en güçlü ve en az bilinen hakkı budur.
 ## Geliştirme
 
 ```bash
-# Veri tutarlılığı (parametreler.json ↔ veri.js)
-python3 scripts/veri-kontrol.py
+# Siteyi üret
+python3 scripts/site-uret.py
+
+# Denetim paketi — hepsinin yeşil olması yayın şartıdır
+python3 scripts/bag-kontrol.py        # iç bağlantılar
+python3 scripts/kontrast.py           # WCAG 4.5:1 eşiği
+python3 scripts/veri-kontrol.py       # parametreler.json ↔ veri-parametre.js
+python3 scripts/markdown-kontrol.py   # markdown işleyici
+node scripts/sure-kontrol.mjs         # takvim süresi aritmetiği
+node scripts/hesap-kontrol.mjs        # DASK / eksik sigorta hesabı
+node scripts/danisma-kontrol.mjs      # danışma isabeti
+node scripts/dosya-kod-kontrol.mjs    # dosya kodu gidiş-dönüşü
 
 # Mevzuat MCP (ağ erişimi olan bir ortamda otomatik yüklenir)
 # .mcp.json repoda hazır — bkz. DOGRULAMA.md

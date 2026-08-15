@@ -57,9 +57,12 @@
     <h2>Dilekçeniz hazır</h2>
     <div class="serit">
       <strong>Kontrol edin.</strong> Metni okuyun, eksik veya yanlış bir yer varsa
-      formu düzeltip yeniden oluşturun. Bu bir taslaktır.
+      formu düzeltip yeniden oluşturun. Bu bir taslaktır ve avukat onayından
+      geçmemiştir.
     </div>
-    <pre class="cikti" id="cikti"></pre>
+    <!-- A4 önizleme: çıktının kâğıtta nasıl duracağı burada görünür.
+         Yazdırmada kenarlık ve gölge kalkar, metin tam sayfa olur. -->
+    <div class="dilekce-kagit"><pre id="cikti"></pre></div>
     <div class="dugme-sira">
       <button class="dugme" type="button" id="kopyala">Metni kopyala</button>
       <button class="dugme ikincil" type="button" id="indir">Dosya olarak indir</button>
@@ -72,7 +75,7 @@
 <script type="module">
 import {el, metniIndir, panoyaKopyala,
          kaydet, oku } from "../assets/app.js";
-import { SABLONLAR } from "../assets/veri.js";
+import { SABLONLAR, dilekceMetni } from "../assets/veri.js";
 const secimBolum = document.getElementById("secimBolum");
 const formBolum  = document.getElementById("formBolum");
 const ciktiBolum = document.getElementById("ciktiBolum");
@@ -155,7 +158,7 @@ form.addEventListener("submit", (e) => {
   }
   kaydet("dilekce-" + aktif.id, v);
 
-  document.getElementById("cikti").textContent = aktif.govde(v).trim();
+  document.getElementById("cikti").textContent = dilekceMetni(aktif, v).trim();
   gonderimCiz(aktif);
 
   formBolum.classList.add("gizli");
