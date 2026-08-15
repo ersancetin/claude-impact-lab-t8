@@ -1,0 +1,229 @@
+{
+  "$aciklama": "Zamanla degisen tum hukuki ve parasal degerler. Icerik sayfalari ve chatbot bu dosyadan okur; hicbir deger metne gomulmez. Her degerin gecerlilik tarihi ve dogrulama durumu zorunludur.",
+  "surum": "0.1.0-taslak",
+  "guncellemeTarihi": "2026-08-15",
+  "uyari": "HICBIR DEGER RESMI KAYNAKTAN DOGRULANMAMISTIR. Calisma ortaminin ag politikasi mevzuat.gov.tr, resmigazete.gov.tr ve dask.gov.tr erisimini engelledi. Yayin oncesi DOGRULAMA.md izlenerek her deger teyit edilmelidir.",
+
+  "dogrulamaDurumlari": {
+    "resmi": "Resmi kaynaktan birebir dogrulandi",
+    "coklu": "Birden fazla bagimsiz ikincil kaynaktan teyit edildi",
+    "tek": "Tek kaynak - guvenilmez",
+    "celiskili": "Kaynaklar celisiyor - YAYINLANAMAZ"
+  },
+
+  "dask": {
+    "$kaynak": "Zorunlu Deprem Sigortasi Tarife ve Talimat Tebligi",
+    "$kritikNot": "Azami teminat 2026'da AYLIK guncelleniyor. Bu degeri bir icerik sayfasina yazmak, sayfayi bir ay icinde yanlis hale getirir. Kullaniciya her zaman hangi tarihli tarifeyle hesap yapildigi gosterilmelidir.",
+    "azamiTeminat": {
+      "birim": "TRY",
+      "guncellemeSikligi": "aylik",
+      "gecerliDeger": 2271283,
+      "gecerlilikTarihi": "2026-05-01",
+      "dogrulama": "tek",
+      "gecmis": [
+        { "tarih": "2024-01-01", "deger": 1272000, "dogrulama": "coklu" },
+        { "tarih": "2025-01-01", "deger": 1704162, "dogrulama": "coklu" },
+        { "tarih": "2026-01-01", "deger": 2095462, "dogrulama": "tek" },
+        { "tarih": "2026-05-01", "deger": 2271283, "dogrulama": "tek" },
+        { "tarih": "2026-??-??", "deger": 2407723, "dogrulama": "celiskili", "not": "Hangi doneme ait oldugu belirsiz" }
+      ]
+    },
+    "metrekareBirimBedeli": {
+      "birim": "TRY/m2",
+      "gecerlilikTarihi": "2026-05-01",
+      "dogrulama": "tek",
+      "yapiTarzi": {
+        "celik_betonarme_karkas": 10714,
+        "diger": 7142
+      }
+    },
+    "muafiyetOrani": {
+      "deger": 0.02,
+      "aciklama": "Sigorta bedelinin %2'si oraninda tenzili muafiyet. DASK muafiyeti asan kisimdan sorumludur.",
+      "dogrulama": "coklu"
+    },
+    "hasarBirlestirmePenceresi": {
+      "saat": 72,
+      "aciklama": "Her 72 saatlik donem bir hasar sayilir. Sigortalinin LEHINEDIR: 6 Subat gibi kisa arayla iki deprem oldugunda muafiyet bir kez uygulanir.",
+      "dogrulama": "coklu"
+    }
+  },
+
+  "sureler": {
+    "$aciklama": "Hak dusurucu sureler. Sure hesaplayici bu tablodan calisir. Bir hata, kullanicinin hakkini tamamen kaybetmesine yol acar.",
+    "daskHasarIhbari": {
+      "gun": 15,
+      "baslangic": "rizikoyu ogrenme tarihi",
+      "dayanak": "ZDS Genel Sartlari B.1",
+      "dogrulama": "tek"
+    },
+    "eksperRaporunaItiraz": {
+      "gun": 15,
+      "baslangic": "raporun tebligi",
+      "dayanak": "sigorta sirketine yazili itiraz",
+      "dogrulama": "tek"
+    },
+    "daskHasarDosyasinaItiraz": {
+      "gun": 30,
+      "baslangic": "hasar dosyasinin kapatilmasi",
+      "dayanak": "DASK Genel Mudurlugune yazili itiraz",
+      "dogrulama": "tek"
+    },
+    "hasarTespitineItiraz": {
+      "gun": 30,
+      "baslangic": "mahalli ilan tarihi",
+      "dayanak": "7269 sayili Kanun",
+      "dogrulama": "coklu",
+      "kritik": true
+    },
+    "hakSahipligiBasvurusu": {
+      "ay": 2,
+      "baslangic": "ilan tarihi",
+      "dayanak": "7269 s.K. m.29 - mulkiye amirine yazili talep ve taahhutname",
+      "dogrulama": "coklu",
+      "kritik": true
+    },
+    "hakSahipligiReddineItiraz": {
+      "gun": 15,
+      "baslangic": "teblig",
+      "dayanak": "Afet Sebebiyle Hak Sahibi Olanlarin Tespiti Hakkinda Yonetmelik",
+      "dogrulama": "tek"
+    },
+    "riskliYapiTespitineItiraz": {
+      "gun": 15,
+      "baslangic": "teblig",
+      "dayanak": "6306 Uygulama Yonetmeligi",
+      "dogrulama": "coklu"
+    },
+    "imarPlaniAskiItirazi": {
+      "gun": 30,
+      "baslangic": "aski ilani",
+      "dayanak": "3194 s.K. m.8/b - bir ay",
+      "dogrulama": "coklu"
+    },
+    "idariDavaAcma": {
+      "gun": 60,
+      "baslangic": "teblig veya zimni ret",
+      "dayanak": "2577 s.K.",
+      "dogrulama": "coklu"
+    },
+    "idariBasvuruyaCevap": {
+      "gun": 30,
+      "aciklama": "Cevap verilmezse zimni ret sayilir; 60 gunluk dava suresi bu surenin bitiminden isler",
+      "dayanak": "2577 s.K. m.10-11",
+      "dogrulama": "coklu"
+    },
+    "tamYargiOnBasvurusu": {
+      "yil": 1,
+      "azamiYil": 5,
+      "baslangic": "eylemi ogrenme / eylem tarihi",
+      "dayanak": "2577 s.K. m.13",
+      "dogrulama": "tek"
+    },
+    "sigortaZamanasimi": {
+      "yil": 2,
+      "azamiYil": 6,
+      "baslangic": "alacagin muaccel oldugu tarih / riziko tarihi",
+      "dayanak": "TTK m.1420",
+      "dogrulama": "coklu",
+      "kritik": true
+    },
+    "eserSozlesmesiZamanasimi": {
+      "yil": 5,
+      "agirKusurYil": 20,
+      "baslangic": "teslim tarihi",
+      "dayanak": "TBK m.474-478",
+      "dogrulama": "coklu",
+      "not": "Deprem davalarinin neredeyse tamami 20 yillik sureye dayanir"
+    },
+    "cezaDavasiZamanasimi": {
+      "yil": 15,
+      "dayanak": "TCK m.66 - TCK m.85/1 ve 85/2 icin",
+      "dogrulama": "tek",
+      "tartismali": true,
+      "not": "Baslangic ani (insaatin tamamlanmasi mi, yikim mi) doktrinde tartismali"
+    },
+    "isverenYarimUcret": {
+      "gun": 7,
+      "aciklama": "Zorlayici sebeple calisilamayan bir haftaya kadar sure icin yarim ucret",
+      "dayanak": "4857 s.K. m.40",
+      "dogrulama": "coklu"
+    },
+    "besOdemesi": {
+      "isGunu": 20,
+      "baslangic": "lehtar veya mirascilarin talebi",
+      "dogrulama": "tek"
+    }
+  },
+
+  "sigortaTahkim": {
+    "$kaynak": "Sigorta Tahkim Komisyonu duyurulari",
+    "$kritikNot": "Kanun metnindeki 5.000 TL orijinal (2007) degerdir ve her yil yeniden degerleme oraninda artar. Bu rakam hicbir icerikte kullanilmamalidir.",
+    "gecerlilikTarihi": "2026-01-22",
+    "kesinlikSiniri": { "deger": 35000, "birim": "TRY", "dogrulama": "celiskili", "not": "Bir kaynak 28.000 TL diyor" },
+    "itirazSiniri": { "deger": 35000, "birim": "TRY", "dogrulama": "tek" },
+    "ucKisilikHeyetSiniri": { "deger": 122000, "birim": "TRY", "dogrulama": "tek" },
+    "temyizSiniri": { "deger": 383000, "birim": "TRY", "dogrulama": "celiskili", "not": "Bir kaynak 300.000 TL diyor" },
+    "itirazSuresiGun": { "deger": 10, "dogrulama": "tek" },
+    "itirazKararSuresiAy": { "deger": 2, "dogrulama": "tek" },
+    "hangiTarihinSiniri": "Itiraz ve temyizde kararin verildigi tarihteki, heyet tesekkulunde zorunlu hale geldigi tarihteki sinir uygulanir"
+  },
+
+  "depremYonetmelikleri": {
+    "$aciklama": "Guvende miyim testinin cekirdegi. Binanin yapim yili hangi yonetmelik kusagina denk geliyor?",
+    "kusaklar": [
+      { "ad": "ABYYHY 1975", "yururluk": null, "resmiGazete": null, "dogrulama": "tek" },
+      { "ad": "ABYYHY 1998", "yururluk": "1998", "resmiGazete": "02.09.1997 / 23098", "dogrulama": "tek", "not": "Yayim 1997, yaygin adlandirma 1998 - hangisinin esas alinacagi netlesmeli" },
+      { "ad": "DBYBHY 2007", "yururluk": "2007-03-06", "resmiGazete": "06.03.2007 / 26454", "dogrulama": "tek" },
+      { "ad": "TBDY 2018", "yururluk": "2019-01-01", "resmiGazete": "18.03.2018 / 30364 (Mukerrer)", "dogrulama": "coklu" }
+    ],
+    "yapiDenetimiBaslangici": {
+      "yil": 2001,
+      "dayanak": "4708 sayili Kanun",
+      "aciklama": "2001 oncesi yapilar zorunlu yapi denetiminden gecmemistir",
+      "dogrulama": "coklu"
+    }
+  },
+
+  "gecmisUygulamalar": {
+    "$KRITIK_UYARI": "BUNLAR KALICI HAK DEGILDIR. 2023 depremine ozgu idari kararlardir. Platformda 'hakkiniz' olarak degil, 'gecmis afette uygulanan emsal' olarak sunulmalidir. Aksi halde kullaniciya var olmayan bir hak vaat edilmis olur.",
+    "afad2023": {
+      "kiraYardimiEvSahibi": { "aylik": 5000, "ay": 12, "birim": "TRY", "dogrulama": "tek" },
+      "kiraYardimiKiraci": { "aylik": 3000, "ay": 12, "birim": "TRY", "dogrulama": "tek" },
+      "tasinmaYardimi": { "deger": 15000, "birim": "TRY", "birDefalik": true, "dogrulama": "coklu" }
+    },
+    "kosgeb2023": {
+      "acilDestekKredisi": { "azami": 1500000, "birim": "TRY", "dogrulama": "tek" },
+      "konteynerDestegi": { "azami": 300000, "birim": "TRY", "geriOdemesiz": true, "dogrulama": "tek" },
+      "onarimPersonelDestegi": { "deger": 75000, "birim": "TRY", "dogrulama": "tek" },
+      "girisimcilikDestegi": { "azami": 130000, "birim": "TRY", "geriOdemesiz": true, "dogrulama": "tek" }
+    },
+    "bddk2023": {
+      "kreditErtelemeAyAzami": 6,
+      "gecerlilik": "2023-02-06 / 2024-01-01",
+      "dogrulama": "coklu"
+    },
+    "mucbirSebep2023": {
+      "iller": ["Adana", "Adiyaman", "Diyarbakir", "Gaziantep", "Hatay", "Kahramanmaras", "Kilis", "Malatya", "Osmaniye", "Elazig", "Sanliurfa"],
+      "bitis": "2023-07-31",
+      "dayanak": "VUK m.13 - Hazine ve Maliye Bakanligi",
+      "dogrulama": "coklu"
+    }
+  },
+
+  "afetKonutuBorclandirma": {
+    "$dayanak": "7269 sayili Kanun",
+    "geriOdemeAsgariYil": 20,
+    "geriOdemeAzamiYil": 30,
+    "faizli": false,
+    "ilkTaksitGecikmeYil": 2,
+    "ilkTaksitBaslangic": "insaatin tamamlanip hak sahibine teslimi",
+    "dogrulama": "tek"
+  },
+
+  "iletisim": {
+    "aloDask": "125",
+    "daskHasarIhbarKanallari": ["ALO DASK 125", "dask.gov.tr Online Hasar Islemleri", "policeyi duzenleyen sigorta sirketi", "e-Devlet"],
+    "dogrulama": "coklu"
+  }
+}

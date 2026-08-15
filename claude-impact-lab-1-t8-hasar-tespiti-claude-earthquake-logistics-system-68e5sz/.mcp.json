@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "mevzuat": {
+      "command": "uvx",
+      "args": ["--from", "mevzuat-mcp", "mevzuat-mcp"],
+      "env": {}
+    }
+  }
+}
