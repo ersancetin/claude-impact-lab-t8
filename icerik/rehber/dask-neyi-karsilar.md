@@ -3,9 +3,9 @@
   "kategori": "konut-sigorta",
   "sira": 1,
   "baslik": "DASK neyi karşılar, neyi karşılamaz?",
-  "seoBaslik": "DASK neyi karşılar, neyi karşılamaz? Kapsam ve teminat dışı kalemler",
-  "ozet": "Zorunlu deprem sigortası yalnızca binayı sigortalar. Ev eşyası, enkaz kaldırma, alternatif konaklama, kira kaybı ve ölüm dâhil tüm bedeni zararlar teminat dışıdır.",
-  "seoAciklama": "DASK hangi zararları karşılar? Eşya, enkaz kaldırma, kira kaybı ve ölüm neden teminat dışı? Zorunlu deprem sigortasının kapsamı, muafiyet ve azami teminat.",
+  "seoBaslik": "DASK Neleri Karşılamaz? Teminat Dışı Kalan Her Şey",
+  "ozet": "DASK binanızı sigortalar, hayatınızı değil. Ev eşyası, enkaz kaldırma, alternatif konaklama, kira kaybı ve ölüm dâhil bedeni zararlar kapsam dışıdır.",
+  "seoAciklama": "DASK neleri ödemez? Ev eşyası, enkaz kaldırma, kira mahrumiyeti, alternatif konaklama ve ölüm dâhil bedeni zararlar teminat dışıdır. Hangi poliçe kapatır?",
   "nitelik": "kalici",
   "dogrulama": "coklu",
   "guncelleme": "2026-08-15",
@@ -29,139 +29,150 @@
   ],
   "sss": [
     {
-      "soru": "DASK'ım varken eşyalarım için ödeme alabilir miyim?",
-      "cevap": "Hayır. DASK yalnızca **bina** teminatıdır. Ev eşyası için ayrıca ihtiyari konut/eşya sigortası gerekir."
+      "soru": "DASK ev eşyasını karşılar mı?",
+      "cevap": "Hayır. Genel şartlar her türlü taşınır malı, eşyayı ve benzerlerini açıkça teminat dışında bırakır. Mobilya, beyaz eşya ve elektronik cihazlar için ihtiyari konut/eşya sigortası gerekir."
     },
     {
-      "soru": "Deprem sırasında yakınım hayatını kaybetti; DASK ödeme yapar mı?",
-      "cevap": "Hayır. Ölüm dâhil tüm bedeni zararlar ve manevi tazminat talepleri teminat dışıdır. Bunların karşılığı hayat sigortası, ferdi kaza sigortası, SGK hakları ve tazminat davalarında aranır."
+      "soru": "Enkaz kaldırma masrafını DASK öder mi?",
+      "cevap": "Hayır. Enkaz kaldırma masrafları genel şartlarda sayılan teminat dışı kalemler arasındadır. Bazı konut paket poliçelerinde ek teminat olarak seçilebilir."
+    },
+    {
+      "soru": "Depremde evim oturulamaz hâle geldi, DASK kira öder mi?",
+      "cevap": "Hayır. Kâr kaybı, iş durması, kira mahrumiyeti ve alternatif ikametgâh masrafları teminat dışıdır. Bu ihtiyaç ancak ihtiyari konut sigortasının ilgili teminatlarıyla karşılanabilir."
+    },
+    {
+      "soru": "Depremde ölüm veya yaralanma DASK kapsamında mı?",
+      "cevap": "Hayır. Ölüm dâhil olmak üzere tüm bedeni zararlar ve manevi tazminat talepleri teminat dışıdır. Bedeni zararların karşılığı hayat sigortası ve deprem teminatı seçilmiş ferdi kaza poliçeleridir."
+    },
+    {
+      "soru": "Hangi binalar DASK kapsamı dışındadır?",
+      "cevap": "Kamu hizmet binaları, köy yerleşik alanlarındaki binalar, tamamı ticari veya sınai amaçla kullanılan binalar, projesi bulunmayan ve mühendislik hizmeti görmemiş yapılar, taşıyıcı sistemi olumsuz etkilenecek şekilde tadil edilmiş binalar ile yıkılmasına karar verilen, metruk veya harap binalar."
     },
     {
       "soru": "Kiracıyım, DASK yaptırabilir miyim?",
       "cevap": "DASK bina için ve malik adına düzenlenir; kiracı poliçenin lehtarı değildir. Ancak kendi ev eşyanız için konut/eşya sigortası yaptırabilirsiniz."
     },
     {
-      "soru": "Enkaz kaldırma masrafını DASK karşılar mı?",
-      "cevap": "Hayır. Enkaz kaldırma, teminat dışında sayılan kalemler arasındadır."
-    },
-    {
       "soru": "Ödeme binanın piyasa değeri üzerinden mi yapılır?",
-      "cevap": "Hayır. Sigorta bedeli, yapı tarzına ve brüt yüzölçümüne göre belirlenen metrekare birim maliyetiyle hesaplanır; **arsa değeri teminata dâhil değildir** ve tutar azami teminatı aşamaz."
+      "cevap": "Hayır. Sigorta bedeli, yapı tarzına ve brüt yüzölçümüne göre belirlenen metrekare birim maliyetiyle hesaplanır; arsa değeri teminata dâhil değildir ve tutar azami teminatı aşamaz."
     }
   ],
   "arac": [
     {
       "id": "teminat",
       "ad": "Teminat açığı hesabı",
-      "ozet": "Binanızın sigorta bedelini, muafiyeti ve açıkta kalan tutarı hesaplayın."
+      "ozet": "DASK'ın kapsadığı ve açıkta kalan tutarı hesaplayın."
+    },
+    {
+      "id": "haklarim",
+      "ad": "Hak tarama",
+      "ozet": "Malik veya kiracı olarak hangi haklara sahip olduğunuzu görün."
     }
   ],
   "ilgili": [
+    "dask-yeterli-mi",
     "konut-sigortasi-ve-eksik-sigorta",
     "dask-hasar-ihbari",
-    "hak-sahipligi-ve-afet-konutu"
+    "daskim-yoksa-ne-olur",
+    "kiraci-deprem-haklari"
   ],
   "anahtar": [
-    "dask",
-    "zorunlu deprem sigortası",
-    "kapsam",
-    "teminat dışı",
-    "eşya",
-    "enkaz kaldırma",
-    "kira kaybı",
-    "alternatif konaklama",
-    "bedeni zarar",
-    "manevi tazminat",
-    "neyi karşılar",
-    "neyi karşılamaz"
+    "DASK neleri karşılamaz",
+    "DASK eşya karşılıyor mu",
+    "DASK teminat dışı",
+    "enkaz kaldırma sigorta",
+    "DASK kapsamı",
+    "zorunlu deprem sigortası kapsam"
   ]
 }
 ---
-Zorunlu deprem sigortası (DASK) Türkiye'de en yaygın bilinen afet sigortasıdır; aynı zamanda
-en yaygın **yanlış bilinen** sigortadır. "DASK'ım var" cümlesi çoğu kişi için "zararım
-karşılanır" anlamına gelir. Gerçekte DASK dar ve net bir teminattır: **binayı sigortalar,
-insanı ve eşyayı sigortalamaz.**
+Türkiye'de en yaygın sigorta yanılgısı tek cümleyle özetlenebilir: *"DASK'ım var, ben güvendeyim."* Zorunlu deprem sigortası önemli bir korumadır ama kapsamı, çoğu kişinin sandığından çok daha dardır.
+
+:::vurgulu 
+**DASK binanızı sigortalar, hayatınızı değil.** Eşyanız, canınız, kiranız ve enkaz masrafınız DASK kapsamında değildir.
+:::
 
 ## DASK neyi karşılar?
 
-Teminat, deprem ve depremin doğrudan sonucu olan olayların **binada** yol açtığı maddi
-zararları kapsar:
+Sigorta, depremin doğrudan neden olduğu maddi zararlar ile deprem nedeniyle ortaya çıkan **yangın, infilak, dev dalga (tsunami) ve yer kayması** sonucu binada meydana gelen maddi zararları teminat altına alır.
 
-- Deprem
-- Deprem sonucu **yangın**
-- Deprem sonucu **infilak**
-- **Tsunami**
-- Deprem sonucu **yer kayması**
+:dayanak Zorunlu Deprem Sigortası Genel Şartları A.1
 
-Bina bakımından teminat; temeller, ana duvarlar, taşıyıcı sistem, tavan ve tabanlar,
-merdivenler, asansörler, çatı ve bacalar gibi binanın bütünleyici parçalarını kapsar.
+Teminat kapsamındaki bina unsurları: temeller, ana duvarlar, bağımsız bölümleri ayıran ortak duvarlar, tavan ve tabanlar, merdivenler, asansörler, sahanlıklar, koridorlar, çatılar, bacalar ve yapının benzer nitelikteki tamamlayıcı kısımları.
 
-## DASK neyi karşılamaz?
+Ödeme, konutun piyasa değeri üzerinden yapılmaz: sigorta bedeli yapı tarzına ve brüt yüzölçümüne göre hesaplanır, **arsa değeri teminata dâhil değildir** ve tutar hiçbir hâlde azami teminatı aşamaz ({{dask.azamiTeminatTarih}} tarifesine göre {{dask.azamiTeminat}}). Hesabın ayrıntısı: [DASK'ım yeterli mi?](dask-yeterli-mi.html)
 
-Asıl mağduriyet burada doğar. Aşağıdaki kalemler **teminat dışıdır:**
+## DASK neleri karşılamaz? Tam liste
 
-| Kalem | Durum |
-|---|---|
-| Ev eşyası (mobilya, beyaz eşya, elektronik) | Teminat dışı |
-| Enkaz kaldırma masrafları | Teminat dışı |
-| Alternatif konaklama, geçici barınma gideri | Teminat dışı |
-| Kira kaybı, iş durması, kâr kaybı | Teminat dışı |
-| **Ölüm dâhil tüm bedeni zararlar** | Teminat dışı |
-| **Manevi tazminat** talepleri | Teminat dışı |
-| Deprem dışındaki dolaylı zararlar | Teminat dışı |
-
-:::tehlike En sık yapılan hata
-"DASK var, gerisini düşünmem" varsayımı. DASK ödemesi yapılsa bile eşyanız, barınma
-gideriniz, kira kaybınız ve bedeni zararlarınız için **hiçbir ödeme almazsınız.**
+:::tehlike 
+- **Enkaz kaldırma masrafları**
+- **Kâr kaybı, iş durması, kira mahrumiyeti**
+- **Alternatif ikametgâh ve iş yeri masrafları**
+- Mali sorumluluklar ve benzeri dolaylı zararlar
+- **Her türlü taşınır mal, eşya ve benzerleri** — mobilya, beyaz eşya, elektronik: hiçbiri kapsamda değildir
+- **Ölüm dâhil olmak üzere tüm bedeni zararlar**
+- **Manevi tazminat talepleri**
+- Deprem ve deprem sonucu oluşan yangın, infilak, tsunami veya yer kaymasının dışında kalan hasarlar
+- Belirli bir deprem hadisesine bağlı olmaksızın, binanın kendi kusur ve özellikleri nedeniyle zamanla oluşan zararlar
 :::
 
-## Hangi binalar kapsam dışıdır?
+:dayanak Zorunlu Deprem Sigortası Genel Şartları A.3
 
-Zorunlu deprem sigortası, tapuya kayıtlı ve özel mülkiyete tabi taşınmazlar üzerindeki
-**meskenler** için düzenlenir. Genel şartlarda kapsam dışı bırakılan yapılar arasında
-şunlar sayılır:
+## Hangi binalar hiç sigortalanamaz?
 
-- Kamu kurum ve kuruluşlarına ait binalar
-- Köy yerleşim alanlarındaki binalar
-- Tamamı ticari veya sanayi amacıyla kullanılan binalar
-- Projesine aykırı inşa edilmiş, ruhsatsız veya kaçak yapılar
-- İnşaatı tamamlanmamış binalar
-- Yıkılmaya yüz tutmuş ya da taşıyıcı sistemi olumsuz etkileyecek şekilde tadil edilmiş binalar
+Bazı binalar için poliçe yapılsa dahi genel şartlar gereği kapsam dışı sayılabilir:
 
-## Ödeme nasıl belirlenir?
+- Kamu hizmet binası olarak kullanılan binalar
+- Köy yerleşik alanlarındaki binalar
+- **Tamamı** ticari veya sınai amaçla kullanılan binalar
+- **Projesi bulunmayan ve mühendislik hizmeti görmemiş binalar**
+- Taşıyıcı sistemi olumsuz yönde etkileyecek şekilde **tadil edilmiş** binalar
+- Yetkili kamu kurumlarınca yıkılmasına karar verilen binalar ile metruk, bakımsız veya harap binalar
 
-Ödeme, poliçedeki **sigorta bedeli** ile sınırlıdır. Bu bedel, binanın yapı tarzına ve brüt
-yüzölçümüne göre belirlenen metrekare birim maliyetiyle hesaplanır ve DASK'ın her yıl
-güncellenen **azami teminat tutarını** aşamaz.
+:::uyari Tadilat uyarısı
+"Salonu büyütmek için kolon kestirdim", "taşıyıcı duvarı kaldırdık" diyen bir malikin poliçesi, hasar anında tartışma konusu olabilir. Taşıyıcı sisteme dokunan her tadilat, hem bina güvenliği hem sigorta bakımından risk üretir.
+:::
 
-İki nokta sürekli gözden kaçar:
+## Açıkta kalan zararı ne kapatır?
 
-1. **Arsa değeri teminata dâhil değildir.** Sigorta bedeli yapının inşa maliyetine göre
-   belirlenir; binanın piyasa değeri hesaba katılmaz.
-2. **%2 tenzili muafiyet** uygulanır: sigorta bedelinin %2'sine karşılık gelen tutar
-   hasardan düşülür. Küçük hasarlarda bu, ödemenin hiç yapılmaması sonucunu doğurabilir.
+:tablo DASK ile ihtiyari konut sigortası karşılaştırması
+| Konu | DASK | Konut sigortası (deprem ek teminatlı) |
+|---|---|---|
+| Zorunluluk | Zorunlu | İsteğe bağlı |
+| Bina hasarı | Azami teminata kadar | DASK limitinin üstü |
+| Eşya / taşınır mal | Yok | Poliçeye göre var |
+| Enkaz kaldırma | Yok | Ek teminat olarak seçilebilir |
+| Kira mahrumiyeti / alternatif konut | Yok | Poliçeye göre var |
+| Bedeni zararlar, ölüm | Yok | Ferdi kaza teminatıyla kısmen |
 
-> Azami teminat ve metrekare birim maliyetleri düzenli olarak değişir. Bu değerler rehber
-> metnine gömülmez; [teminat açığı hesabı](../arac/teminat.html) aracı tarih damgalı tek bir
-> veri dosyasından okur.
+**İşleyiş sırası:** önce DASK devreye girer ve limitine kadar öder; DASK limitini aşan kısım, varsa konut paket poliçesinin deprem teminatından karşılanır. İkisi birbirinin alternatifi değil, **tamamlayıcısıdır**.
 
-## Bedeni zararlar nereden karşılanır?
+## Kiracıysanız durum daha da nettir
 
-DASK'ın karşılamadığı bedeni zararların karşılığı başka yerlerde aranır:
+DASK poliçesi binaya ve malike bağlıdır; tazminat malike ödenir. Kiracı DASK yaptıramaz. Buna karşılık kiracı, **kendi eşyası için** konut/eşya sigortası yaptırabilir. Bina malikin, eşya sizin — sigortası da ayrıdır.
 
-- **Hayat sigortası** — vefat teminatı
-- **Ferdi kaza sigortası** — dikkat: aksi kararlaştırılmadıkça **deprem teminat dışıdır**
-- **SGK ölüm (dul–yetim) aylığı**
-- **Bireysel emeklilik (BES) birikimi** — lehtara, yoksa yasal mirasçılara
-- **Tazminat davaları** — müteahhit, yapı denetim kuruluşu ve idareye karşı
+Türkiye'de kiracılar arasında eşya sigortasının yaygınlığı çok düşüktür; oysa aylık maliyeti düşük, karşılığı yüksek bir üründür. [Kiracının deprem hakları](kiraci-deprem-haklari.html) yazısında ayrıntılı anlatılıyor.
 
-Ayrıntı: [Ölüm hâlinde sigorta ve sosyal güvenlik hakları](olum-halinde-sigorta-ve-sgk.html).
+## Can kaybı: en büyük boşluk
 
-## DASK'ın en az bilinen işlevi
+Deprem sonrasında ailelerin karşılaştığı en acı sürprizlerden biri budur: DASK ölümü karşılamaz. Bedeni zararların karşılığı hayat sigortası ve **deprem teminatı seçilmiş** ferdi kaza poliçeleridir. Standart ferdi kaza poliçelerinde deprem, aksi kararlaştırılmadıkça teminat dışıdır.
 
-DASK'ın asıl karşılığı hasar ödemesinden ibaret değildir: **zorunlu deprem sigortası
-bulunmayanlara devlet konut yardımı veya kredi ödenmemektedir.** Yani DASK yaptırmamanın
-yaptırımı bir para cezası değil, afet sonrası devlet desteğinin tamamen dışında kalmaktır.
+Yakınını kaybedenler için başvuru sırası: [ölüm karinesi, sigorta, SGK ve BES](olum-karinesi-ve-miras.html).
 
-Bu kural hak sahipliği başvurusu yapacak malikler için belirleyicidir; bkz.
-[Hak sahipliği ve afet konutu](hak-sahipligi-ve-afet-konutu.html).
+## Bugün yapılabilecek üç şey
+
+1. **Poliçenizi okuyun.** Bina metrekaresi doğru mu, yapı tarzı doğru mu? Yanlış metrekare, eksik sigorta bedeli demektir.
+2. **Açığınızı hesaplayın.** [Sigorta açığı aracı](../arac/teminat.html) binanızın sigorta bedelini, muafiyeti ve açıkta kalan tutarı gösterir.
+3. **Eksik teminatları tamamlayın.** Eşya, enkaz kaldırma, alternatif konaklama ve ferdi kaza teminatlarını ihtiyari poliçelerle değerlendirin. [DASK yeterli mi?](dask-yeterli-mi.html)
+
+## İş yeriniz varsa durum farklı
+
+Zorunlu deprem sigortası, mesken olarak inşa edilmiş binalar ile bu binalar içindeki **ticarethane, büro ve benzeri amaçlarla kullanılan bağımsız bölümleri** kapsar. Buna karşılık **tamamı** ticari veya sınai amaçla kullanılan binalar genel şartlar gereği kapsam dışındadır.
+
+Pratik sonuç şudur: apartmanın zemin katındaki dükkân kapsamda olabilirken, müstakil bir fabrika veya iş hanı DASK ile korunmaz. Bu yapılar için **ticari deprem sigortası** gerekir. Ayrıca DASK, iş yeri sahibinin asıl kaybını — **iş durması ve kâr kaybını** — hiçbir hâlde karşılamaz; bu, ayrı bir teminat konusudur.
+
+## Ortak alan hasarları ne oluyor?
+
+Teminat kapsamındaki bina unsurları arasında ortak duvarlar, merdivenler, asansörler, sahanlıklar, koridorlar, çatılar ve bacalar da sayılmıştır. Yani ortak alan hasarları kural olarak teminat kapsamındadır; ancak ödeme her bağımsız bölümün poliçesi ve sigorta bedeli üzerinden yürür.
+
+Bu yüzden apartmanda bazı dairelerin poliçesiz olması, ortak alan onarımında **maliyet paylaşımı sorunu** yaratır. Yönetim planı ve kat malikleri kurulu kararları burada belirleyici olur.

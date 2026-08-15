@@ -534,6 +534,39 @@ a:hover { color: var(--vurgu-koyu); }
 .rehber span { display: block; color: var(--murekkep-2); font-size: .9rem; flex: 1; }
 .rehber .etiket { color: var(--turkuaz); }
 
+/* Görselli rehber kartı: küçük fotoğraf üstte, metin altta. Fotoğraf
+   dekoratiftir (alt=""), bilgiyi başlık taşır — görsel hiç yüklenmese
+   de kart eksik kalmaz. Yükseklik/genişlik özniteliği zorunlu: ızgara
+   yüklenirken kaymasın (CLS). */
+.rehber.gorselli { padding: 0; overflow: hidden; }
+.rehber-gorsel {
+  display: block; width: 100%; height: auto; aspect-ratio: 360 / 188;
+  object-fit: cover; background: var(--yuzey-alt);
+  border-bottom: var(--sinir);
+}
+.rehber-kapak {
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: calc(var(--olcek)*3);
+  font-family: var(--f-mono); font-size: .8rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--murekkep-3);
+  background: var(--yuzey-alt);
+  /* Fotoğrafı olmayan rehberin kartı boş kalmaz; sahte fotoğraf da konmaz. */
+  background-image: repeating-linear-gradient(
+    135deg, transparent 0 7px, var(--cizgi) 7px 8px);
+}
+/* Sarmalayıcının `.rehber span` kuralını yenmesi için sınıf zinciri:
+   yoksa kart başlığı da soluk metin rengini miras alırdı. */
+.rehber .rehber-ic {
+  display: flex; flex-direction: column; flex: 1;
+  padding: calc(var(--olcek)*4);
+  color: var(--murekkep); font-size: 1rem;
+}
+.rehber .rehber-ic > span { color: var(--murekkep-2); font-size: .9rem; }
+.rehber .etiket {
+  font-size: .7rem; letter-spacing: .13em; text-transform: uppercase;
+  margin-bottom: calc(var(--olcek)*2);
+}
+
 /* --- 12. Durum kartları ----------------------------------- */
 .kart {
   background: var(--yuzey);
@@ -756,6 +789,43 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
 }
 .icindekiler a { color: var(--murekkep-2); text-decoration: none; }
 .icindekiler a:hover { color: var(--vurgu); text-decoration: underline; }
+
+/* Açılış fotoğrafı — indirilmiş dosya, dış istek yok; künyesi altında. */
+.foto { margin: 0 0 calc(var(--olcek)*6); }
+.foto img {
+  display: block; width: 100%; height: auto;
+  border: var(--sinir);            /* köşe yuvarlatma yok: evrak hissi */
+  background: var(--yuzey-alt);
+}
+.foto figcaption,
+.sekil figcaption {
+  font-family: var(--f-mono); font-size: .72rem;
+  color: var(--murekkep-3);
+  margin-top: calc(var(--olcek)*2);
+}
+.foto figcaption a { color: var(--murekkep-3); }
+
+/* Şema (satır içi SVG) — renkler tema değişkenlerinden gelir, böylece
+   koyu tema ve kullanıcının tema seçimi çizime de uygulanır. */
+.sekil {
+  margin: 0 0 calc(var(--olcek)*7);
+  padding: calc(var(--olcek)*4) calc(var(--olcek)*4) calc(var(--olcek)*3);
+  background: var(--yuzey); border: var(--sinir);
+}
+.sekil svg { display: block; width: 100%; height: auto; }
+.sekil figcaption { margin-top: calc(var(--olcek)*3); }
+.sekil .s-metin        { fill: var(--murekkep); font-family: var(--f-metin); }
+.sekil .s-mono         { fill: var(--murekkep-2); font-family: var(--f-mono); }
+.sekil .s-kutu         { fill: var(--yuzey-alt); }
+.sekil .s-cizgi        { stroke: var(--cizgi); stroke-width: 1; }
+.sekil .s-cizgi-kalin  { stroke: var(--cizgi-koyu); stroke-width: 2; }
+.sekil .s-ok           { fill: var(--cizgi-koyu); }
+.sekil .s-vurgu-dolgu  { fill: var(--vurgu); }
+.sekil .s-uyari-dolgu  { fill: var(--uyari); }
+.sekil .s-tehlike-dolgu{ fill: var(--tehlike); }
+.sekil .s-bilgi-dolgu  { fill: var(--bilgi); }
+.sekil .s-notr-dolgu   { fill: var(--cizgi-koyu); }
+.sekil .s-cubuk-yazi   { fill: var(--bant-yazi); font-family: var(--f-mono); }
 
 .yazi-kunye {
   display: flex; flex-wrap: wrap; gap: calc(var(--olcek)*3);
@@ -1041,6 +1111,8 @@ td.sayi, th.sayi { text-align: right; font-family: var(--f-mono); font-variant-n
   .cikti { border: none; padding: 0; max-height: none; overflow: visible; font-size: 11pt; }
   .kart { border: 1px solid #999; break-inside: avoid; }
   .yazi-duzen { display: block; }
+  .foto, .sekil { break-inside: avoid; }
+  .sekil { border: 1px solid #999; }
   a { color: #000; text-decoration: none; }
   .sss details { display: block; }
   .sss .cevap { display: block !important; }
