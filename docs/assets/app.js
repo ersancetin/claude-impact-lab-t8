@@ -30,52 +30,14 @@ function temaEtiketiYenile() {
   d.textContent = koyuMu ? "Açık tema" : "Koyu tema";
 }
 
-/* --- Sayfa iskeleti --------------------------------------- */
-export function iskelet({ aktif } = {}) {
-  const kok = document.body;
-
-  const ust = document.createElement("header");
-  ust.className = "ust";
-  ust.innerHTML = `
-    <div class="ust-ic">
-      <a class="marka" href="./index.html">Deprem Haklarım</a>
-      <span class="bosluk"></span>
-      <button class="tema-dugme" type="button">Koyu tema</button>
-    </div>`;
-  kok.prepend(ust);
-
-  const atla = document.createElement("a");
-  atla.className = "atla";
-  atla.href = "#ana";
-  atla.textContent = "İçeriğe atla";
-  kok.prepend(atla);
-
-  const alt = document.createElement("footer");
-  alt.className = "alt";
-  alt.innerHTML = `
-    <div class="kap">
-      <nav>
-        <a href="./index.html">Ana sayfa</a>
-        <a href="./haklarim.html">Haklarım</a>
-        <a href="./sureler.html">Süre takvimi</a>
-        <a href="./teminat.html">Sigorta açığı</a>
-        <a href="./dilekce.html">Dilekçe</a>
-      </nav>
-      <p><strong>Bu site hukuki tavsiye vermez.</strong> Buradaki bilgiler genel
-      bilgilendirme amaçlıdır ve avukatlık hizmetinin yerine geçmez. Somut
-      durumunuz için bir avukata veya bulunduğunuz ilin barosunun
-      <strong>adli yardım</strong> birimine başvurun.</p>
-      <p>Bilgiler henüz resmî kaynaklardan doğrulanmamıştır; doğrulama
-      sürmektedir. Girdiğiniz hiçbir bilgi sunucuya gönderilmez, yalnızca
-      tarayıcınızda kalır.</p>
-      <p>Kâr amacı gütmeyen açık kaynak çalışma · T8 Hasar Tespiti</p>
-    </div>`;
-  kok.append(alt);
-
-  ust.querySelector(".tema-dugme").addEventListener("click", temaDegistir);
+/* --- Tema düğmesi bağlama --------------------------------- */
+/* Başlık ve alt bilgi artık statik HTML olarak üretiliyor
+   (scripts/site-uret.py). Burada yalnızca tema düğmesi bağlanır. */
+export function temaBagla() {
+  const d = document.querySelector(".tema-dugme");
+  if (!d) return;
+  d.addEventListener("click", temaDegistir);
   temaEtiketiYenile();
-
-  if (aktif) document.title = `${aktif} · Deprem Haklarım`;
 }
 
 /* --- Tarih ------------------------------------------------ */
