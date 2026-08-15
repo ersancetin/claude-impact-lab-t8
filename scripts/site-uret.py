@@ -61,6 +61,43 @@ def kacir(m):
     return html.escape(str(m), quote=True)
 
 
+# ---------------------------------------------------------------- ikon
+# Tek kaynak: data/ikon.json. Buradan hem menüye satır içi SVG basılır
+# hem de docs/assets/ikon.js üretilir. İkonu iki yerde tutmak, birinin
+# eskimesi demektir — bu yüzden kopya yok.
+IKONLAR = {}
+
+
+def ikon_yukle():
+    ham = json.loads((VERI / "ikon.json").read_text(encoding="utf-8"))
+    return {k: v for k, v in ham.items() if not k.startswith("$")}
+
+
+def ikon_svg(ad, ek=""):
+    """Satır içi SVG. Süsleyici olduğu için ekran okuyucudan gizlenir —
+    anlam her zaman yanındaki metinde vardır."""
+    kayit = IKONLAR.get(ad)
+    if not kayit:
+        return ""
+    sinif = f"ikon {ek}".strip()
+    return (f'<svg class="{sinif}" viewBox="0 0 20 20" aria-hidden="true" '
+            f'focusable="false">{kayit["d"]}</svg>')
+
+
+def ikon_js_yaz():
+    govde = json.dumps(
+        {k: v["d"] for k, v in IKONLAR.items()}, ensure_ascii=False, indent=1)
+    (CIKTI / "assets" / "ikon.js").write_text(
+        "/* ÜRETİLMİŞ DOSYA — elle düzenlemeyin.\n"
+        "   Kaynak: data/ikon.json · Üreteç: scripts/site-uret.py\n\n"
+        "   Tarayıcı tarafı için ikon gövdeleri. Kullanım:\n"
+        "     el('svg', { class: 'ikon', viewBox: '0 0 20 20',\n"
+        "                 'aria-hidden': 'true', html: IKON.sure })\n */\n"
+        f"export const IKON = {govde};\n",
+        encoding="utf-8")
+    return len(IKONLAR)
+
+
 def kisalt(metin, sinir=96):
     """Menü ve künye özetlerini cümle bütünlüğünü bozmadan kısaltır."""
     metin = (metin or "").strip()
@@ -99,8 +136,9 @@ class Site:
         sutun = []
         for grup, ler in self.arac_gruplari().items():
             oge = "".join(
-                f'<li><a href="{p}arac/{m["id"]}.html">'
-                f'<b>{kacir(m["ad"])}</b><span>{kacir(kisalt(m["ozet"]))}</span></a></li>'
+                f'<li><a href="{p}arac/{m["id"]}.html">{ikon_svg(m.get("ikon", m["id"]))}'
+                f'<div><b>{kacir(m["ad"])}</b>'
+                f'<span>{kacir(kisalt(m["ozet"]))}</span></div></a></li>'
                 for m in ler)
             sutun.append(f'<div><h3>{kacir(grup)}</h3><ul>{oge}</ul></div>')
         return f"""<div class="mega">
@@ -117,8 +155,9 @@ class Site:
         sutun = []
         for i in range(0, len(katlar), boy):
             oge = "".join(
-                f'<li><a href="{p}bilgi/{k["id"]}.html">'
-                f'<b>{kacir(k["ad"])}</b><span>{kacir(kisalt(k["ozet"]))}</span></a></li>'
+                f'<li><a href="{p}bilgi/{k["id"]}.html">{ikon_svg(k.get("ikon", k["id"]))}'
+                f'<div><b>{kacir(k["ad"])}</b>'
+                f'<span>{kacir(kisalt(k["ozet"]))}</span></div></a></li>'
                 for k in katlar[i:i + boy])
             sutun.append(f"<div><ul>{oge}</ul></div>")
         return f"""<div class="mega">
@@ -131,15 +170,16 @@ class Site:
 
     def mega_kurumsal(self, p):
         oge = "".join(
-            f'<li><a href="{p}kurumsal/{s["id"]}.html">'
-            f'<b>{kacir(s["ad"])}</b><span>{kacir(kisalt(s.get("ozet", ""), 78))}</span></a></li>'
+            f'<li><a href="{p}kurumsal/{s["id"]}.html">{ikon_svg(s.get("ikon", s["id"]))}'
+            f'<div><b>{kacir(s["ad"])}</b>'
+            f'<span>{kacir(kisalt(s.get("ozet", ""), 78))}</span></div></a></li>'
             for s in KURUMSAL)
         return f'<div class="mega sag"><div class="mega-izgara iki">' \
                f'<div><ul>{oge}</ul></div>' \
                f'<div><h3>Taahhüdümüz</h3><ul>' \
-               f'<li><a href="{p}kurumsal/mahremiyet.html">' \
-               f'<b>Veri toplamıyoruz</b><span>Sunucu yok, analitik yok, çerez yok. ' \
-               f'Girdiğiniz hiçbir bilgi cihazınızdan çıkmaz.</span></a></li>' \
+               f'<li><a href="{p}kurumsal/mahremiyet.html">{ikon_svg("mahremiyet")}' \
+               f'<div><b>Veri toplamıyoruz</b><span>Sunucu yok, analitik yok, çerez yok. ' \
+               f'Girdiğiniz hiçbir bilgi cihazınızdan çıkmaz.</span></div></a></li>' \
                f'</ul></div></div></div>'
 
     def gezinme_html(self, derinlik, aktif):
@@ -163,14 +203,17 @@ class Site:
         for grup, ler in self.arac_gruplari().items():
             bag.append(f'<span class="etiket">{kacir(grup)}</span>')
             for m in ler:
-                bag.append(f'<a href="{p}arac/{m["id"]}.html">{kacir(m["ad"])}</a>')
+                bag.append(f'<a href="{p}arac/{m["id"]}.html">'
+                           f'{ikon_svg(m.get("ikon", m["id"]))}{kacir(m["ad"])}</a>')
         bag.append('<span class="etiket">Bilgi Merkezi</span>')
         bag.append(f'<a href="{p}bilgi/index.html">Tüm konular</a>')
         for k in self.y["kategoriler"]:
-            bag.append(f'<a href="{p}bilgi/{k["id"]}.html">{kacir(k["ad"])}</a>')
+            bag.append(f'<a href="{p}bilgi/{k["id"]}.html">'
+                       f'{ikon_svg(k.get("ikon", k["id"]))}{kacir(k["ad"])}</a>')
         bag.append('<span class="etiket">Kurumsal</span>')
         for s in KURUMSAL:
-            bag.append(f'<a href="{p}kurumsal/{s["id"]}.html">{kacir(s["ad"])}</a>')
+            bag.append(f'<a href="{p}kurumsal/{s["id"]}.html">'
+                       f'{ikon_svg(s.get("ikon", s["id"]))}{kacir(s["ad"])}</a>')
         return "".join(bag)
 
     def ust_html(self, derinlik, aktif):
@@ -620,10 +663,16 @@ def modul_sayfasi(site, m):
             ilgili = (f'<section class="ilgili"><h2 class="mt0">Bu aracın arkasındaki bilgi</h2>'
                       f'<div class="izgara iki">{"".join(kartlar)}</div></section>')
 
-    govde = f"""<main id="ana" class="kap">
-  <span class="etiket">{kacir(m.get("etiket", "Araç"))}</span>
-  <h1>{kacir(m["baslik"])}</h1>
-  <p class="giris">{kacir(m["giris"])}</p>
+    # Kapsayıcı .kap (44rem) değil .kap-genis (76rem): araç formları iki
+    # sütuna açılabilsin diye. .izgara/.form-izgara kırılımları 46rem'de
+    # başlıyor, 44rem'lik kapta hiç tetiklenmiyordu — "inputlar alt alta"
+    # sorununun kaynağı buydu. Okuma ölçüsü .arac-bas ile korunur.
+    govde = f"""<main id="ana" class="kap-genis">
+  <div class="arac-bas">
+    <span class="etiket">{kacir(m.get("etiket", "Araç"))}</span>
+    <h1>{kacir(m["baslik"])}</h1>
+    <p class="giris">{kacir(m["giris"])}</p>
+  </div>
 {m["govde"]}
   {ilgili}
 </main>"""
@@ -1018,6 +1067,8 @@ KURUMSAL = []
 
 def main():
     global MODULLER, KURUMSAL
+    global IKONLAR
+    IKONLAR = ikon_yukle()
     yap = json.loads((ICERIK / "site.json").read_text(encoding="utf-8"))
     site = Site(yap)
     MODULLER = modulleri_yukle()
@@ -1045,11 +1096,12 @@ def main():
         kurumsal_sayfasi(site, s)
     sitemap_yaz(site)
     kayit = bilgi_tabani_yaz(site)
+    ikon_sayisi = ikon_js_yaz()
 
     print(f"{len(site.sayfalar)} sayfa üretildi:")
     print(f"  {len(MODULLER)} araç · {len(site.rehberler)} rehber · "
           f"{len(yap['kategoriler'])} kategori · {len(KURUMSAL)} kurumsal sayfa")
-    print(f"  danışma bilgi tabanı: {kayit} kayıt")
+    print(f"  danışma bilgi tabanı: {kayit} kayıt · ikon: {ikon_sayisi}")
     return 0
 
 
